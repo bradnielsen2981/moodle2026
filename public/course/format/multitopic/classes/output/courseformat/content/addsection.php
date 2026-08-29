@@ -1,0 +1,107 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Contains the section course format output class.
+ *
+ * @package   format_multitopic
+ * @copyright 2019 onwards James Calder and Otago Polytechnic
+ * @copyright based on work by 2020 Ferran Recio <ferran@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace format_multitopic\output\courseformat\content;
+
+use core\output\renderer_base;
+use core\url;
+use core_courseformat\output\local\content\addsection as addsection_base;
+use core_courseformat\base as course_format;
+use section_info;
+use stdClass;
+
+/**
+ * Class to render a course add section button.
+ *
+ * @package   format_multitopic
+ * @copyright 2019 onwards James Calder and Otago Polytechnic
+ * @copyright based on work by 2020 Ferran Recio <ferran@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class addsection extends addsection_base {
+    /**
+     * @var section_info|null the target section information
+     * Redeclaration deprecated since Moodle 5.1, see MDL-85284.
+     */
+    protected ?section_info $targetsection;
+
+    /**
+     * Constructor.
+     *
+     * Redeclaration deprecated since Moodle 5.1, see MDL-85284.
+     *
+     * @param course_format $format the course format
+     * @param section_info|null $targetsection the target targetsection information
+     */
+    public function __construct(course_format $format, ?section_info $targetsection = null) {
+        parent::__construct($format);
+        $this->targetsection = $targetsection;
+    }
+
+    /**
+     * Get the add section button data.
+     *
+     * Current course format does not have 'numsections' option but it has multiple sections suppport.
+     * Display the "Add section" link that will insert a section in the end.
+     * Note to course format developers: inserting sections in the other positions should check both
+     * capabilities 'moodle/course:update' and 'moodle/course:movesections'.
+     *
+     * @param renderer_base $output typically, the renderer that's calling this function
+     * @param int $lastsection the last section number
+     * @param int $maxsections the maximum number of sections (deprecated since Moodle 5.1)
+     * @return stdClass data context for a mustache template
+     */
+    #[\Override]
+    protected function get_add_section_data(renderer_base $output, int $lastsection, int $maxsections = 0): stdClass {
+        $format = $this->format;
+        $course = $format->get_course();
+        $data = parent::get_add_section_data($output, $lastsection, $maxsections);
+
+        $addstring = get_string_manager()->string_exists('addsectiontopic', 'format_' . $course->format) ?
+                    get_string('addsectiontopic', 'format_' . $course->format)
+                    : get_string('addsection', 'core_courseformat');
+
+        $params = [
+            'courseid' => $course->id, // CHANGED.
+            'insertlevel' => FORMAT_MULTITOPIC_SECTION_LEVEL_TOPIC,
+            'sesskey' => sesskey(),
+            'returnurl' => new url(
+                "/course/view.php?id={$course->id}"
+                . (($format->get_sectionid() != $format->fmtrootsectionid) ?
+                    "&sectionid={$format->get_sectionid()}" : "")
+            ),
+        ];
+        if ($this->targetsection) {
+            $params['insertprevupid'] = $this->targetsection->id;
+        } else {
+            $params['insertparentid'] = $format->get_sectionid();
+        }
+
+        $data->addsections->url = new url('/course/format/multitopic/_course_changenumsections.php', $params);
+        $data->addsections->title = $addstring;
+
+        return $data;
+    }
+}
