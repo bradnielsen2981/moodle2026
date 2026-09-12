@@ -15,14 +15,14 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/secondary_icons
+    @template theme_boost_union/secondary_icons_vertical
 
-    Template to render secondary navigation as icon links.
+    Template to render secondary navigation as vertical icon links.
 }}
-<div class="secondary-navigation-icons d-flex flex-wrap gap-2 py-3 justify-content-center">
+<div class="secondary-navigation-icons vertical d-flex flex-column gap-2 mt-2 align-items-center">
     {{#custom_nodes}}
         {{^haschildren}}
-            <a href="{{{url}}}" class="btn {{#isactive}}btn-secondary{{/isactive}}{{^isactive}}btn-outline-secondary{{/isactive}} secondary-icon-link secondary-icon-key-{{key}} d-flex align-items-center justify-content-center p-2 text-decoration-none rounded-circle" title="{{{text}}}" data-toggle="tooltip" style="width: 40px; height: 40px;">
+            <a href="{{{url}}}" class="btn {{#isactive}}btn-secondary{{/isactive}}{{^isactive}}btn-outline-secondary{{/isactive}} secondary-icon-link secondary-icon-key-{{key}} d-flex align-items-center justify-content-center p-2 text-decoration-none rounded-circle" title="{{{text}}}" data-toggle="tooltip" data-bs-placement="right" style="width: 40px; height: 40px;">
                 <div class="d-flex align-items-center justify-content-center m-0">
                     {{{iconhtml}}}
                 </div>
@@ -31,7 +31,7 @@
         {{/haschildren}}
         {{#haschildren}}
             <div class="dropdown">
-                <button class="btn {{#isactive}}btn-secondary{{/isactive}}{{^isactive}}btn-outline-secondary{{/isactive}} secondary-icon-link secondary-icon-key-{{key}} d-flex align-items-center justify-content-center p-2 text-decoration-none rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{{{text}}}" data-toggle="tooltip" style="width: 40px; height: 40px;">
+                <button class="btn {{#isactive}}btn-secondary{{/isactive}}{{^isactive}}btn-outline-secondary{{/isactive}} secondary-icon-link secondary-icon-key-{{key}} d-flex align-items-center justify-content-center p-2 text-decoration-none rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="{{{text}}}" data-toggle="tooltip" data-bs-placement="right" style="width: 40px; height: 40px;">
                     <div class="d-flex align-items-center justify-content-center m-0">
                         {{{iconhtml}}}
                     </div>

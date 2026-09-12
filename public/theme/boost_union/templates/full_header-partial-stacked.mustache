@@ -33,7 +33,8 @@
     Modifications compared to the original template:
     * Provide the layout for the "Stacked" course header layout option.
 }}
-<div id="bucourseheader" class="stacked mb-3">
+<div id="bucourseheader" class="stacked mb-3 position-relative">
+    {{#courseurl}}<a href="{{{courseurl}}}" class="stretched-link bu-course-header-link" aria-hidden="true" tabindex="-1"></a>{{/courseurl}}
     <div class="d-flex align-items-center pb-2">
         {{> theme_boost_union/full_header-chunk-headeractions }}
     </div>

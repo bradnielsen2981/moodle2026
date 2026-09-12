@@ -71,6 +71,72 @@ if ($PAGE->has_secondary_navigation()) {
     $tablistnav = $PAGE->has_tablist_secondary_navigation();
     $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
+    
+    if ($secondarynavigationicons && isset($secondarynavigation['nodecollection']->children)) {
+        $iconmap = [
+            'coursehome' => 'i/course',
+            'settings' => 'i/settings',
+            'participants' => 'i/users',
+            'grades' => 'i/grades',
+            'reports' => 'i/report',
+            'questionbank' => 'i/questions',
+            'more' => 'i/moremenu',
+            'advancedgrading' => 'i/grading',
+            'roles' => 'i/role',
+            'logs' => 'i/log',
+            'competencies' => 'i/competencies',
+            'filtermanage' => 'i/filter',
+            'backup' => 'i/backup',
+            'restore' => 'i/restore',
+        ];
+        
+        $custom_nodes = [];
+        foreach ($secondarynavigation['nodecollection']->children as $child) {
+            $node = new \stdClass();
+            $node->key = $child->key;
+            $node->text = $child->text;
+            $node->title = $child->title;
+            if (isset($child->action) && $child->action instanceof \moodle_url) {
+                $node->url = $child->action->out(false);
+            } else if (isset($child->action) && is_string($child->action)) {
+                $node->url = $child->action;
+            } else {
+                $node->url = '';
+            }
+            $node->isactive = $child->isactive;
+            $node->haschildren = false;
+            $node->pixicon = $iconmap[$child->key] ?? 'i/marker';
+            $node->iconhtml = $OUTPUT->render(new \pix_icon($node->pixicon, $node->text, 'core'));
+            $custom_nodes[] = $node;
+        }
+
+        $max_icons = 4;
+        if (count($custom_nodes) > $max_icons) {
+            $visible = array_slice($custom_nodes, 0, $max_icons);
+            $hidden = array_slice($custom_nodes, $max_icons);
+            
+            $morenode = new \stdClass();
+            $morenode->key = 'more';
+            $morenode->text = get_string('moremenu', 'core');
+            $morenode->title = get_string('moremenu', 'core');
+            $morenode->pixicon = $iconmap['more'];
+            $morenode->iconhtml = $OUTPUT->render(new \pix_icon($morenode->pixicon, $morenode->text, 'core'));
+            $morenode->haschildren = true;
+            $morenode->children = $hidden;
+            $morenode->isactive = false;
+            foreach ($hidden as $h) {
+                if ($h->isactive) {
+                    $morenode->isactive = true;
+                    break;
+                }
+            }
+            $visible[] = $morenode;
+            $custom_nodes = $visible;
+        }
+        
+        $secondarynavigation['custom_nodes'] = $custom_nodes;
+    }
+
     $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
     if (!is_null($overflowdata)) {
         $selectmenu = new \core\output\select_menu(
