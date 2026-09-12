@@ -507,6 +507,36 @@ class core_renderer extends core_renderer_intermediate {
     }
 
     /**
+     * Override the context_header to wrap the heading in a link to the course index page.
+     *
+     * @param array|null $headerinfo An array of header information, dependant on what type of header is being displayed.
+     * @param int $headinglevel What level the 'h' tag will be.
+     * @return string HTML to display the main header.
+     */
+    public function context_header($headerinfo = null, $headinglevel = 1): string {
+        if ($this->page->context) {
+            $iscoursecontext = in_array($this->page->context->contextlevel, [CONTEXT_COURSE, CONTEXT_MODULE]);
+            if ($iscoursecontext && $this->page->course && $this->page->course->id != SITEID) {
+                $courseurl = new \moodle_url('/course/view.php', ['id' => $this->page->course->id]);
+                
+                // Get the heading from headerinfo or page.
+                $heading = $headerinfo['heading'] ?? $this->page->heading;
+                
+                if (!empty($heading) && strpos($heading, '<a ') === false) {
+                    $linkedheading = \html_writer::link($courseurl, $heading, ['class' => 'text-decoration-none text-reset bu-course-header-heading-link', 'title' => get_string('course')]);
+                    
+                    if ($headerinfo === null) {
+                        $headerinfo = [];
+                    }
+                    $headerinfo['heading'] = $linkedheading;
+                }
+            }
+        }
+        
+        return parent::context_header($headerinfo, $headinglevel);
+    }
+
+    /**
      * Wrapper for header elements.
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php

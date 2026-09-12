@@ -24,6 +24,11 @@ $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
 
+@error_reporting(E_ALL | E_STRICT);
+@ini_set('display_errors', '1');
+$CFG->debug = (E_ALL | E_STRICT);
+$CFG->debugdisplay = 1;
+
 require_once(__DIR__ . '/lib/setup.php');
 
 // There is no php closing tag in this file,

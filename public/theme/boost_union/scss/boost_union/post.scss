@@ -819,7 +819,6 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
     &.headingabove,
     &.headingabovebackground {
         .bucoursetitle {
-            border-bottom: 2px solid lightblue;
             padding-bottom: 5px;
             margin-bottom: 5px;
         }
@@ -3897,10 +3896,11 @@ body.dir-rtl {
 }
 
 /*=======================================
- * Participants / incourse pagelayout alignment
+ * Participants / incourse and report pagelayout alignment
  ======================================*/
 @include media-breakpoint-up(md) {
-    .pagelayout-incourse {
+    .pagelayout-incourse,
+    .pagelayout-report {
         #page.drawers {
             .main-inner {
                 max-width: $course-content-maxwidth;
@@ -3919,5 +3919,15 @@ body.dir-rtl {
             padding-left: 15px;
             padding-right: 15px;
         }
+    }
+}
+
+/*=======================================
+ * Course header heading link
+ ======================================*/
+.bu-course-header-heading-link {
+    &:hover,
+    &:focus {
+        text-decoration: underline !important;
     }
 }
