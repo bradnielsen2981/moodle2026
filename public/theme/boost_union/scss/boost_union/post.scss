@@ -3867,3 +3867,21 @@ body.dir-rtl {
         }
     }
 }
+
+/*=======================================
+ * Secondary menu icons
+ ======================================*/
+.secondary-navigation-icons {
+    .secondary-icon-link {
+        color: $gray-600;
+
+        &:hover,
+        &:focus {
+            color: $black;
+        }
+
+        &.active {
+            color: $black;
+        }
+    }
+}

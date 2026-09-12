@@ -112,7 +112,10 @@ if (!$courseindex) {
 
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
-$secondarynavigationicons = (get_config('theme_boost_union', 'secondarynavigationicons') === THEME_BOOST_UNION_SETTING_SELECT_YES);
+// Only apply secondary navigation modifications in Course and Module contexts.
+$is_course_context = in_array($PAGE->context->contextlevel, [CONTEXT_COURSE, CONTEXT_MODULE]);
+
+$secondarynavigationicons = $is_course_context && (get_config('theme_boost_union', 'secondarynavigationicons') === THEME_BOOST_UNION_SETTING_SELECT_YES);
 if ($secondarynavigationicons && $PAGE->secondarynav) {
     $coursehome = $PAGE->secondarynav->find('coursehome', null);
     if ($coursehome) {
@@ -130,10 +133,11 @@ if ($PAGE->has_secondary_navigation()) {
     if ($secondarynavigationicons && isset($secondarynavigation['nodecollection']->children)) {
         $iconmap = [
             'coursehome' => 'i/course',
-            'settings' => 'i/settings',
+            'editsettings' => 'i/settings',
             'participants' => 'i/users',
             'grades' => 'i/grades',
             'reports' => 'i/report',
+            'coursereports' => 'i/report',
             'questionbank' => 'i/questions',
             'more' => 'i/moremenu',
             'advancedgrading' => 'i/grading',
@@ -141,6 +145,7 @@ if ($PAGE->has_secondary_navigation()) {
             'logs' => 'i/log',
             'competencies' => 'i/competencies',
             'filtermanage' => 'i/filter',
+            'filtermanagement' => 'i/filter',
             'backup' => 'i/backup',
             'restore' => 'i/restore',
         ];
@@ -150,7 +155,10 @@ if ($PAGE->has_secondary_navigation()) {
             $node = new \stdClass();
             $node->key = $child->key;
             $node->text = $child->text;
-            $node->title = $child->title;
+            if ($node->key === 'editsettings') {
+                $node->text = 'Course Settings';
+            }
+            $node->title = $node->text;
             // Handle URL output safely
             if (isset($child->action) && $child->action instanceof \moodle_url) {
                 $node->url = $child->action->out(false);
@@ -161,8 +169,21 @@ if ($PAGE->has_secondary_navigation()) {
             }
             $node->isactive = $child->isactive;
             $node->haschildren = false;
+            
+            // If the icon is settings, we can force a cog icon if desired, or use i/settings which is Moodle's cog/gear.
             $node->pixicon = $iconmap[$child->key] ?? 'i/marker';
             $node->iconhtml = $OUTPUT->render(new \pix_icon($node->pixicon, $node->text, 'core'));
+            
+            if ($node->key === 'editsettings') {
+                // Force a cog explicitly if i/settings rendering defaults to something else.
+                $node->iconhtml = '<i class="icon fa fa-cog fa-fw" aria-hidden="true" title="Course Settings" role="img" aria-label="Course Settings"></i>';
+            }
+            
+            if ($node->key === 'grades') {
+                // Use a tick-like icon for grades.
+                $node->iconhtml = '<i class="icon fa fa-check fa-fw" aria-hidden="true" title="Grades" role="img" aria-label="Grades"></i>';
+            }
+
             $custom_nodes[] = $node;
         }
 
@@ -243,7 +264,7 @@ $coursefullname = $PAGE->course?->fullname ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
-$secondarynavigationposition = get_config('theme_boost_union', 'secondarynavigationposition');
+$secondarynavigationposition = $is_course_context ? get_config('theme_boost_union', 'secondarynavigationposition') : THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_BELOWHEADER;
 $secondarynavigationaboveheader = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER);
 $secondarynavigationincourseindex = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_COURSEINDEX);
 
