@@ -28,6 +28,7 @@ $string['addsection'] = 'Add section';
 $string['addsections'] = 'Add section';
 $string['addsubsection'] = 'Add subsection';
 $string['backtocourse'] = 'Back to course \'{$a}\'';
+$string['istab'] = 'Display as tab';
 $string['backtosection'] = 'Back to \'{$a}\'';
 $string['cmbacklink'] = 'Display back link in activities';
 $string['cmbacklinkdesc'] = 'Display link \'Back to ...\' allowing to return to the course section inside the section activities.';

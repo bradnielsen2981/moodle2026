@@ -444,6 +444,14 @@ class format_flexsections extends core_courseformat\base {
                 'cachedefault' => FORMAT_FLEXSECTIONS_EXPANDED,
                 'default' => COURSE_DISPLAY_SINGLEPAGE,
             ],
+            'istab' => [
+                'type' => PARAM_INT,
+                'label' => get_string('istab', 'format_flexsections'),
+                'element_type' => 'advcheckbox',
+                'cache' => true,
+                'cachedefault' => 0,
+                'default' => 0,
+            ],
         ];
     }
 
