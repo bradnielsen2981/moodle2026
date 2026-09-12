@@ -2931,6 +2931,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $secondarynavigationpositionoptions = [
             THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_BELOWHEADER => get_string('secondarynavigationposition_belowheader', 'theme_boost_union', null, true),
             THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER => get_string('secondarynavigationposition_aboveheader', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_COURSEINDEX => get_string('secondarynavigationposition_courseindex', 'theme_boost_union', null, true),
         ];
         $setting = new admin_setting_configselect(
             $name,
@@ -2938,6 +2939,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $description,
             THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_BELOWHEADER,
             $secondarynavigationpositionoptions
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Secondary menu icons.
+        $name = 'theme_boost_union/secondarynavigationicons';
+        $title = get_string('secondarynavigationicons', 'theme_boost_union', null, true);
+        $description = get_string('secondarynavigationicons_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $yesnooption
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);

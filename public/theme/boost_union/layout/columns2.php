@@ -57,6 +57,14 @@ $extraclasses = [];
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
 
+$secondarynavigationicons = (get_config('theme_boost_union', 'secondarynavigationicons') === THEME_BOOST_UNION_SETTING_SELECT_YES);
+if ($secondarynavigationicons && $PAGE->secondarynav) {
+    $coursehome = $PAGE->secondarynav->find('coursehome', null);
+    if ($coursehome) {
+        $coursehome->remove();
+    }
+}
+
 $secondarynavigation = false;
 $overflow = '';
 if ($PAGE->has_secondary_navigation()) {
@@ -99,7 +107,9 @@ $headercontent = $header->export_for_template($renderer);
 $bodyattributes = $OUTPUT->body_attributes($extraclasses); // In the original layout file, this line is place more above,
                                                            // but we amended $extraclasses and had to move it.
 
-$secondarynavigationaboveheader = (get_config('theme_boost_union', 'secondarynavigationposition') === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER);
+$secondarynavigationposition = get_config('theme_boost_union', 'secondarynavigationposition');
+$secondarynavigationaboveheader = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER);
+$secondarynavigationincourseindex = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_COURSEINDEX);
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
@@ -109,7 +119,9 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes,
     'primarymoremenu' => $primarymenu['moremenu'],
     'secondarymoremenu' => $secondarynavigation ?: false,
+    'secondarynavigationicons' => $secondarynavigationicons,
     'secondarynavigationaboveheader' => $secondarynavigationaboveheader,
+    'secondarynavigationincourseindex' => $secondarynavigationincourseindex,
     'mobileprimarynav' => $primarymenu['mobileprimarynav'],
     'usermenu' => $primarymenu['user'],
     'langmenu' => $primarymenu['lang'],

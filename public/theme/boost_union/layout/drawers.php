@@ -112,6 +112,14 @@ if (!$courseindex) {
 
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
+$secondarynavigationicons = (get_config('theme_boost_union', 'secondarynavigationicons') === THEME_BOOST_UNION_SETTING_SELECT_YES);
+if ($secondarynavigationicons && $PAGE->secondarynav) {
+    $coursehome = $PAGE->secondarynav->find('coursehome', null);
+    if ($coursehome) {
+        $coursehome->remove();
+    }
+}
+
 $secondarynavigation = false;
 $overflow = '';
 if ($PAGE->has_secondary_navigation()) {
@@ -168,7 +176,9 @@ $coursefullname = $PAGE->course?->fullname ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
-$secondarynavigationaboveheader = (get_config('theme_boost_union', 'secondarynavigationposition') === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER);
+$secondarynavigationposition = get_config('theme_boost_union', 'secondarynavigationposition');
+$secondarynavigationaboveheader = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_ABOVEHEADER);
+$secondarynavigationincourseindex = ($secondarynavigationposition === THEME_BOOST_UNION_SETTING_SECONDARYNAVIGATIONPOSITION_COURSEINDEX);
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
@@ -183,7 +193,9 @@ $templatecontext = [
     'courseindex' => $courseindex,
     'primarymoremenu' => $primarymenu['moremenu'],
     'secondarymoremenu' => $secondarynavigation ?: false,
+    'secondarynavigationicons' => $secondarynavigationicons,
     'secondarynavigationaboveheader' => $secondarynavigationaboveheader,
+    'secondarynavigationincourseindex' => $secondarynavigationincourseindex,
     'mobileprimarynav' => $primarymenu['mobileprimarynav'],
     'usermenu' => $primarymenu['user'],
     'langmenu' => $primarymenu['lang'],

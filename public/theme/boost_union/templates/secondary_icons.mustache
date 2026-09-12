@@ -1,0 +1,31 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/secondary_icons
+
+    Template to render secondary navigation as icon links.
+}}
+<div class="secondary-navigation-icons d-flex flex-wrap gap-2 py-3">
+    {{#nodecollection}}
+        {{#children}}
+            <a href="{{{url}}}" class="btn {{#isactive}}btn-secondary{{/isactive}}{{^isactive}}btn-outline-secondary{{/isactive}} secondary-icon-link secondary-icon-key-{{key}} d-flex flex-column align-items-center justify-content-center p-2 text-decoration-none" title="{{{text}}}" data-toggle="tooltip" style="flex: 1 1 30%; min-width: 4rem;">
+                <i class="icon fa fa-fw d-block mb-1" aria-hidden="true"></i>
+                <span class="small text-truncate w-100 text-center" style="font-size: 0.7rem;">{{{text}}}</span>
+            </a>
+        {{/children}}
+    {{/nodecollection}}
+</div>

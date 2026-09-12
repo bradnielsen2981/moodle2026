@@ -721,6 +721,11 @@ $string['secondarynavigationposition'] = 'Secondary navigation position';
 $string['secondarynavigationposition_desc'] = 'Select where the secondary navigation menu should be positioned in relation to the course header.';
 $string['secondarynavigationposition_belowheader'] = 'Below the course header';
 $string['secondarynavigationposition_aboveheader'] = 'Above the course header';
+$string['secondarynavigationposition_courseindex'] = 'In the side menu below the course index';
+
+// ... ... Setting: Secondary menu icons.
+$string['secondarynavigationicons'] = 'Secondary menu icons';
+$string['secondarynavigationicons_desc'] = 'When enabled, the secondary navigation menu links will be replaced with Moodle icons. Additionally, the "Course" link will be removed from the secondary navigation.';
 // ... ... Setting: Enable enhanced course header.
 $string['courseheaderenabled'] = 'Enable enhanced course header';
 $string['courseheaderenabled_desc'] = 'When enabled, the course header (which is just the course title in Moodle core) is enhanced by additional elements like the course image (which can be uploaded in a course\'s course settings) and other course metadata, depending how you configure the course header in detail.';
