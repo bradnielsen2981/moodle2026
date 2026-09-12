@@ -89,8 +89,10 @@
                 {{#secondarynavigationincourseindex}}
                     {{#secondarymoremenu}}
                         {{#secondarynavigationicons}}
-                            <div class="px-3 border-top mt-4">
-                                {{> theme_boost_union/secondary_icons }}
+                            <div class="px-3 border-top mt-4 pb-3">
+                                {{< theme_boost_union/secondary_icons_vertical }}
+                                    {{$alignment}}align-items-start{{/alignment}}
+                                {{/ theme_boost_union/secondary_icons_vertical }}
                             </div>
                         {{/secondarynavigationicons}}
                         {{^secondarynavigationicons}}

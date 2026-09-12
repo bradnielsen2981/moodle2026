@@ -1,11 +1,16 @@
 <?php
 define('CLI_SCRIPT', true);
 require('config.php');
-$c = $DB->get_record('course', ['id' => 1]);
-$PAGE->set_course($c);
-$PAGE->set_url(new moodle_url('/course/view.php', ['id' => $c->id]));
+$c = $DB->get_records('course');
+foreach ($c as $course) {
+    if ($course->id == 1) continue;
+    $PAGE->set_course($course);
+    $PAGE->set_url(new moodle_url('/course/view.php', ['id' => $course->id]));
+    $PAGE->set_pagelayout('course');
+    $PAGE->has_secondary_navigation();
 
-$icons = ['i/settings', 'i/grades', 'i/marker', 't/edit', 'i/completion_auto_pass', 'i/checked'];
-foreach ($icons as $i) {
-    echo $i . ": " . $OUTPUT->render(new pix_icon($i, $i, 'core')) . "\n";
+    foreach ($PAGE->secondarynav->children as $child) {
+        echo "Key: {$child->key}\n";
+    }
+    break;
 }
