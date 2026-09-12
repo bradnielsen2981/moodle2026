@@ -3867,3 +3867,21 @@ body.dir-rtl {
         }
     }
 }
+
+/*=======================================
+ * Secondary menu icons
+ ======================================*/
+.secondary-navigation-icons {
+    .secondary-icon-link {
+        i::before {
+            content: "\f0a9"; /* fa-arrow-circle-right */
+        }
+    }
+    .secondary-icon-key-participants i::before { content: "\f0c0"; } /* fa-users */
+    .secondary-icon-key-grades i::before { content: "\f080"; } /* fa-bar-chart */
+    .secondary-icon-key-reports i::before { content: "\f201"; } /* fa-line-chart */
+    .secondary-icon-key-settings i::before { content: "\f013"; } /* fa-cog */
+    .secondary-icon-key-coursehome i::before { content: "\f015"; } /* fa-home */
+    .secondary-icon-key-questionbank i::before { content: "\f059"; } /* fa-question-circle */
+    .secondary-icon-key-more i::before { content: "\f141"; } /* fa-ellipsis-h */
+}

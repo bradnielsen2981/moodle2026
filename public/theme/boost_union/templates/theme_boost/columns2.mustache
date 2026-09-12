@@ -75,8 +75,13 @@
         {{> theme_boost_union/infobannersabove }}
         {{#secondarynavigationaboveheader}}
             {{#secondarymoremenu}}
-                <div class="secondary-navigation">
-                    {{> core/moremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{#secondarynavigationicons}}
+                        {{> theme_boost_union/secondary_icons }}
+                    {{/secondarynavigationicons}}
+                    {{^secondarynavigationicons}}
+                        {{> core/moremenu}}
+                    {{/secondarynavigationicons}}
                 </div>
             {{/secondarymoremenu}}
         {{/secondarynavigationaboveheader}}
@@ -84,8 +89,13 @@
         {{> theme_boost_union/infobannersbelow }}
         {{^secondarynavigationaboveheader}}
             {{#secondarymoremenu}}
-                <div class="secondary-navigation">
-                    {{> core/moremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{#secondarynavigationicons}}
+                        {{> theme_boost_union/secondary_icons }}
+                    {{/secondarynavigationicons}}
+                    {{^secondarynavigationicons}}
+                        {{> core/moremenu}}
+                    {{/secondarynavigationicons}}
                 </div>
             {{/secondarymoremenu}}
         {{/secondarynavigationaboveheader}}
