@@ -815,6 +815,16 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
         background-color: rgb(230, 230, 230) !important; /* stylelint-disable-line declaration-no-important */
     }
 
+    /* Styles specifically for separating the title from the banner image. */
+    &.headingabove,
+    &.headingabovebackground {
+        .bucoursetitle {
+            border-bottom: 2px solid lightblue;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+    }
+
     /* The headingabove layout and the stacked layout only. */
     &.headingabove,
     &.stacked {
@@ -3882,6 +3892,32 @@ body.dir-rtl {
 
         &.active {
             color: $black;
+        }
+    }
+}
+
+/*=======================================
+ * Participants / incourse pagelayout alignment
+ ======================================*/
+@include media-breakpoint-up(md) {
+    .pagelayout-incourse {
+        #page.drawers {
+            .main-inner {
+                max-width: $course-content-maxwidth;
+            }
+            .footer-popover {
+                max-width: $course-content-maxwidth;
+                width: 100%;
+                margin: 0 auto;
+                @include border-radius();
+            }
+        }
+
+        .header-maxwidth {
+            max-width: $course-content-maxwidth;
+            margin: 0 auto;
+            padding-left: 15px;
+            padding-right: 15px;
         }
     }
 }
