@@ -33,7 +33,8 @@
     Modifications compared to the original template:
     * Provide the layout for the "Heading above background" course header layout option.
 }}
-<div id="bucourseheader" class="headingabovebackground mb-3">
+<div id="bucourseheader" class="headingabovebackground mb-3 position-relative">
+    {{#courseurl}}<a href="{{{courseurl}}}" class="stretched-link bu-course-header-link" aria-hidden="true" tabindex="-1"></a>{{/courseurl}}
     <div class="bucoursetitle d-inline-block {{{courseheadercanvasclasses}}} {{{courseheaderborderclasses}}}"
         {{#courseheadertitlebackgroundcolor}}style="background-color: {{courseheadertitlebackgroundcolor}}; padding: 0.5rem; border-radius: 5px;"{{/courseheadertitlebackgroundcolor}}>
         {{#showshortname}}

@@ -572,6 +572,10 @@ class core_renderer extends core_renderer_intermediate {
                 } else {
                     // Set a marker that course header is enabled.
                     $header->courseheaderenabled = true;
+                    // Provide the course URL so the banner can be clickable.
+                    if (!empty($this->page->course->id)) {
+                        $header->courseurl = (new \moodle_url('/course/view.php', ['id' => $this->page->course->id]))->out(false);
+                    }
                     // Set the course header image url (might be empty if background type allows it).
                     $header->courseheaderimageurl = $courseheaderimageurl;
                     // Additionally, get the course header height.

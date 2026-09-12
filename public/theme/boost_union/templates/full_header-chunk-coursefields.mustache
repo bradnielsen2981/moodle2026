@@ -28,14 +28,14 @@
 }}
 {{#hascustomfields}}
     {{#customfieldsstyleasbadge}}
-        <div class="d-flex me-auto bg-light p-2 pe-0 bg-opacity-75 border rounded">
+        <div class="d-flex me-auto bg-light p-2 pe-0 bg-opacity-75 border rounded position-relative" style="z-index: 2;">
             <div class="customfields">
                 {{{customfields}}}
             </div>
         </div>
     {{/customfieldsstyleasbadge}}
     {{^customfieldsstyleasbadge}}
-        <div class="d-flex me-auto bg-light px-2 py-1 bg-opacity-75 small rounded courseheadersticker align-self-end text-dark">
+        <div class="d-flex me-auto bg-light px-2 py-1 bg-opacity-75 small rounded courseheadersticker align-self-end text-dark position-relative" style="z-index: 2;">
             <div class="customfields">
                 {{{customfields}}}
             </div>

@@ -200,6 +200,13 @@
                             <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
                             <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
                         </button>
+                        {{#secondarynavigationincourseindex}}
+                            {{#secondarymoremenu}}
+                                {{#secondarynavigationicons}}
+                                    {{> theme_boost_union/secondary_icons_vertical }}
+                                {{/secondarynavigationicons}}
+                            {{/secondarymoremenu}}
+                        {{/secondarynavigationincourseindex}}
                     </div>
                 {{/courseindex}}
                 {{#hasblocks}}

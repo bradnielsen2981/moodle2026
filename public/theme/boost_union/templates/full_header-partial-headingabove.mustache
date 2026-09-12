@@ -33,7 +33,8 @@
     Modifications compared to the original template:
     * Provide the layout for the "Heading above" course header layout option.
 }}
-<div id="bucourseheader" class="headingabove mb-3">
+<div id="bucourseheader" class="headingabove mb-3 position-relative">
+    {{#courseurl}}<a href="{{{courseurl}}}" class="stretched-link bu-course-header-link" aria-hidden="true" tabindex="-1"></a>{{/courseurl}}
     <div class="bucoursetitle">
         {{#showshortname}}
             {{< theme_boost_union/full_header-chunk-shortname}}{{$cssclass}}text-muted muted{{/cssclass}}{{/ theme_boost_union/full_header-chunk-shortname}}
