@@ -54,14 +54,14 @@ class content extends \core_courseformat\output\local\content {
     public function export_for_template(\renderer_base $output) {
         $data = parent::export_for_template($output);
 
-        // Generate tabs for pages (sections with ispage=1)
+        // Generate tabs for tabs (sections with istab=1)
         $modinfo = get_fast_modinfo($this->format->get_courseid());
         $pages = [];
         
         foreach ($modinfo->get_section_info_all() as $s) {
             if ($s->section > 0 && empty($s->parent) && !$s->is_delegated() && $this->format->is_section_visible($s)) {
                 $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($s);
-                if (!empty($formatoptions['ispage'])) {
+                if (!empty($formatoptions['istab'])) {
                     $pages[] = $s;
                 }
             }
@@ -74,7 +74,7 @@ class content extends \core_courseformat\output\local\content {
             while ($vs && $vs->section > 0) {
                 if (empty($vs->parent)) {
                     $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($vs);
-                    if (!empty($formatoptions['ispage'])) {
+                    if (!empty($formatoptions['istab'])) {
                         $activetab = $vs->section;
                     }
                     break;
@@ -105,12 +105,12 @@ class content extends \core_courseformat\output\local\content {
             ];
         }
 
-        $showtabs = count($pages) > 0;
-        $data->tabs = $showtabs ? $tabs : [];
+        $showtabs = true;
+        $data->tabs = $tabs;
         $data->showtabs = $showtabs;
         
         if ($this->format->show_editor() && $this->format->should_display_add_sub_section_link(0)) {
-            $data->addpageurl = (new \moodle_url('/course/format/flexsections/addpage.php', ['courseid' => $this->format->get_courseid(), 'sesskey' => sesskey()]))->out(false);
+            $data->addpageurl = (new \moodle_url('/course/format/flexsections/addtab.php', ['courseid' => $this->format->get_courseid(), 'sesskey' => sesskey()]))->out(false);
         }
 
         // If we are on course view page for particular section.
@@ -165,7 +165,7 @@ class content extends \core_courseformat\output\local\content {
             while ($vs && $vs->section > 0) {
                 if (empty($vs->parent)) {
                     $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($vs);
-                    if (!empty($formatoptions['ispage'])) {
+                    if (!empty($formatoptions['istab'])) {
                         $activetab = $vs->section;
                     }
                     break;
@@ -186,10 +186,10 @@ class content extends \core_courseformat\output\local\content {
             
             // Display sections based on the active tab
             if ($activetab === 0) {
-                // Main page: display all top-level sections that are NOT pages.
+                // Main page: display all top-level sections that are NOT tabs.
                 if (empty($s->parent)) {
                     $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($s);
-                    if (empty($formatoptions['ispage'])) {
+                    if (empty($formatoptions['istab'])) {
                         return true;
                     }
                 }
