@@ -1,20 +1,9 @@
 <?php
 define('CLI_SCRIPT', true);
 require('config.php');
-
-$data = [
-    'custom_nodes' => [
-        [
-            'key' => 'settings',
-            'url' => '#',
-            'text' => 'Settings',
-            'isactive' => false,
-            'iconhtml' => '<i class="fa fa-cog"></i>',
-            'haschildren' => true,
-            'children' => [
-                ['url' => '#', 'text' => 'Child', 'isactive' => false]
-            ]
-        ]
-    ]
-];
-echo $OUTPUT->render_from_template('theme_boost_union/secondary_icons_vertical', $data);
+$c = $DB->get_record('course', ['id' => 2]);
+if (!$c) $c = $DB->get_record('course', ['id' => 1]);
+$PAGE->set_course($c);
+$PAGE->set_url(new moodle_url('/course/view.php', ['id' => $c->id]));
+$PAGE->set_heading($c->fullname);
+echo $OUTPUT->context_header();
