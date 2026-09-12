@@ -35,6 +35,7 @@ $context = context_course::instance($course->id);
 
 // Make sure section 0 is created.
 course_create_sections_if_missing($course, 0);
+$format->initialise_course_sections();
 
 $renderer = $PAGE->get_renderer('format_flexsections');
 

@@ -68,6 +68,34 @@ final class format_flexsections_test extends \advanced_testcase {
     }
 
     /**
+     * Test that a new course gets a Unit Overview tab and nested sections.
+     *
+     * @return void
+     */
+    public function test_initialise_course_sections(): void {
+        global $DB;
+        $this->resetAfterTest(true);
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course(
+            ['numsections' => 3, 'format' => 'flexsections'],
+            ['createsections' => true]
+        );
+        $format = course_get_format($course);
+        $format->initialise_course_sections();
+
+        $sections = $DB->get_records('course_sections', ['course' => $course->id], 'section ASC');
+        $this->assertSame('', (string)$sections[0]->name);
+        $this->assertSame(0, (int)$sections[1]->parent);
+        $this->assertSame(get_string('unitoverview', 'format_flexsections'), $sections[1]->name);
+        $this->assertSame(1, (int)$sections[2]->parent);
+        $this->assertSame(1, (int)$sections[3]->parent);
+
+        $options = $format->get_format_options($sections[1]);
+        $this->assertSame(1, (int)$options['istab']);
+    }
+
+    /**
      * Tests for format_flexsections::get_section_name method with modified section names.
      *
      * @return void

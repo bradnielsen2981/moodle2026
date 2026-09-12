@@ -43,6 +43,33 @@ class format_flexsections extends core_courseformat\base {
     use preferences;
 
     /**
+     * Initialise the first-level section hierarchy for a new course.
+     *
+     * @return void
+     */
+    public function initialise_course_sections(): void {
+        global $DB;
+
+        $sections = array_values($DB->get_records('course_sections', ['course' => $this->courseid], 'section ASC'));
+        $firstsection = $sections[1] ?? null;
+        if (!$firstsection || (string)$firstsection->name !== '' || $firstsection->parent != 0) {
+            return;
+        }
+
+        $DB->set_field('course_sections', 'parent', $firstsection->section, [
+            'course' => $this->courseid,
+        ]);
+        $DB->set_field('course_sections', 'parent', 0, [
+            'id' => $firstsection->id,
+        ]);
+        $DB->set_field('course_sections', 'name', get_string('unitoverview', 'format_flexsections'), [
+            'id' => $firstsection->id,
+        ]);
+        $this->update_section_format_options(['id' => $firstsection->id, 'istab' => 1]);
+        rebuild_course_cache($this->courseid, true);
+    }
+
+    /**
      * Returns true if this course format uses sections.
      *
      * @return bool
