@@ -277,7 +277,7 @@ class format_flexsections extends core_courseformat\base {
             }
         }
         foreach ($modinfo->get_section_info_all() as $section) {
-            if ($section->parent == 0 && $section->section != 0) {
+            if ($section->parent <= 0 && $section->section != 0) {
                 $this->navigation_add_section($navigation, $node, $section);
             }
         }
@@ -413,15 +413,38 @@ class format_flexsections extends core_courseformat\base {
      * @return array
      */
     public function section_format_options($foreditform = false): array {
+        $parent = [
+            'type' => PARAM_INT,
+            'label' => '',
+            'element_type' => 'hidden',
+            'default' => 0,
+            'cache' => true,
+            'cachedefault' => 0,
+        ];
+        
+        if ($foreditform) {
+            global $COURSE;
+            $choices = [
+                0 => 'Normal section (Root)',
+                -1 => 'Tab',
+            ];
+            
+            if (!empty($COURSE->id)) {
+                $modinfo = get_fast_modinfo($COURSE);
+                foreach ($modinfo->get_section_info_all() as $s) {
+                    if ($s->section > 0) {
+                        $choices[$s->section] = 'Child of: ' . $this->get_section_name($s);
+                    }
+                }
+            }
+            
+            $parent['label'] = 'Section placement';
+            $parent['element_type'] = 'select';
+            $parent['element_attributes'] = [$choices];
+        }
+
         return [
-            'parent' => [
-                'type' => PARAM_INT,
-                'label' => '',
-                'element_type' => 'hidden',
-                'default' => 0,
-                'cache' => true,
-                'cachedefault' => 0,
-            ],
+            'parent' => $parent,
             'visibleold' => [
                 'type' => PARAM_INT,
                 'label' => '',
@@ -476,6 +499,10 @@ class format_flexsections extends core_courseformat\base {
                     'default' => (bool)get_config('format_flexsections', 'cmbacklink'),
                     'type' => PARAM_BOOL,
                 ],
+                'hidetopsection' => [
+                    'default' => 1,
+                    'type' => PARAM_BOOL,
+                ],
             ];
         }
         if ($foreditform && !isset($courseformatoptions['showsection0title']['label'])) {
@@ -502,6 +529,10 @@ class format_flexsections extends core_courseformat\base {
                 ],
                 'cmbacklink' => [
                     'label' => new lang_string('cmbacklink', 'format_flexsections'),
+                    'element_type' => 'advcheckbox',
+                ],
+                'hidetopsection' => [
+                    'label' => 'Hide top section',
                     'element_type' => 'advcheckbox',
                 ],
             ];
@@ -661,6 +692,42 @@ class format_flexsections extends core_courseformat\base {
         return $rv;
     }
 
+    /** @var bool */
+    protected $section1_tab_checked = false;
+
+    /**
+     * Override get_format_options to default section 1 to be a tab
+     */
+    public function get_format_options($section = null) {
+        $options = parent::get_format_options($section);
+        if ($section !== null && !$this->section1_tab_checked) {
+            $sectionno = $this->resolve_section_number($section);
+            if ($sectionno == 1) {
+                global $DB;
+                $sectionid = (is_object($section) && isset($section->id)) ? $section->id : 0;
+                if (!$sectionid) {
+                    $sec = $DB->get_record('course_sections', ['course' => $this->courseid, 'section' => 1]);
+                    $sectionid = $sec ? $sec->id : 0;
+                }
+
+                if ($sectionid) {
+                    $record = $DB->record_exists('course_format_options', [
+                        'courseid' => $this->courseid,
+                        'format' => 'flexsections',
+                        'sectionid' => $sectionid,
+                        'name' => 'parent'
+                    ]);
+                    if (!$record) {
+                        $this->update_section_format_options(['id' => $sectionid, 'parent' => -1]);
+                        $options['parent'] = -1;
+                    }
+                    $this->section1_tab_checked = true;
+                }
+            }
+        }
+        return $options;
+    }
+
     /**
      * Return the plugin configs for external functions.
      *
@@ -689,7 +756,7 @@ class format_flexsections extends core_courseformat\base {
             return true;
         }
         $section = $this->get_section($section);
-        return $section->available;
+        return $section ? $section->available : true;
     }
 
     /**
@@ -701,8 +768,8 @@ class format_flexsections extends core_courseformat\base {
      */
     public function find_collapsed_parent($section, $returnid = false) {
         $section = $this->get_section($section);
-        if (!$section->section || $section->collapsed == FORMAT_FLEXSECTIONS_COLLAPSED) {
-            return $returnid ? $section->id : $section->section;
+        if (!$section || !$section->section || $section->collapsed == FORMAT_FLEXSECTIONS_COLLAPSED) {
+            return $section ? ($returnid ? $section->id : $section->section) : 0;
         } else {
             return $this->find_collapsed_parent($section->parent, $returnid);
         }
@@ -769,7 +836,7 @@ class format_flexsections extends core_courseformat\base {
             return $sectionnum == $viewedsection || $this->section_has_parent($sectionnum, $viewedsection);
         } else {
             $section = $this->get_section($sectionnum);
-            if (!$section->parent) {
+            if ($section->parent <= 0) {
                 return true;
             }
             return $this->find_collapsed_parent($section->parent) ? false : true;
@@ -1036,7 +1103,10 @@ class format_flexsections extends core_courseformat\base {
             return;
         }
         $section = $this->get_section($section);
-        if ($visibility && $section->parent && !$this->get_section($section->parent)->visible) {
+        if (!$section) {
+            return;
+        }
+        if ($visibility && $section->parent > 0 && !$this->get_section($section->parent)->visible) {
             // Can not set section visible when parent is hidden.
             return;
         }
@@ -1222,7 +1292,7 @@ class format_flexsections extends core_courseformat\base {
             return false;
         } else if ($section->parent == $parentnum) {
             return true;
-        } else if ($section->parent == 0) {
+        } else if ($section->parent <= 0) {
             return false;
         } else if ($section->parent >= $section->section) {
             // Some error.
@@ -1342,8 +1412,8 @@ class format_flexsections extends core_courseformat\base {
      */
     public function mergeup_section(section_info $section): void {
         global $DB;
-        if (!$section->section || !$section->parent) {
-            // Section 0 does not have parent.
+        if (!$section->section || $section->parent <= 0) {
+            // Section 0 or tabs do not have valid mergeable parents.
             return;
         }
 
@@ -1396,11 +1466,12 @@ class format_flexsections extends core_courseformat\base {
      */
     public function should_display_add_sub_section_link(int $sectionnum): bool {
         // Display for the top-level sections and for the sections that are displayed as a link.
-        if (!$sectionnum) {
+        // Also handle virtual parent -1 for tabs.
+        if ($sectionnum <= 0) {
             return true;
         }
         $section = $this->get_section($sectionnum);
-        return (bool)$section->collapsed;
+        return $section ? (bool)$section->collapsed : false;
     }
 
     /**
@@ -1434,7 +1505,7 @@ class format_flexsections extends core_courseformat\base {
     public function get_number_of_toplevel_sections(): int {
         $cnt = 0;
         foreach ($this->get_sections() as $section) {
-            if ($section->section && !$section->parent) {
+            if ($section->section && $section->parent <= 0) {
                 $cnt++;
             }
         }

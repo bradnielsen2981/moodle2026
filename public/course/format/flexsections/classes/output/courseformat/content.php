@@ -52,7 +52,57 @@ class content extends \core_courseformat\output\local\content {
      * @return \stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output) {
+        $hidetopsection = $this->format->get_course()->hidetopsection ?? 1;
+        
+        if ($hidetopsection) {
+            $course = $this->format->get_course();
+            $modinfo = get_fast_modinfo($course->id);
+            if (!empty($modinfo->sections[0])) {
+                foreach ($modinfo->sections[0] as $cmid) {
+                    $cm = $modinfo->get_cm($cmid);
+                    if ($cm->modname === 'forum') {
+                        global $DB;
+                        $forum = $DB->get_record('forum', ['id' => $cm->instance]);
+                        if ($forum && $forum->type === 'news') {
+                            $section1 = $this->format->get_section(1);
+                            if (!$section1) {
+                                $this->format->create_new_section(0, null);
+                                $modinfo = get_fast_modinfo($course->id);
+                                $section1 = $this->format->get_section(1);
+                            }
+                            if ($section1) {
+                                $targetsection = $modinfo->get_section_info($section1->section);
+                                moveto_module($cm, $targetsection);
+                                // Modinfo changes after moveto_module, we must rebuild or let it be
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         $data = parent::export_for_template($output);
+
+        // Moodle 4.0+ puts section 0 inside the 'sections' array.
+        // We extract it so it renders strictly above the tabs, or discard it if hidden.
+        if (!empty($data->sections)) {
+            $first_section = reset($data->sections);
+            if (isset($first_section->num) && $first_section->num == 0) {
+                $section0 = array_shift($data->sections);
+                if (!$hidetopsection && !$this->format->get_viewed_section()) {
+                    $data->initialsection = $section0;
+                }
+            } else if (is_array($first_section) && isset($first_section['num']) && $first_section['num'] == 0) {
+                $section0 = array_shift($data->sections);
+                if (!$hidetopsection && !$this->format->get_viewed_section()) {
+                    $data->initialsection = $section0;
+                }
+            }
+        }
+
+        if ($hidetopsection) {
+            $data->initialsection = null;
+        }
 
         // If we are on course view page for particular section.
         if ($this->format->get_viewed_section()) {
@@ -61,7 +111,7 @@ class content extends \core_courseformat\output\local\content {
 
             // Add 'back to parent' control.
             $section = $this->format->get_section($this->format->get_viewed_section());
-            if ($section->parent) {
+            if ($section->parent > 0) {
                 $sr = $this->format->find_collapsed_parent($section->parent);
                 $url = $this->format->get_view_url($section->section, ['sr' => $sr]);
                 $data->backtosection = [
@@ -83,6 +133,43 @@ class content extends \core_courseformat\output\local\content {
         }
         $data->accordion = $this->format->get_accordion_setting() ? 1 : '';
         $data->mainsection = $this->format->get_viewed_section();
+
+        // ------------------ NEW TAB LOGIC ------------------
+        if (!$this->format->get_viewed_section()) {
+            $modinfo = get_fast_modinfo($this->format->get_course());
+            $sections = $modinfo->get_section_info_all();
+            $firsttab = true;
+            
+            $tab_nav = [];
+            $tab_panes = [];
+            
+            foreach ($sections as $s) {
+                if ($s->section > 0 && $s->parent == -1 && $this->format->is_section_visible($s)) {
+                    $sectionoutput = new $this->sectionclass($this->format, $s);
+                    $exported = $sectionoutput->export_for_template($output);
+                    
+                    $isactive = $firsttab ? true : false;
+                    $firsttab = false;
+                    
+                    $tab_nav[] = [
+                        'id' => $s->id,
+                        'name' => $this->format->get_section_name($s),
+                        'isactive' => $isactive,
+                    ];
+                    
+                    $exported->istabpane = true;
+                    $exported->isactive = $isactive;
+                    $tab_panes[] = $exported;
+                }
+            }
+            
+            if (!empty($tab_nav)) {
+                $data->hastabs = true;
+                $data->tabnav = $tab_nav;
+                $data->tabpanes = $tab_panes;
+            }
+        }
+        // ---------------------------------------------------
 
         return $data;
     }

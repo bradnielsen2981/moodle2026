@@ -93,6 +93,28 @@
         {{#initialsection}}
             {{> format_flexsections/local/content/section }}
         {{/initialsection}}
+
+        {{#hastabs}}
+            <li class="section main clearfix">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    {{#tabnav}}
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link {{#isactive}}active{{/isactive}}" id="tab-{{id}}" data-toggle="tab" data-bs-toggle="tab" href="#tabpane-{{id}}" role="tab" aria-controls="tabpane-{{id}}" aria-selected="{{#isactive}}true{{/isactive}}{{^isactive}}false{{/isactive}}">{{{name}}}</a>
+                        </li>
+                    {{/tabnav}}
+                </ul>
+                <div class="tab-content">
+                    {{#tabpanes}}
+                        <div class="tab-pane fade {{#isactive}}show active{{/isactive}}" id="tabpane-{{id}}" role="tabpanel" aria-labelledby="tab-{{id}}">
+                            <ul class="{{format}} flexsections-level-0">
+                                {{> format_flexsections/local/content/section }}
+                            </ul>
+                        </div>
+                    {{/tabpanes}}
+                </div>
+            </li>
+        {{/hastabs}}
+
         {{#sections}}
             {{> format_flexsections/local/content/section }}
         {{/sections}}
