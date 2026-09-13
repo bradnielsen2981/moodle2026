@@ -54,65 +54,6 @@ class content extends \core_courseformat\output\local\content {
     public function export_for_template(\renderer_base $output) {
         $data = parent::export_for_template($output);
 
-        // Generate tabs for tabs (sections with istab=1)
-        $modinfo = get_fast_modinfo($this->format->get_courseid());
-        $pages = [];
-        
-        foreach ($modinfo->get_section_info_all() as $s) {
-            if ($s->section > 0 && empty($s->parent) && !$s->is_delegated() && $this->format->is_section_visible($s)) {
-                $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($s);
-                if (!empty($formatoptions['istab'])) {
-                    $pages[] = $s;
-                }
-            }
-        }
-        
-        $activetab = 0;
-        $viewedsection = $this->format->get_viewed_section();
-        if ($viewedsection) {
-            $vs = $modinfo->get_section_info($viewedsection);
-            while ($vs && $vs->section > 0) {
-                if (empty($vs->parent)) {
-                    $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($vs);
-                    if (!empty($formatoptions['istab'])) {
-                        $activetab = $vs->section;
-                    }
-                    break;
-                }
-                $vs = $modinfo->get_section_info($vs->parent);
-            }
-        }
-
-        $tabs = [];
-        
-        $tabs[] = [
-            'id' => 0,
-            'name' => format_string($this->format->get_course()->shortname),
-            'url' => (new \moodle_url('/course/view.php', ['id' => $this->format->get_courseid()]))->out(false),
-            'isactive' => ($activetab === 0),
-            'section' => 0
-        ];
-
-        foreach ($pages as $p) {
-            $url = new \moodle_url('/course/view.php', ['id' => $this->format->get_courseid(), 'section' => $p->section]);
-            $isactive = ($activetab === $p->section);
-            $tabs[] = [
-                'id' => $p->id,
-                'name' => get_section_name($this->format->get_courseid(), $p),
-                'url' => $url->out(false),
-                'isactive' => $isactive,
-                'section' => $p->section
-            ];
-        }
-
-        $showtabs = true;
-        $data->tabs = $tabs;
-        $data->showtabs = $showtabs;
-        
-        if ($this->format->show_editor() && $this->format->should_display_add_sub_section_link(0)) {
-            $data->addpageurl = (new \moodle_url('/course/format/flexsections/addtab.php', ['courseid' => $this->format->get_courseid(), 'sesskey' => sesskey()]))->out(false);
-        }
-
         // If we are on course view page for particular section.
         if ($this->format->get_viewed_section()) {
             // Do not display the "General" section when on a page of another section.
@@ -127,6 +68,14 @@ class content extends \core_courseformat\output\local\content {
                     'url' => $url->out(false),
                     'sectionname' => $this->format->get_section_name($section->parent),
                 ];
+            } else {
+                $sr = 0;
+                $url = $this->format->get_view_url($section->section, ['sr' => $sr]);
+                $context = \context_course::instance($this->format->get_courseid());
+                $data->backtocourse = [
+                    'url' => $url->out(false),
+                    'coursename' => format_string($this->format->get_course()->fullname, true, ['context' => $context]),
+                ];
             }
 
             // Hide add section link below page content.
@@ -134,7 +83,6 @@ class content extends \core_courseformat\output\local\content {
         }
         $data->accordion = $this->format->get_accordion_setting() ? 1 : '';
         $data->mainsection = $this->format->get_viewed_section();
-        $data->numsections = false; // Hide add section link below page content, as we use the Add page tab.
 
         return $data;
     }
@@ -157,51 +105,13 @@ class content extends \core_courseformat\output\local\content {
         }
 
         $viewedsection = $this->format->get_viewed_section();
-        
-        // Determine the active tab
-        $activetab = 0;
-        if ($viewedsection) {
-            $vs = $modinfo->get_section_info($viewedsection);
-            while ($vs && $vs->section > 0) {
-                if (empty($vs->parent)) {
-                    $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($vs);
-                    if (!empty($formatoptions['istab'])) {
-                        $activetab = $vs->section;
-                    }
-                    break;
-                }
-                $vs = $modinfo->get_section_info($vs->parent);
-            }
-        }
-
-        return array_values(array_filter($modinfo->get_section_info_all(), function ($s) use ($activetab) {
+        return array_values(array_filter($modinfo->get_section_info_all(), function ($s) use ($viewedsection) {
             if ($s->is_delegated()) {
                 return false;
             }
-            
-            // If the section is the general section (section 0), display it.
-            if (!$s->section) {
-                return true;
-            }
-            
-            // Display sections based on the active tab
-            if ($activetab === 0) {
-                // Main page: display all top-level sections that are NOT tabs.
-                if (empty($s->parent)) {
-                    $formatoptions = course_get_format($this->format->get_courseid())->get_format_options($s);
-                    if (empty($formatoptions['istab'])) {
-                        return true;
-                    }
-                }
-                return false;
-            } else {
-                // Specific page: display ONLY the Page section itself.
-                // The flexsections output classes will automatically render its subsections.
-                if ($s->section == $activetab) {
-                    return true;
-                }
-                return false;
-            }
+            return (!$s->section) ||
+                (!$viewedsection && !$s->parent && $this->format->is_section_visible($s)) ||
+                ($viewedsection && $s->section == $viewedsection);
         }));
     }
 }

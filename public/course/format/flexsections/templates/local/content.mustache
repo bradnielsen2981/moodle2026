@@ -85,23 +85,6 @@
 
 {{> format_flexsections/local/navigate_back_to }}
 
-{{#showtabs}}
-<div class="tertiary-navigation">
-    <ul class="nav nav-tabs" role="tablist">
-        {{#tabs}}
-        <li class="nav-item" role="presentation">
-            <a class="nav-link {{#isactive}}active{{/isactive}}" href="{{{url}}}" role="tab" aria-selected="{{#isactive}}true{{/isactive}}{{^isactive}}false{{/isactive}}">{{{name}}}</a>
-        </li>
-        {{/tabs}}
-        {{#addpageurl}}
-        <li class="nav-item">
-            <a class="nav-link" href="{{{addpageurl}}}"><i class="fa fa-plus"></i> <span class="sr-only">{{#str}}addsection, format_flexsections{{/str}}</span></a>
-        </li>
-        {{/addpageurl}}
-    </ul>
-</div>
-{{/showtabs}}
-
 <div id="{{uniqid}}-course-format" data-flexsections-accordion="{{{accordion}}}"
         data-flexsections-mainsection="{{mainsection}}">
     <h2 class="accesshide">{{{title}}}</h2>
