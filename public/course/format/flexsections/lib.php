@@ -426,8 +426,16 @@ class format_flexsections extends core_courseformat\base {
             global $COURSE;
             $choices = [
                 0 => 'Normal section (Root)',
-                -1 => 'Tab',
             ];
+            
+            $allowcoursetabs = false;
+            if (!empty($COURSE->id)) {
+                $allowcoursetabs = course_get_format($COURSE)->get_course()->allowcoursetabs ?? 0;
+            }
+
+            if ($allowcoursetabs) {
+                $choices[-1] = 'Tab';
+            }
             
             if (!empty($COURSE->id)) {
                 $modinfo = get_fast_modinfo($COURSE);
@@ -499,6 +507,10 @@ class format_flexsections extends core_courseformat\base {
                     'default' => (bool)get_config('format_flexsections', 'cmbacklink'),
                     'type' => PARAM_BOOL,
                 ],
+                'allowcoursetabs' => [
+                    'default' => 0,
+                    'type' => PARAM_BOOL,
+                ],
                 'hidetopsection' => [
                     'default' => 1,
                     'type' => PARAM_BOOL,
@@ -531,6 +543,10 @@ class format_flexsections extends core_courseformat\base {
                     'label' => new lang_string('cmbacklink', 'format_flexsections'),
                     'element_type' => 'advcheckbox',
                 ],
+                'allowcoursetabs' => [
+                    'label' => 'Allow course tabs',
+                    'element_type' => 'advcheckbox',
+                ],
                 'hidetopsection' => [
                     'label' => 'Hide top section',
                     'element_type' => 'advcheckbox',
@@ -539,6 +555,50 @@ class format_flexsections extends core_courseformat\base {
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
+    }
+
+    /**
+     * Updates course format options.
+     * Overridden to handle moving announcements if hidetopsection is enabled.
+     *
+     * @param stdClass|array $data return value from moodleform::get_data() or array with data
+     * @param stdClass $oldcourse return value from get_course($data->id)
+     * @return bool whether there were any changes to the options values
+     */
+    public function update_course_format_options($data, $oldcourse = null) {
+        $result = parent::update_course_format_options($data, $oldcourse);
+        $course = $this->get_course();
+        
+        $allowcoursetabs = $course->allowcoursetabs ?? 0;
+        $hidetopsection = $course->hidetopsection ?? 1;
+        
+        if ($hidetopsection) {
+            $modinfo = get_fast_modinfo($course->id);
+            if (!empty($modinfo->sections[0])) {
+                $section1 = $this->get_section(1);
+                if (!$section1) {
+                    $this->create_new_section(0, null);
+                    // Re-fetch modinfo after section creation
+                    $modinfo = get_fast_modinfo($course->id);
+                    $section1 = $this->get_section(1);
+                }
+                
+                if ($section1) {
+                    global $DB;
+                    $targetsection = $modinfo->get_section_info($section1->section);
+                    foreach ($modinfo->sections[0] as $cmid) {
+                        $cm = $modinfo->get_cm($cmid);
+                        if ($cm->modname === 'forum') {
+                            $forum = $DB->get_record('forum', ['id' => $cm->instance]);
+                            if ($forum && $forum->type === 'news') {
+                                moveto_module($cm, $targetsection);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
     /**
@@ -700,7 +760,8 @@ class format_flexsections extends core_courseformat\base {
      */
     public function get_format_options($section = null) {
         $options = parent::get_format_options($section);
-        if ($section !== null && !$this->section1_tab_checked) {
+        $allowcoursetabs = $this->get_course()->allowcoursetabs ?? 0;
+        if ($allowcoursetabs && $section !== null && !$this->section1_tab_checked) {
             $sectionno = $this->resolve_section_number($section);
             if ($sectionno == 1) {
                 global $DB;
