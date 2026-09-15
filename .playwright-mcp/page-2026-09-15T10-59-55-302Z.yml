@@ -1,0 +1,53 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - img "Edge logo" [ref=e5]
+      - generic [ref=e6]: Microsoft Corporation
+      - generic [ref=e7]: © 2026 Microsoft Corporation. All rights reserved.
+    - table [ref=e8]:
+      - rowgroup [ref=e9]:
+        - row [ref=e10]:
+          - cell "Microsoft Edge:" [ref=e11]
+          - cell [ref=e12]:
+            - generic [ref=e13]: 153.0.4234.32 (Official build) (64-bit)
+            - button "Copy version string" [ref=e14] [cursor=pointer]
+        - row [ref=e16]:
+          - cell "Revision:" [ref=e17]
+          - cell "9aab8632678bdbd60c393455e1394ee523ba682d" [ref=e18]
+        - row [ref=e19]:
+          - cell "Chromium version:" [ref=e20]
+          - cell "153.0.8010.37" [ref=e21]
+        - row [ref=e22]:
+          - cell "Operating system:" [ref=e23]
+          - cell "Windows 11 Version 25H2 (Build 26200.9457)" [ref=e24]
+        - row [ref=e26]:
+          - cell "JavaScript:" [ref=e27]
+          - cell "V8 15.3.12.4" [ref=e28]
+        - row [ref=e29]:
+          - cell "User agent:" [ref=e30]
+          - cell "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0" [ref=e31]
+        - row [ref=e32]:
+          - cell "Command-line:" [ref=e33]
+          - cell [ref=e34]
+        - row [ref=e35]:
+          - cell "Executable path:" [ref=e36]
+          - cell "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe" [ref=e37]
+        - row [ref=e38]:
+          - cell "Profile path:" [ref=e39]
+          - cell "C:\\Users\\BradTest\\AppData\\Local\\ms-playwright-mcp\\mcp-msedge-06483e3\\Default" [ref=e40]
+        - row [ref=e41]:
+          - cell "Variations Source:" [ref=e42]
+          - cell "command line or about flags" [ref=e43]
+        - text: ":"
+        - row [ref=e44]:
+          - cell "Command-line Variations:" [ref=e45]
+          - cell "eyJkaXNhYmxlLWZlYXR1cmVzIjoiQXV0b0RlRWxldmF0ZSxBdm9pZFVubmVj..." [ref=e46]
+          - cell [ref=e47]:
+            - button "Copy variations string" [ref=e48] [cursor=pointer]
+        - row [ref=e50]:
+          - cell "Active Variations:" [ref=e51]
+          - cell [ref=e52]: 7b46cc51-d8d26f5eac656a17-d8d26f5eb69ef12a-d8d26f5ec5c172fe-d8d26f5eb2b4ef63-d8d26f5e8c4a4826-d8d26f5ec2f0b521-d8d26f5eb6f29041-9af5ba9053fa9d2a-d8d26f5ecd4e78d9-d8d26f5e3abb3b6c-d8d26f5e2dc7d034-d8d26f5e549b23b0-d8d26f5e2bb9db2e-d8d26f5e1655361a-d8d26f5e984bb401-d8d26f5efdf18b1d-d8d26f5ec2c84668-d8d26f5e15b917a6-d8d26f5ee1b6477f-d8d26f5e1b79b376-d8d26f5e7d3babf7-d8d26f5ed7ea7a4f-d8d26f5eb1fa74fa-d8d26f5ecdd9e6c3-d8d26f5eccdfedf0-d8d26f5ec48f9c61-d8d26f5ec3ba599a-d8d26f5ebfaa011e-d8d26f5eeb5f17c2-d8d26f5e7976a6ce-d8d26f5eff35c681-d8d26f5e50dccc31-d8d26f5e336bf3b9-d8d26f5ecc22d948-d8d26f5ee02b01a7-d8d26f5e360bb61-d8d26f5eea79e1e2-d8d26f5e7971e8b2-d8d26f5e25803648-d8d26f5e7b6d572e-d8d26f5ee53d63d0-d8d26f5e63a1a746-d8d26f5ee89a957d-d8d26f5e63b7524f-d8d26f5ec034b698-d8d26f5ed2280f33-d8d26f5eb966ff7f-d8d26f5eab93f638-d8d26f5efb25e7f6-d8d26f5e3100e413-d8d26f5e675932d-d8d26f5e5defe5b2-d8d26f5eef4d3524-d8d26f5e5324995-d8d26f5e7d8c3893-d8d26f5e5ee5831b-d8d26f5e2cf460b7-d8d26f5e5e3e5cc5-d8d26f5e2dab07dc-d8d26f5e7accdcfa-d8d26f5ef2106f75-d8d26f5eae3d2259-d8d26f5ea4ad23c5-d8d26f5e7894d47e-d8d26f5ee467da42-d8d26f5e7e3f43-d8d26f5e2f8275db-d8d26f5e82e97f97-d8d26f5e1a1885f2-d8d26f5e4f10b653-d8d26f5ea9140717-d8d26f5ebffc025-d8d26f5e62121c30-d8d26f5ed5fced7e-d8d26f5ebc94b4ce-d8d26f5e8682395-d8d26f5ea0a2e01e-d8d26f5ee2716658-d8d26f5ec6fdbeb2-d8d26f5ebb11aa4f-d8d26f5e4dfbdb7a-d8d26f5e72b9708a-d8d26f5eeaab553f-d8d26f5e7c10ab74-d8d26f5ecc4725b-d8d26f5eec2cd375-d8d26f5e46475fb6-d8d26f5e33340c1-d8d26f5e6c0dbab5-d8d26f5e1f3df2fa-d8d26f5e4d4c330-d8d26f5ec127615-d8d26f5eb4176e95-d8d26f5e876a9b71-d8d26f5ea9ca1042-d8d26f5ed59dcb6d-d8d26f5e4805b918-d8d26f5eb952aee9-d8d26f5e49439df5-d8d26f5ec66670da-d8d26f5eaa754f77-d8d26f5e87749173-d8d26f5ec943fa0a-d8d26f5e42b78576-d8d26f5e3872ce31-d8d26f5ed8f269c8-d8d26f5ed4826933-d8d26f5e8c89b9a0-d8d26f5e6d7aa022-d8d26f5ed7607b3e-d8d26f5e1b0ab354-d8d26f5e3abcc7ba-d8d26f5e62bed39b-d8d26f5e36839d81-d8d26f5e5c9bda13-d8d26f5e4b5f3e1c-d8d26f5ec9c13d5c-d8d26f5ea5a2b2fb-d8d26f5eb5b3a374-d8d26f5e45937cf-d8d26f5edfb6ddc4-d8d26f5ebd91993d-d8d26f5e24062188-d8d26f5ea7431b33-d8d26f5ea43c18f9-d8d26f5e4534c8e-d8d26f5ecdd21b70-d8d26f5ed159db07-d8d26f5ec222db84-d8d26f5e7e489a56-d8d26f5e2392500b-d8d26f5e43a03df3-d8d26f5ede6945d6-d8d26f5e6655ecbe-d8d26f5e85de54c4-d8d26f5ef959761-d8d26f5ecf1d8a5d-d8d26f5ebd45ab20-d8d26f5e3fabe990-d8d26f5eb7f872a4-d8d26f5e6e613b43-d8d26f5e1e70429b-d8d26f5e4fc83ae3-d8d26f5ea37d716f-d8d26f5ebd38e151-d8d26f5e9fbc238e-d8d26f5efe31eba5-d8d26f5eb357b792-3d47f4f4f4f00e05-ca7d8d80a35976f5-f23d1dea4b935545-3d47f4f49a38bae3-3d47f4f441ad04e1-16e9df142d1e43a3-3d47f4f4370ace14-3f4a17df386dc267-3d47f4f4d69d967d-3695c92e3c8f75a1-a6f840a5a4406b35-1657e2d6408da146-1657e2d6
+          - cell [ref=e53]:
+            - button "Copy variations string" [ref=e54] [cursor=pointer]
+        - text: ":"
+  - alert [ref=e56]
