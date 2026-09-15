@@ -47,11 +47,30 @@ export default class extends Exporter {
     /**
      * Generate the course export data from the state.
      *
+     * Unlike the default implementation, this also includes tabs (virtual top-level
+     * sections with the format option 'parent' set to -1) as top-level entries so that
+     * they can be picked as a destination in the "Move section"/"Move activity" dialogs
+     * and shown in the course index. Tabs are deliberately excluded from
+     * state.course.sectionlist (see classes/output/courseformat/state/course.php) because
+     * the generic reactive DOM reordering code expects that list to only contain ids of
+     * elements that are direct children of the section list, which is not the case for a
+     * tab (it is rendered nested inside its own tab pane).
+     *
      * @param {Object} state the current state.
      * @returns {Object}
      */
     course(state) {
-        const course = super.course(state);
+        const course = {
+            sections: [],
+            editmode: this.reactive.isEditing,
+            highlighted: state.course.highlighted ?? '',
+        };
+        const topSectionIds = state.course.topsectionlist ?? state.course.sectionlist ?? [];
+        topSectionIds.forEach(sectionid => {
+            const sectioninfo = state.section.get(sectionid) ?? {};
+            course.sections.push(this.section(state, sectioninfo));
+        });
+        course.hassections = (course.sections.length != 0);
         course.maxsectiondepth = state.course.maxsectiondepth;
         return course;
     }

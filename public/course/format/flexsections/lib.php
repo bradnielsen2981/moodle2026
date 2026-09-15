@@ -906,6 +906,14 @@ class format_flexsections extends core_courseformat\base {
                 redirect($url);
             }
 
+            // If requested, convert the section into a new top-level tab.
+            $maketab = optional_param('maketab', null, PARAM_INT);
+            if ($maketab && confirm_sesskey() && has_capability('moodle/course:update', $context)) {
+                $section = $this->get_section($maketab, MUST_EXIST);
+                $this->make_section_tab($section);
+                redirect(course_get_url($this->courseid));
+            }
+
             // If requested, delete the section.
             $deletesection = optional_param('deletesection', null, PARAM_INT);
             if (
@@ -1197,7 +1205,20 @@ class format_flexsections extends core_courseformat\base {
         // Add current section to $neworder.
         $neworder[$cursection->id] = count($neworder);
         // Loop through subsections and reorder them (insert $movedsectionnum if necessary).
-        foreach ($this->get_subsections($cursection) as $subsection) {
+        $subsections = $this->get_subsections($cursection);
+        if (!$cursection->section) {
+            // Tabs (virtual parent -1) are top-level, alongside section 0's real (parent 0)
+            // children, but get_subsections() only matches by exact parent number so it never
+            // finds them from here. Without this they never get a slot in $neworder, which
+            // later collapses to section number 0 and collides with the real section 0.
+            foreach ($this->get_sections() as $section) {
+                if ($section->parent == -1) {
+                    $subsections[$section->section] = $section;
+                }
+            }
+            ksort($subsections);
+        }
+        foreach ($subsections as $subsection) {
             if ($movebeforenum && $subsection->section == $movebeforenum) {
                 $this->reorder_sections($neworder, $movedsectionnum);
             }
@@ -1459,6 +1480,30 @@ class format_flexsections extends core_courseformat\base {
     }
 
     /**
+     * Converts a section into a new top-level tab.
+     *
+     * Tabs are top-level sections with the virtual 'parent' format option set to -1
+     * (see {@see \format_flexsections\output\courseformat\content} for how they are rendered).
+     * The section keeps its section number, visibility and any subsections it already has,
+     * it is simply detached from its current parent (if any) so that it is displayed as
+     * a new tab on the course page instead.
+     *
+     * @param section_info $section
+     */
+    public function make_section_tab(section_info $section): void {
+        if (!$section->section) {
+            // Section 0 (General) can not become a tab.
+            return;
+        }
+        if ($section->parent == -1) {
+            // Already a tab, nothing to do.
+            return;
+        }
+        $this->update_section_format_options(['id' => $section->id, 'parent' => -1]);
+        rebuild_course_cache($this->courseid, true);
+    }
+
+    /**
      * Display 'Add section' as a link on the page and not as a "Add subsection" menu item
      *
      * @param int $sectionnum
@@ -1466,12 +1511,19 @@ class format_flexsections extends core_courseformat\base {
      */
     public function should_display_add_sub_section_link(int $sectionnum): bool {
         // Display for the top-level sections and for the sections that are displayed as a link.
-        // Also handle virtual parent -1 for tabs.
         if ($sectionnum <= 0) {
             return true;
         }
         $section = $this->get_section($sectionnum);
-        return $section ? (bool)$section->collapsed : false;
+        if (!$section) {
+            return false;
+        }
+        if ($section->parent == -1) {
+            // Tabs behave like top-level sections: always allow adding content to them
+            // directly, regardless of their own collapsed/expanded display setting.
+            return true;
+        }
+        return (bool)$section->collapsed;
     }
 
     /**

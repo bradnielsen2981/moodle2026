@@ -74,4 +74,41 @@ export default class extends Mutations {
         const updates = await this._callEditWebservice('section_switch_collapsed', course.id, [sectionId]);
         stateManager.processUpdates(updates);
     }
+
+    /**
+     * Move sections after another location in the course.
+     *
+     * Overridden because format_flexsections overloads the sign/value of targetSectionId (see
+     * classes/courseformat/stateactions.php::section_move_after): positive means "after this
+     * section, same parent", negative means "as the first child of the section with this id",
+     * and 0 means "as the first child of the top level". The generic core implementation does
+     * not know about this convention: it treats a literal 0 as "no target" and throws, and it
+     * passes the raw signed/zero value straight into stateManager.get('section', targetSectionId)
+     * to build its log message, which is undefined for anything that is not a real, positive
+     * section id (throwing "Cannot read properties of undefined (reading 'title')").
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids to move
+     * @param {number} targetSectionId the target section id (see sign convention above)
+     */
+    async sectionMoveAfter(stateManager, sectionIds, targetSectionId) {
+        if (targetSectionId === undefined || targetSectionId === null) {
+            throw new Error(`Mutation sectionMoveAfter requires targetSectionId`);
+        }
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, sectionIds, true);
+        // Resolve the real, positive section id (if any) for the log message.
+        const loggerTargetSectionId = Math.abs(targetSectionId) || undefined;
+        const logEntry = this._getLoggerEntry(
+            stateManager,
+            'section_move_after',
+            sectionIds,
+            loggerTargetSectionId ? {targetSectionId: loggerTargetSectionId} : {}
+        );
+        const updates = await this._callEditWebservice('section_move_after', course.id, sectionIds, targetSectionId);
+        this.bulkReset(stateManager);
+        stateManager.processUpdates(updates);
+        this.sectionLock(stateManager, sectionIds, false);
+        stateManager.addLoggerEntry(await logEntry);
+    }
 }

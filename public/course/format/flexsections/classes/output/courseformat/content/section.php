@@ -67,7 +67,12 @@ class section extends \core_courseformat\output\local\content\section {
         // Add subsections.
         if (!$showaslink) {
             $data->subsections = $this->section->section ? $this->get_subsections($output) : [];
-            $data->level = $this->level;
+            // Tabs (virtual top-level sections with format option 'parent' set to -1) are meant
+            // to replace the top level for everything displayed inside them: their own direct
+            // children should render unindented, exactly like normal top-level sections do.
+            // Deeper nesting (a subsection of a subsection of a tab) still uses the normal level
+            // (see get_subsections()) and so is still indented as usual.
+            $data->level = ($this->section->parent == -1) ? 0 : $this->level;
         }
 
         if (
@@ -93,7 +98,7 @@ class section extends \core_courseformat\output\local\content\section {
                 && ($this->section->section != $this->format->get_viewed_section() || $this->section->section === 0)
         ) {
             // Display 'Add section' button after to insert after this section.
-            $data->addsectionafter = $this->export_add_section($output);
+            $data->addsectionafter = $this->export_add_section($output, 0, $this->section);
         }
         if ($this->section->section && $this->format->should_display_add_sub_section_link($this->section->section)) {
             // Display 'Add section' button to insert a section as a first direct child of this section.
@@ -107,13 +112,22 @@ class section extends \core_courseformat\output\local\content\section {
      * Exporter for the 'Add section' link
      *
      * @param \renderer_base $output
-     * @param int $parentid
+     * @param int $parentid used for the JS-driven 'insert as first child of $parentid' action
+     * @param \section_info|null $aftersection when set, the non-JS fallback link (and the
+     *     default core 'addSection' action) will insert the new section as a sibling placed
+     *     right after this one, instead of always appending at the very end of the course.
+     *     Without this, e.g. the 'Add section' link shown after a tab's own content would
+     *     ignore the tab entirely and create a new top-level section at the end of the course.
      * @return stdClass
      */
-    protected function export_add_section(\renderer_base $output, int $parentid = 0): stdClass {
+    protected function export_add_section(
+        \renderer_base $output,
+        int $parentid = 0,
+        ?\section_info $aftersection = null
+    ): stdClass {
         $addsectionclass = $this->format->get_output_classname('content\\addsection');
         /** @var \core_courseformat\output\local\content\addsection $addsection */
-        $addsection = new $addsectionclass($this->format);
+        $addsection = new $addsectionclass($this->format, $aftersection);
         $data = $addsection->export_for_template($output);
         $data->insertparentid = $parentid;
         return $data;
