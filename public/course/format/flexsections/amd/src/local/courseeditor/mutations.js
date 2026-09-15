@@ -111,4 +111,29 @@ export default class extends Mutations {
         this.sectionLock(stateManager, sectionIds, false);
         stateManager.addLoggerEntry(await logEntry);
     }
+
+    /**
+     * Reorder a section among its siblings via drag-and-drop.
+     *
+     * This is dispatched instead of sectionMoveAfter for section drag-and-drop specifically
+     * (see amd/src/local/content/section.js::drop()). Unlike sectionMoveAfter, the server-side
+     * action (classes/courseformat/stateactions.php::section_reorder) can never change the
+     * dragged section's parent - it always keeps its current parent and refuses the request if
+     * the target is not already one of its siblings. This is what guarantees that dragging a
+     * section to reorder it (similar to the Topics format) never changes its 'parent' value in
+     * mdl_course_format_options; becoming a subsection of a different section must go through
+     * the explicit "Move" action (sectionMoveAfter) instead.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {number} sectionId the section being reordered
+     * @param {number} targetSectionId the sibling section id to move after
+     */
+    async sectionReorder(stateManager, sectionId, targetSectionId) {
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, [sectionId], true);
+        const updates = await this._callEditWebservice('section_reorder', course.id, [sectionId], targetSectionId);
+        this.bulkReset(stateManager);
+        stateManager.processUpdates(updates);
+        this.sectionLock(stateManager, [sectionId], false);
+    }
 }
