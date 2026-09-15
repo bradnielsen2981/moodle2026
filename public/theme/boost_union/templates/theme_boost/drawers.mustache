@@ -205,7 +205,13 @@
                         {{#secondarynavigationincourseindex}}
                             {{#secondarymoremenu}}
                                 {{#secondarynavigationicons}}
-                                    {{> theme_boost_union/secondary_icons_vertical }}
+                                    {{! Hidden below the md breakpoint: .drawer-left-toggle becomes a fixed,
+                                        bottom-anchored floating button on mobile (core Boost layout.scss), which
+                                        would otherwise drag this whole icon stack down with it. The mobile-width
+                                        equivalent is rendered separately, above the course header, below. }}
+                                    <div class="d-none d-md-block">
+                                        {{> theme_boost_union/secondary_icons_vertical }}
+                                    </div>
                                 {{/secondarynavigationicons}}
                             {{/secondarymoremenu}}
                         {{/secondarynavigationincourseindex}}
@@ -244,6 +250,18 @@
                         </div>
                     {{/secondarymoremenu}}
                 {{/secondarynavigationaboveheader}}
+            {{/secondarynavigationincourseindex}}
+            {{#secondarynavigationincourseindex}}
+                {{#secondarymoremenu}}
+                    {{#secondarynavigationicons}}
+                        {{! Mobile-width counterpart to the vertical icon stack hidden above: statically
+                            positioned (not inside the fixed drawer toggle), so it stays above the course
+                            header instead of being dragged to the bottom of the viewport. }}
+                        <div class="secondary-navigation d-flex d-md-none d-print-none">
+                            {{> theme_boost_union/secondary_icons }}
+                        </div>
+                    {{/secondarynavigationicons}}
+                {{/secondarymoremenu}}
             {{/secondarynavigationincourseindex}}
             {{{ output.full_header }}}
             {{> theme_boost_union/infobannersbelow }}

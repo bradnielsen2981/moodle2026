@@ -1,0 +1,224 @@
+- generic [ref=f10e1]:
+  - status
+  - generic [ref=f10e2]:
+    - link "Skip to main content" [ref=f10e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f10e4]:
+      - generic [ref=f10e5]:
+        - link "Curved Learning" [ref=f10e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f10e9]:
+          - menubar [ref=f10e10]:
+            - menuitem "Dashboard" [ref=f10e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f10e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f10e13]:
+          - generic [ref=f10e15]:
+            - generic [ref=f10e16]: Edit mode
+            - checkbox "Edit mode" [ref=f10e18]
+          - button "Show notification window with no new notifications" [ref=f10e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f10e21]: 
+          - button "Toggle messaging drawer" [ref=f10e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f10e24]: 
+          - link "" [ref=f10e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f10e28]: 
+          - button "User menu" [ref=f10e33] [cursor=pointer]:
+            - img "Admin User" [ref=f10e37]: AU
+            - text: 
+    - generic [ref=f10e166]:
+      - generic [ref=f10e167]:
+        - button "Test" [ref=f10e170] [cursor=pointer]
+        - generic [ref=f10e171]:
+          - generic [ref=f10e173]:
+            - button "Course index options" [ref=f10e174] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f10e175]: 
+            - text:   
+          - button "Close course index" [active] [ref=f10e176] [cursor=pointer]
+      - generic [ref=f10e179]:
+        - navigation [ref=f10e180]:
+          - tree [ref=f10e182]:
+            - treeitem [selected] [ref=f10e183]:
+              - generic [ref=f10e184]:
+                - link "Collapse" [expanded] [ref=f10e185] [cursor=pointer]:
+                  - /url: "#courseindexcollapse1"
+                  - text:  
+                  - generic "Collapse" [ref=f10e186]:
+                    - generic [aria-hidden] [ref=f10e187]: 
+                - link "Introduction to Algebra" [ref=f10e189] [cursor=pointer]:
+                  - /url: http://moodle.local/course/section.php?id=25
+                - text: 
+              - group "Collapse Introduction to Algebra" [ref=f10e190]:
+                - group [ref=f10e191]:
+                  - treeitem [ref=f10e192]:
+                    - treeitem [ref=f10e193]:
+                      - generic [ref=f10e194]:
+                        - link "Collapse" [expanded] [ref=f10e195] [cursor=pointer]:
+                          - /url: "#courseindexcollapse6"
+                          - text:  
+                          - generic "Collapse" [ref=f10e196]:
+                            - generic [aria-hidden] [ref=f10e197]: 
+                        - link "New subsection" [ref=f10e199] [cursor=pointer]:
+                          - /url: http://moodle.local/course/section.php?id=25#section-6
+                        - text: 
+                      - group "Collapse New subsection":
+                        - group
+                  - treeitem [ref=f10e200]:
+                    - treeitem [ref=f10e201]:
+                      - generic [ref=f10e202]:
+                        - link "Collapse" [expanded] [ref=f10e203] [cursor=pointer]:
+                          - /url: "#courseindexcollapse7"
+                          - text:  
+                          - generic "Collapse" [ref=f10e204]:
+                            - generic [aria-hidden] [ref=f10e205]: 
+                        - link "New subsection" [ref=f10e207] [cursor=pointer]:
+                          - /url: http://moodle.local/course/section.php?id=25#section-7
+                        - text: 
+                      - group "Collapse New subsection":
+                        - group
+            - treeitem [ref=f10e208]:
+              - generic [ref=f10e209]:
+                - link "Collapse" [expanded] [ref=f10e210] [cursor=pointer]:
+                  - /url: "#courseindexcollapse2"
+                  - text:  
+                  - generic "Collapse" [ref=f10e211]:
+                    - generic [aria-hidden] [ref=f10e212]: 
+                - link "Tab One - Child A" [ref=f10e214] [cursor=pointer]:
+                  - /url: http://moodle.local/course/section.php?id=24
+                - text: 
+              - group "Collapse Tab One - Child A":
+                - group
+            - treeitem [ref=f10e215]:
+              - generic [ref=f10e216]:
+                - link "Collapse" [expanded] [ref=f10e217] [cursor=pointer]:
+                  - /url: "#courseindexcollapse3"
+                  - text:  
+                  - generic "Collapse" [ref=f10e218]:
+                    - generic [aria-hidden] [ref=f10e219]: 
+                - link "Tab One - Child B" [ref=f10e221] [cursor=pointer]:
+                  - /url: http://moodle.local/course/section.php?id=26
+                - text: 
+              - group "Collapse Tab One - Child B":
+                - group
+            - treeitem [ref=f10e222]:
+              - generic [ref=f10e223]:
+                - link "Collapse" [expanded] [ref=f10e224] [cursor=pointer]:
+                  - /url: "#courseindexcollapse5"
+                  - text:  
+                  - generic "Collapse" [ref=f10e225]:
+                    - generic [aria-hidden] [ref=f10e226]: 
+                - link "Tab Two" [ref=f10e228] [cursor=pointer]:
+                  - /url: http://moodle.local/course/section.php?id=41
+                - text: 
+              - group "Collapse Tab Two":
+                - group
+        - generic [ref=f10e230]:
+          - link "Course Settings" [ref=f10e231] [cursor=pointer]:
+            - /url: http://moodle.local/course/edit.php?id=9
+            - img [aria-hidden] [ref=f10e232]: 
+          - link "Participants Participants" [ref=f10e234] [cursor=pointer]:
+            - /url: http://moodle.local/user/index.php?id=9
+            - img "Participants" [ref=f10e235]: 
+            - generic [ref=f10e236]: Participants
+          - link "Grades" [ref=f10e237] [cursor=pointer]:
+            - /url: http://moodle.local/grade/report/index.php?id=9
+            - img [aria-hidden] [ref=f10e238]: 
+          - link "Activities" [ref=f10e240] [cursor=pointer]:
+            - /url: http://moodle.local/course/overview.php?id=9
+            - img [aria-hidden] [ref=f10e241]: 
+          - button "More More" [ref=f10e244] [cursor=pointer]:
+            - img "More" [ref=f10e245]: 
+            - generic [ref=f10e246]: More
+    - generic [ref=f10e38]:
+      - generic [ref=f10e40]:
+        - generic:     
+        - text:     
+        - banner [ref=f10e64]:
+          - heading [level=1] [ref=f10e72]:
+            - link "Test" [ref=f10e73] [cursor=pointer]:
+              - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f10e78]:
+          - generic [ref=f10e81]:
+            - heading "Section outline" [level=2] [ref=f10e82]
+            - list [ref=f10e83]:
+              - listitem [ref=f10e84]:
+                - tablist [ref=f10e85]:
+                  - tab "Introduction to Algebra" [selected] [ref=f10e86] [cursor=pointer]
+                  - tab "Tab Two" [ref=f10e87] [cursor=pointer]
+              - listitem [ref=f10e88]:
+                - generic [ref=f10e89]:
+                  - generic [ref=f10e91]:
+                    - button "Introduction to Algebra" [expanded] [ref=f10e92] [cursor=pointer]:
+                      - generic "Collapse" [ref=f10e93]:
+                        - generic [aria-hidden] [ref=f10e94]: 
+                      - text:  
+                    - heading [level=3] [ref=f10e96]:
+                      - link "Introduction to Algebra" [ref=f10e97] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=25
+                  - list [ref=f10e99]:
+                    - listitem [ref=f10e100]:
+                      - list [ref=f10e104]:
+                        - listitem [ref=f10e105]:
+                          - generic [ref=f10e106]:
+                            - generic [ref=f10e108]:
+                              - button "New subsection" [expanded] [ref=f10e109] [cursor=pointer]:
+                                - generic "Collapse" [ref=f10e110]:
+                                  - generic [aria-hidden] [ref=f10e111]: 
+                                - text:  
+                              - heading [level=4] [ref=f10e113]:
+                                - link "New subsection" [ref=f10e114] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=25#section-6
+                            - generic [ref=f10e115]:
+                              - list
+                    - listitem [ref=f10e116]:
+                      - list [ref=f10e120]:
+                        - listitem [ref=f10e121]:
+                          - generic [ref=f10e122]:
+                            - generic [ref=f10e124]:
+                              - button "New subsection" [expanded] [ref=f10e125] [cursor=pointer]:
+                                - generic "Collapse" [ref=f10e126]:
+                                  - generic [aria-hidden] [ref=f10e127]: 
+                                - text:  
+                              - heading [level=4] [ref=f10e129]:
+                                - link "New subsection" [ref=f10e130] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=25#section-7
+                            - generic:
+                              - list
+              - listitem [ref=f10e131]:
+                - generic [ref=f10e132]:
+                  - generic [ref=f10e134]:
+                    - button "Tab One - Child A" [expanded] [ref=f10e135] [cursor=pointer]:
+                      - generic "Collapse" [ref=f10e136]:
+                        - generic [aria-hidden] [ref=f10e137]: 
+                      - text:  
+                    - heading [level=3] [ref=f10e139]:
+                      - link "Tab One - Child A" [ref=f10e140] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=24
+                  - generic:
+                    - list
+              - listitem [ref=f10e141]:
+                - generic [ref=f10e142]:
+                  - generic [ref=f10e144]:
+                    - button "Tab One - Child B" [expanded] [ref=f10e145] [cursor=pointer]:
+                      - generic "Collapse" [ref=f10e146]:
+                        - generic [aria-hidden] [ref=f10e147]: 
+                      - text:  
+                    - heading [level=3] [ref=f10e149]:
+                      - link "Tab One - Child B" [ref=f10e150] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=26
+                  - generic:
+                    - list
+              - text:   
+      - contentinfo [ref=f10e151]:
+        - button "Show footer" [ref=f10e152] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f10e153]: "?"
+        - text:    
+        - generic [ref=f10e155]:
+          - link "Purge all caches" [ref=f10e157] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=tcDD336jKX&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+          - generic [ref=f10e159]:
+            - text: "Reactive instances:"
+            - generic [ref=f10e160]:
+              - button "ProcessMonitor" [ref=f10e161] [cursor=pointer]
+              - button "CourseEditor9" [ref=f10e162] [cursor=pointer]
+  - tooltip "Close course index" [ref=f10e247]

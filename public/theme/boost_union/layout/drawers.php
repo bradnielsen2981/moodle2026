@@ -184,6 +184,11 @@ if ($PAGE->has_secondary_navigation()) {
                 $node->iconhtml = '<i class="icon fa fa-check fa-fw" aria-hidden="true" title="Grades" role="img" aria-label="Grades"></i>';
             }
 
+            if ($node->key === 'courseoverview') {
+                // Use a 5 pointed star icon for Activities.
+                $node->iconhtml = '<i class="icon fa fa-star fa-fw" aria-hidden="true" title="Activities" role="img" aria-label="Activities"></i>';
+            }
+
             $custom_nodes[] = $node;
         }
 

@@ -3880,12 +3880,23 @@ body.dir-rtl {
 /*=======================================
  * Secondary menu icons
  ======================================*/
+// These buttons are rendered in three different places (the desktop vertical rail
+// next to the course index toggle, the copy inside the course index drawer's own
+// content, and the mobile-width row above the course header). Only the rail copy
+// used to pick up its boxed, larger look "for free" from core's .drawer-toggler .btn
+// rule (theme/boost/scss/moodle/layout.scss), because it happens to sit inside that
+// container - the other two never did. Styled explicitly here instead, so all three
+// contexts render identically regardless of which ancestor they happen to sit in.
 .secondary-navigation-icons {
     .secondary-icon-link {
+        width: $icon-medium-width;
+        height: $icon-medium-width;
+        background-color: $gray-300;
         color: $gray-600;
 
         &:hover,
         &:focus {
+            background-color: $gray-400;
             color: $black;
         }
 

@@ -1,0 +1,28 @@
+- generic [active] [ref=f1e1]:
+  - status
+  - generic [ref=f1e2]:
+    - link "Skip to main content" [ref=f1e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - generic [ref=f1e5]:
+      - complementary [ref=f1e6]: AI-generated image
+      - main [ref=f1e10]:
+        - generic [ref=f1e12]:
+          - heading "Welcome back!" [level=1] [ref=f1e13]
+          - paragraph [ref=f1e14]: Log in to Curved Learning
+          - generic [ref=f1e17]:
+            - generic [ref=f1e18]:
+              - generic [ref=f1e19]: Username or email
+              - textbox "Username or email" [ref=f1e20]:
+                - /placeholder: Enter your username or email
+                - text: admin
+            - generic [ref=f1e21]:
+              - generic [ref=f1e22]: Password
+              - textbox "Password" [ref=f1e23]:
+                - /placeholder: Enter your password
+            - link "Forgot password?" [ref=f1e25] [cursor=pointer]:
+              - /url: http://moodle.local/login/forgot_password.php
+            - button "Log in" [ref=f1e27] [cursor=pointer]
+          - button "Cookies notice" [ref=f1e29] [cursor=pointer]
+    - contentinfo:
+      - button "Show footer" [ref=f1e30] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f1e31]: "?"
