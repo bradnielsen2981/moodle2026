@@ -1,0 +1,3 @@
+[   12005ms] [LOG] TABSDEBUG compare 25 number "25" string false @ http://moodle.local/lib/requirejs.php/1789472722/core/first.js:4349
+[   12005ms] [LOG] TABSDEBUG compare 41 number "25" string false @ http://moodle.local/lib/requirejs.php/1789472722/core/first.js:4349
+[   12010ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789472722/core/first.js:860

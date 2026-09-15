@@ -1,0 +1,6 @@
+[   11789ms] [LOG] TABSDEBUG init called [Object, Object] @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:4349
+[   11789ms] [LOG] TABSDEBUG resolvedTabs 2 @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:4349
+[   11789ms] [LOG] TABSDEBUG before setActive call @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:4349
+[   11790ms] [LOG] TABSDEBUG setActive 25 stripInDoc true @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:4349
+[   11790ms] [LOG] TABSDEBUG after setActive call, el41 hidden now: true @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:4349
+[   11794ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789472423/core/first.js:860

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="course/format/multipageformat/db" VERSION="20260915" COMMENT="XMLDB file for Moodle course/format/multipageformat"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="custom_course_format_options" COMMENT="Stores extra course format options not covered by the standard course_format_options table, e.g. the section grouping used by Tabs in format_multipageformat.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id of the course"/>
+        <FIELD NAME="format" TYPE="char" LENGTH="21" NOTNULL="true" SEQUENCE="false" COMMENT="Format this option is for"/>
+        <FIELD NAME="sectionid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Id of the section this option is for"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Name of the format option, e.g. 'parent'"/>
+        <FIELD NAME="value" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Value of the format option"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="formatoption" UNIQUE="true" FIELDS="courseid, format, sectionid, name"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
