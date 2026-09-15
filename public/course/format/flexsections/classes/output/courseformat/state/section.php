@@ -38,7 +38,9 @@ class section extends \core_courseformat\output\local\state\section {
         /** @var \stdClass $data */
         $data = parent::export_for_template($output);
         $data->parent = $this->section->parent;
-        $data->parentid = $this->section->parent ? $this->format->get_modinfo()->get_section_info($this->section->parent)->id : 0;
+        // Note: parent == -1 is a virtual value used for tabs, it does not refer to a real section.
+        $data->parentid = $this->section->parent > 0 ?
+            $this->format->get_modinfo()->get_section_info($this->section->parent)->id : 0;
 
         // For sections that are displayed as a link do not print list of cms or controls.
         $showaslink = $this->section->collapsed == FORMAT_FLEXSECTIONS_COLLAPSED

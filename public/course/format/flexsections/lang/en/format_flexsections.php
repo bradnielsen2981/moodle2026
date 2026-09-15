@@ -45,6 +45,7 @@ $string['editsection'] = 'Edit section';
 $string['editsectionname'] = 'Edit section name';
 $string['errorsectiondepthexceeded'] = 'Subsection depth has exceeded configured value.';
 $string['hidefromothers'] = 'Hide section';
+$string['maketab'] = 'Make into a tab';
 $string['maxsectiondepth'] = 'Max subsection depth';
 $string['maxsectiondepthdesc'] = 'Maximum number of subsection levels.';
 $string['mergeup'] = 'Merge with parent';

@@ -36,12 +36,31 @@ class course extends \core_courseformat\output\local\state\course {
     public function export_for_template(\renderer_base $output): \stdClass {
         $data = parent::export_for_template($output);
 
+        $originalsectionlist = $data->sectionlist;
+
         // Build list of first-level sections (used by courseindex).
+        // Note: tabs (virtual sections with format option 'parent' set to -1) are deliberately
+        // excluded here. The generic reactive code (see _fixOrder() in core_courseformat's
+        // content.js) uses this list to physically reposition each section's root element as a
+        // direct child of the '[data-for="course_sectionlist"]' element, but a tab's root element
+        // is rendered nested inside its own tab pane, so including it here would rip it out of
+        // the tab pane on the next reorder.
         $data->sectionlist = array_values(array_filter(
-            $data->sectionlist,
+            $originalsectionlist,
             function ($sectionid) {
                 $section = $this->format->get_modinfo()->get_section_info_by_id($sectionid);
                 return $section && !$section->parent;
+            }
+        ));
+
+        // Same as sectionlist above but also includes tabs. Used to build the section tree for
+        // the "Move section"/"Move activity" dialogs and the course index, so that tabs can be
+        // selected/displayed as a top-level destination.
+        $data->topsectionlist = array_values(array_filter(
+            $originalsectionlist,
+            function ($sectionid) {
+                $section = $this->format->get_modinfo()->get_section_info_by_id($sectionid);
+                return $section && $section->parent <= 0;
             }
         ));
 

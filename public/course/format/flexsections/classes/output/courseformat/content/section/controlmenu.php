@@ -157,6 +157,22 @@ class controlmenu extends \core_courseformat\output\local\content\section\contro
         }
 
         if (
+            $section->section && $section->parent != -1 &&
+                has_capability('moodle/course:update', $coursecontext)
+        ) {
+            $maketaburl = new moodle_url($url, ['maketab' => $section->section]);
+            $controls['maketab'] = new \core\output\action_menu\link_secondary(
+                $maketaburl,
+                new pix_icon('t/up', '', 'moodle', ['class' => 'iconsmall']),
+                get_string('maketab', 'format_flexsections'),
+                [
+                    'class' => 'editing_maketab',
+                    'data-id' => $section->id,
+                ]
+            );
+        }
+
+        if (
             has_capability('moodle/course:update', $coursecontext) && $section->section &&
                 (!$section->collapsed || $section->section != $this->format->get_viewed_section())
         ) {

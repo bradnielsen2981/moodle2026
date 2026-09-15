@@ -9,6 +9,17 @@
     padding-bottom: 1rem;
 }
 
+/*
+ * Indentation for nested sections. Level 0 is used for top-level sections and for the direct
+ * children of a tab (so a tab's own subsections line up flush with everything else, just like a
+ * normal top-level section would). Level 1/2 indent any further nesting, including a subsection
+ * of a subsection that belongs to a tab.
+ */
+.course-content ul.flexsections.flexsections-level-1,
+.course-content ul.flexsections.flexsections-level-2 {
+    margin-left: 1.5rem;
+}
+
 .course-content ul.flexsections li.section .content {
     margin: 0;
     padding: 0;

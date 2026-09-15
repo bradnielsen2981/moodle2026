@@ -249,7 +249,10 @@ class stateactions extends \core_courseformat\stateactions {
         $insertposition = null;
         if ($targetsectionid) {
             $targetsection = get_fast_modinfo($course)->get_section_info_by_id($targetsectionid, MUST_EXIST);
-            $parentsection = $targetsection->parent ? $format->get_section($targetsection->parent) : 0;
+            // Note: parent == -1 is the virtual value used for tabs, it does not refer to a real
+            // section that get_section() could resolve, new siblings of a tab are created as
+            // regular top-level (parent 0) sections.
+            $parentsection = $targetsection->parent > 0 ? $format->get_section($targetsection->parent) : 0;
             $insertposition = $this->find_next_sibling($course, $targetsection->parent, $targetsection->section);
         }
 
