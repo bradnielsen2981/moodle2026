@@ -52,6 +52,7 @@ class content extends \core_courseformat\output\local\content {
      * @return \stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output) {
+        $allowcoursetabs = $this->format->get_course()->allowcoursetabs ?? 0;
         $hidetopsection = $this->format->get_course()->hidetopsection ?? 1;
         
         if ($hidetopsection) {
@@ -135,7 +136,7 @@ class content extends \core_courseformat\output\local\content {
         $data->mainsection = $this->format->get_viewed_section();
 
         // ------------------ NEW TAB LOGIC ------------------
-        if (!$this->format->get_viewed_section()) {
+        if ($allowcoursetabs && !$this->format->get_viewed_section()) {
             $modinfo = get_fast_modinfo($this->format->get_course());
             $sections = $modinfo->get_section_info_all();
             $firsttab = true;
