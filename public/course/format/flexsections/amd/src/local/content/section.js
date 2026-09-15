@@ -27,17 +27,47 @@ export default class extends Section {
     // Extends course/format/amd/src/local/courseeditor/dndsection.js
 
     /**
-     * Register state values and the drag and drop subcomponent.
+     * Validate if the drop data can be dropped over the component.
      *
-     * @param {BaseComponent} headerComponent section header component
+     * Section drag-and-drop is restricted to reordering siblings (sections sharing the same
+     * parent) only, similar to the Topics format's simple drag-and-drop reordering. Moving a
+     * section to become a subsection of a different one (i.e. changing its 'parent' format
+     * option in mdl_course_format_options) must go through the explicit "Move" action instead,
+     * which validates depth/loops properly. Without this restriction, dropping a section next
+     * to one belonging to a different tab (or a different subsection), or onto a tab itself,
+     * would change the dragged section's parent - this makes sure that can never happen via
+     * drag-and-drop, only via an explicit "Move" action.
+     *
+     * @param {Object} dropdata the exported drop data.
+     * @returns {boolean}
      */
-    configDragDrop(headerComponent) {
-        super.configDragDrop(headerComponent);
-        // Disable drag and drop for the sections, it does not really work yet.
-        setTimeout(() => {
-            if (typeof headerComponent.dragdrop.parent.getDraggableData === 'function') {
-                headerComponent.dragdrop.setDraggable(false);
+    validateDropData(dropdata) {
+        if (dropdata?.type === 'section') {
+            const draggedSection = this.reactive.get('section', dropdata.id);
+            if (!draggedSection || draggedSection.parent !== this.section?.parent) {
+                return false;
             }
-        }, 1500);
+        }
+        return super.validateDropData(dropdata);
+    }
+
+    /**
+     * Drop event handler.
+     *
+     * Section drops are dispatched to the dedicated sectionReorder mutation instead of the
+     * generic sectionMoveAfter, because sectionReorder is guaranteed (server-side) to never
+     * change the dragged section's parent - see
+     * classes/courseformat/stateactions.php::section_reorder(). validateDropData() above
+     * already only allows dropping onto a sibling, so this is always a same-parent reorder.
+     *
+     * @param {Object} dropdata the accepted drop data
+     * @param {Event} event the drop event
+     */
+    drop(dropdata, event) {
+        if (dropdata.type === 'section') {
+            this.reactive.dispatch('sectionReorder', dropdata.id, this.id);
+            return;
+        }
+        super.drop(dropdata, event);
     }
 }

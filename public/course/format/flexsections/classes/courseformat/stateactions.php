@@ -92,6 +92,73 @@ class stateactions extends \core_courseformat\stateactions {
     }
 
     /**
+     * Reorder a section among its siblings (same parent) via drag-and-drop.
+     *
+     * Unlike section_move_after(), this action can NEVER change a section's parent: the
+     * dragged section's own current parent is always used as-is, and the target must already
+     * be one of its siblings (same parent) or the action is refused outright. This guarantees
+     * that dragging a section to reorder it (similar to the Topics format) never loses or
+     * changes its 'parent' value in mdl_course_format_options; moving a section to become a
+     * subsection of a different one must go through section_move_after() (the explicit "Move"
+     * action), which is the only place parent changes are allowed to happen.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids single section id to reorder
+     * @param int|null $targetsectionid the sibling section id to move after; the section is
+     *     moved to the end of the sibling list if this is null/0
+     * @param int|null $targetcmid not used
+     */
+    public function section_reorder(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids,
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        $this->validate_sections($course, $ids, __FUNCTION__);
+
+        $coursecontext = context_course::instance($course->id);
+        require_capability('moodle/course:movesections', $coursecontext);
+
+        /** @var \format_flexsections $format */
+        $format = course_get_format($course);
+        $modinfo = $format->get_modinfo();
+
+        $sectionid = reset($ids);
+        if (!$sectionid) {
+            return;
+        }
+        $section = $modinfo->get_section_info_by_id($sectionid, MUST_EXIST);
+
+        // Always keep the section's own current parent - this action never reparents.
+        $parent = $section->parent ? $modinfo->get_section_info($section->parent) : 0;
+
+        $before = null;
+        if ($targetsectionid) {
+            $this->validate_sections($course, [$targetsectionid], __FUNCTION__);
+            $targetsection = $modinfo->get_section_info_by_id($targetsectionid, MUST_EXIST);
+            if ($targetsection->parent != $section->parent) {
+                // Not a sibling of the dragged section: refuse rather than silently reparenting.
+                throw new moodle_exception('Action section_reorder target is not a sibling of the dragged section');
+            }
+            $before = $this->find_next_section($modinfo, $targetsection);
+        }
+
+        if ($format->can_move_section_to($section, $parent, $before)) {
+            $format->move_section($section, $parent, $before);
+        }
+
+        // All course sections can be renamed because of the resort.
+        $allsections = get_fast_modinfo($course)->get_section_info_all();
+        foreach ($allsections as $s) {
+            $updates->add_section_put($s->id);
+        }
+        // The section order is at a course level.
+        $updates->add_course_put();
+    }
+
+    /**
      * Find next section within the same parent.
      *
      * @param \course_modinfo $modinfo
