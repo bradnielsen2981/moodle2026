@@ -1929,6 +1929,17 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
     }
 }
 
+/*---------------------------------------
+ * Settings: Indent delegated subsections (mod_subsection).
+ --------------------------------------*/
+
+/* Indent a delegated subsection's header row so that its collapse/expand arrow lines up
+   horizontally with the first character of its parent section's heading text, instead of
+   sitting almost flush with the parent section's own arrow. */
+li.delegated-section > .section-item {
+    margin-left: 36px;
+}
+
 
 /*=======================================
  * Settings: Content -> Footer.

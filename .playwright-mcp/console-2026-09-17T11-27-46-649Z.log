@@ -1,0 +1,3 @@
+[    9602ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789643900/core/first.js:860
+[   12837ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://www.chromium.org/developers/design-documents/create-amazing-password-forms) %o @ http://moodle.local/login/index.php:0
+[   41487ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789643900/core/first.js:860

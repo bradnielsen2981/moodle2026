@@ -23,10 +23,13 @@
  */
 
 $string['currentsection'] = 'Current section';
+$string['deletepage'] = 'Delete page';
 $string['hidefromothers'] = 'Hide';
 $string['hidegeneralsection'] = 'Hide General section';
 $string['hidegeneralsection_help'] = 'If enabled, the General section (section 0) is completely hidden from the course page, course index and navigation for all users.';
 $string['legacysectionname'] = 'Topic';
+$string['makeownsection'] = 'Make own section';
+$string['makepage'] = 'Make page';
 $string['newsection'] = 'New section';
 $string['page-course-view-multipageformat'] = 'Any course main page in multi page format';
 $string['page-course-view-multipageformat-x'] = 'Any course page in multi page format';
@@ -40,3 +43,4 @@ $string['section_unhighlight_feedback'] = 'Highlighting removed from section {$a
 $string['section0name'] = 'General';
 $string['sectionname'] = 'Section';
 $string['showfromothers'] = 'Show';
+$string['tabmustremainontop'] = 'A page (Tab) must stay at the top of its own page: it cannot be moved below its own sections, and none of its sections can be moved above it.';

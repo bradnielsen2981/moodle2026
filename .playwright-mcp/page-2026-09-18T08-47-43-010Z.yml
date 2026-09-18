@@ -1,0 +1,101 @@
+- generic [active] [ref=f14e1]:
+  - status
+  - generic [ref=f14e2]:
+    - link "Skip to main content" [ref=f14e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f14e4]:
+      - generic [ref=f14e5]:
+        - link "Curved Learning" [ref=f14e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f14e9]:
+          - menubar [ref=f14e10]:
+            - menuitem "Dashboard" [ref=f14e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f14e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f14e13]:
+          - generic [ref=f14e15]:
+            - generic [ref=f14e16]: Edit mode
+            - checkbox "Edit mode" [checked] [ref=f14e18]
+          - button "Show notification window with no new notifications" [ref=f14e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f14e21]: 
+          - button "Toggle messaging drawer" [ref=f14e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f14e24]: 
+          - link "" [ref=f14e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f14e28]: 
+          - button "User menu" [ref=f14e33] [cursor=pointer]:
+            - img "Admin User" [ref=f14e37]: AU
+            - text: 
+    - generic [ref=f14e38]:
+      - generic [ref=f14e40]:
+        - button "Open block drawer" [ref=f14e42] [cursor=pointer]
+        - banner [ref=f14e46]:
+          - generic [ref=f14e48]:
+            - heading "Curved Learning" [level=1] [ref=f14e53]
+            - generic [ref=f14e58]:
+              - textbox "Search" [ref=f14e59]
+              - generic: Search
+              - button "Search" [ref=f14e61] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f14e62]: 
+        - navigation [ref=f14e65]:
+          - menubar [ref=f14e66]:
+            - menuitem "General" [ref=f14e67] [cursor=pointer]
+            - menuitem "Users" [ref=f14e68] [cursor=pointer]
+            - menuitem "Courses" [ref=f14e69] [cursor=pointer]
+            - menuitem "Grades" [ref=f14e70] [cursor=pointer]
+            - menuitem "Plugins" [ref=f14e71] [cursor=pointer]
+            - menuitem "Appearance" [ref=f14e72] [cursor=pointer]
+            - menuitem "Server" [ref=f14e73] [cursor=pointer]
+            - menuitem "Reports" [ref=f14e74] [cursor=pointer]
+            - menuitem "Development" [ref=f14e75] [cursor=pointer]
+            - text: 
+        - main [ref=f14e79]:
+          - heading "Purge caches" [level=2] [ref=f14e81]
+          - generic [ref=f14e82]:
+            - paragraph [ref=f14e83]: Moodle can cache themes, JavaScript, language strings, filtered text, RSS feeds and other pieces of calculated data. Purging caches will delete data from the server and force browsers to re-fetch data, so you can be sure you are seeing the most up-to-date values produced by the current code. There is no danger in purging caches, but your site may appear slower for a while until the server and clients calculate new information and cache it.
+            - generic [ref=f14e84]:
+              - button "Purge all caches" [ref=f14e88] [cursor=pointer]
+              - group "Purge selected caches" [ref=f14e89]:
+                - generic [ref=f14e92]:
+                  - button "Purge selected caches" [expanded] [ref=f14e93] [cursor=pointer]:
+                    - generic "Collapse" [ref=f14e94]:
+                      - generic [aria-hidden] [ref=f14e95]: 
+                    - text:  
+                  - heading [level=3] [aria-hidden] [ref=f14e97]: Purge selected caches
+                - generic [ref=f14e98]:
+                  - generic [ref=f14e103]:
+                    - generic [ref=f14e104]:
+                      - checkbox "Themes" [ref=f14e105]
+                      - text: Themes
+                    - generic [ref=f14e106]:
+                      - checkbox "Courses" [ref=f14e107]
+                      - text: Courses
+                    - generic [ref=f14e108]:
+                      - checkbox "Language strings" [ref=f14e109]
+                      - text: Language strings
+                    - generic [ref=f14e110]:
+                      - checkbox "JavaScript" [ref=f14e111]
+                      - text: JavaScript
+                    - generic [ref=f14e112]:
+                      - checkbox "Templates" [ref=f14e113]
+                      - text: Templates
+                    - generic [ref=f14e114]:
+                      - checkbox "Text filters" [ref=f14e115]
+                      - text: Text filters
+                    - generic [ref=f14e116]:
+                      - checkbox "All MUC caches" [ref=f14e117]
+                      - text: All MUC caches
+                    - generic [ref=f14e118]:
+                      - checkbox "All file and miscellaneous caches" [ref=f14e119]
+                      - text: All file and miscellaneous caches
+                  - button "Purge selected caches" [ref=f14e123] [cursor=pointer]
+      - contentinfo [ref=f14e124]:
+        - button "Show footer" [ref=f14e125] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f14e126]: "?"
+        - text:    
+        - generic [ref=f14e128]:
+          - link "Purge all caches" [ref=f14e130] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=AvmilJUkDL&returnurl=%2Fadmin%2Fpurgecaches.php
+          - generic [ref=f14e132]:
+            - text: "Reactive instances:"
+            - generic [ref=f14e133]: This page has no reactive instances.

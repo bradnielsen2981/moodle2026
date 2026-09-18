@@ -80,6 +80,98 @@ class MultipageformatMutations extends DefaultMutations {
         this.sectionLock(stateManager, sectionIds, false);
         stateManager.addLoggerEntry(await logEntry);
     };
+
+    /**
+     * Promote sections to Tabs (pages).
+     *
+     * The Tab strip is built once at page load from server-rendered data, so once the
+     * mutation succeeds the page is reloaded to pick up the new Tab and any subsections
+     * that were moved onto it.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids
+     */
+    sectionMakePage = async function(stateManager, sectionIds) {
+        const logEntry = this._getLoggerEntry(
+            stateManager,
+            'section_makepage',
+            sectionIds,
+            {component: 'format_multipageformat'}
+        );
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, sectionIds, true);
+        const updates = await this._callEditWebservice('section_makepage', course.id, sectionIds);
+        stateManager.processUpdates(updates);
+        stateManager.addLoggerEntry(await logEntry);
+        window.location.reload();
+    };
+
+    /**
+     * Attach a section as a subsection of another section.
+     *
+     * The section's own content stays with it; it just becomes nested inside the target
+     * section instead of being a sibling. Since that changes the DOM structure quite a
+     * bit, the page is reloaded once the mutation succeeds rather than trying to patch it.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids to attach (only the first is used)
+     * @param {number} targetSectionId the section that will become the parent
+     */
+    sectionAttach = async function(stateManager, sectionIds, targetSectionId) {
+        if (!targetSectionId) {
+            throw new Error(`Mutation sectionAttach requires targetSectionId`);
+        }
+        const logEntry = this._getLoggerEntry(
+            stateManager,
+            'section_attach',
+            sectionIds,
+            {component: 'format_multipageformat', targetSectionId}
+        );
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, sectionIds, true);
+        const updates = await this._callEditWebservice('section_attach', course.id, sectionIds, targetSectionId);
+        stateManager.processUpdates(updates);
+        stateManager.addLoggerEntry(await logEntry);
+        window.location.reload();
+    };
+
+    /**
+     * Detach a subsection from its parent, turning it into its own independent section
+     * placed right after targetSectionId.
+     *
+     * The mirror of sectionAttach - see its comment for why this reloads the page rather
+     * than patching the DOM.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of subsection ids to detach (only the first is used)
+     * @param {number} targetSectionId the section the detached section should be placed after
+     */
+    sectionDetach = async function(stateManager, sectionIds, targetSectionId) {
+        if (!targetSectionId) {
+            throw new Error(`Mutation sectionDetach requires targetSectionId`);
+        }
+        const logEntry = this._getLoggerEntry(
+            stateManager,
+            'section_detach',
+            sectionIds,
+            {component: 'format_multipageformat', targetSectionId}
+        );
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, sectionIds, true);
+        const updates = await this._callEditWebservice('section_detach', course.id, sectionIds, targetSectionId);
+        stateManager.processUpdates(updates);
+        stateManager.addLoggerEntry(await logEntry);
+        window.location.reload();
+    };
 }
 
 export const init = () => {
@@ -91,5 +183,8 @@ export const init = () => {
     CourseActions.addActions({
         sectionHighlight: 'sectionHighlight',
         sectionUnhighlight: 'sectionUnhighlight',
+        sectionMakePage: 'sectionMakePage',
+        sectionAttach: 'sectionAttach',
+        sectionDetach: 'sectionDetach',
     });
 };

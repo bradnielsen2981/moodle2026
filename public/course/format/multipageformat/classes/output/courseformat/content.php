@@ -43,6 +43,21 @@ class content extends content_base {
     protected $hasaddsection = true;
 
     /**
+     * Get the name of the template to use for this templatable.
+     *
+     * Overrides the default core_courseformat/local/content template so the section list
+     * loads format_multipageformat/local/content instead of core's own AMD module - that
+     * module swaps in our own Section component, which adds the "drop into a section to
+     * make it a subsection" dropzone.
+     *
+     * @param renderer_base $renderer The renderer requesting the template name
+     * @return string
+     */
+    public function get_template_name(\renderer_base $renderer): string {
+        return 'format_multipageformat/local/content';
+    }
+
+    /**
      * Export this data so it can be used as the context for a mustache template (core/inplace_editable).
      *
      * @param renderer_base $output typically, the renderer that's calling this function
@@ -57,7 +72,7 @@ class content extends content_base {
 
         $tabs = $this->export_tabs();
         if (!empty($tabs)) {
-            $PAGE->requires->js_call_amd('format_multipageformat/tabs', 'init', [$tabs]);
+            $PAGE->requires->js_call_amd('format_multipageformat/tabs', 'init', [$tabs, $this->format->get_courseid()]);
         }
 
         return $data;

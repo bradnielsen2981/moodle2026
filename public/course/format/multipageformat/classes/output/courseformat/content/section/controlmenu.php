@@ -29,6 +29,7 @@ use core\output\action_menu\link_secondary as action_menu_link_secondary;
 use core\output\pix_icon;
 use core_courseformat\output\local\content\section\controlmenu as controlmenu_base;
 use core\url;
+use format_multipageformat\tabs_manager;
 
 /**
  * Base class to render a course section menu.
@@ -55,6 +56,11 @@ class controlmenu extends controlmenu_base {
     public function section_control_items() {
         $section = $this->section;
         $parentcontrols = parent::section_control_items();
+        $istab = tabs_manager::is_tab($section->id);
+
+        if ($istab && isset($parentcontrols['delete'])) {
+            $parentcontrols['delete']->text = get_string('deletepage', 'format_multipageformat');
+        }
 
         if ($section->is_orphan() || !$section->sectionnum) {
             return $parentcontrols;
@@ -64,7 +70,42 @@ class controlmenu extends controlmenu_base {
             return $parentcontrols;
         }
 
-        return $this->add_control_after($parentcontrols, 'edit', 'highlight', $this->get_section_highlight_item());
+        $controls = $this->add_control_after($parentcontrols, 'edit', 'highlight', $this->get_section_highlight_item());
+
+        if (has_capability('moodle/course:update', $this->coursecontext) && !$istab) {
+            $controls = $this->add_control_after($controls, 'highlight', 'makepage', $this->get_section_makepage_item());
+        }
+
+        return $controls;
+    }
+
+    /**
+     * Retrieves the "Make page" item for the section control menu.
+     *
+     * Promotes the section to a Tab (page): the section's own subsections become
+     * sections on the new page.
+     *
+     * @return action_menu_link_secondary
+     */
+    protected function get_section_makepage_item(): action_menu_link_secondary {
+        $section = $this->section;
+
+        $url = $this->format->get_update_url(
+            action: 'section_makepage',
+            ids: [$section->id],
+            returnurl: $this->baseurl,
+        );
+
+        return new action_menu_link_secondary(
+            url: $url,
+            icon: new pix_icon('i/arrow-right', ''),
+            text: get_string('makepage', 'format_multipageformat'),
+            attributes: [
+                'class' => 'editing_makepage',
+                'data-action' => 'sectionMakePage',
+                'data-id' => $section->id,
+            ],
+        );
     }
 
     /**

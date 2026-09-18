@@ -57,6 +57,16 @@ const resolveTabs = (sectionList, tabs) => {
         const childEls = tab.childsectionids
             .map(id => sectionList.querySelector(SELECTORS.SECTION(Number(id))))
             .filter(el => el !== null);
+
+        // Mark the Tab and its children in the DOM so other components (e.g. the section
+        // drag and drop validation) can tell a Tab relationship apart without needing their
+        // own copy of this data - a Tab must stay above all of its own children at all times.
+        tabEl.dataset.tabSection = 'true';
+        tabEl.dataset.tabChildren = childEls.map(el => el.dataset.id).join(',');
+        childEls.forEach(el => {
+            el.dataset.tabParent = String(sectionid);
+        });
+
         return {
             sectionid,
             name: tabEl.dataset.sectionname,
@@ -77,6 +87,11 @@ const buildTabStrip = (resolvedTabs, onSelect) => {
     const wrapper = document.createElement('li');
     wrapper.className = 'format-multipageformat-tabs-wrapper';
     wrapper.style.listStyle = 'none';
+
+    // Core's section-list reordering (see the observer set up in init()) removes any
+    // list item it does not recognise as a section unless it is flagged as an orphan,
+    // in which case it is preserved (moved to the end of the list instead of deleted).
+    wrapper.dataset.orphan = 'true';
 
     const nav = document.createElement('ul');
     nav.className = 'nav nav-tabs format-multipageformat-tabs mb-3';
@@ -107,12 +122,26 @@ const buildTabStrip = (resolvedTabs, onSelect) => {
 };
 
 /**
+ * Build the sessionStorage key used to remember the active tab for a course.
+ *
+ * A plain edit action (making a page, attaching or detaching a subsection, ...) reloads
+ * the whole page to pick up the new tab layout, which would otherwise always reset the
+ * view back to the first tab. sessionStorage survives that reload (it is only cleared
+ * when the browser tab itself closes), so the active tab can be restored afterwards.
+ *
+ * @param {number} courseId the course id
+ * @return {string} the storage key
+ */
+const storageKey = (courseId) => `format_multipageformat/activetab/${courseId}`;
+
+/**
  * Initialise the Tabs UI.
  *
  * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
  *     by format_multipageformat\output\courseformat\content::export_tabs()
+ * @param {number} courseId the course id, used to remember the active tab across reloads
  */
-export const init = (tabs) => {
+export const init = (tabs, courseId) => {
     if (!tabs || !tabs.length) {
         return;
     }
@@ -122,12 +151,35 @@ export const init = (tabs) => {
         return;
     }
 
-    const resolvedTabs = resolveTabs(sectionList, tabs);
+    let resolvedTabs = resolveTabs(sectionList, tabs);
     if (!resolvedTabs.length) {
         return;
     }
 
-    const setActive = (activeSectionId) => {
+    const key = storageKey(courseId);
+    const rememberActive = (sectionId) => {
+        try {
+            sessionStorage.setItem(key, sectionId);
+        } catch (e) {
+            // Private browsing or storage disabled - the tab just won't be remembered.
+            return;
+        }
+    };
+    const getRememberedActive = () => {
+        try {
+            const stored = Number(sessionStorage.getItem(key));
+            return resolvedTabs.some(tab => tab.sectionid === stored) ? stored : null;
+        } catch (e) {
+            return null;
+        }
+    };
+
+    let activeSectionId = getRememberedActive() ?? resolvedTabs[0].sectionid;
+    let strip = null;
+
+    const setActive = (sectionId) => {
+        activeSectionId = sectionId;
+        rememberActive(sectionId);
         resolvedTabs.forEach(tab => {
             const isActive = tab.sectionid === activeSectionId;
             tab.groupEls.forEach(el => el.classList.toggle(CLASSES.HIDDEN, !isActive));
@@ -139,11 +191,85 @@ export const init = (tabs) => {
         });
     };
 
-    const strip = buildTabStrip(resolvedTabs, setActive);
+    strip = buildTabStrip(resolvedTabs, setActive);
 
-    // Insert the strip right before the first tabbed section so untabbed sections
+    // The strip belongs right before the first tabbed section so untabbed sections
     // keep rendering above it, undisturbed.
-    sectionList.insertBefore(strip, resolvedTabs[0].groupEls[0]);
+    const reposition = () => {
+        const anchor = resolvedTabs[0]?.groupEls[0];
+        if (anchor && strip.nextElementSibling !== anchor) {
+            sectionList.insertBefore(strip, anchor);
+        }
+    };
 
-    setActive(resolvedTabs[0].sectionid);
+    // Drop any tab whose own section has been deleted. Its content is gone with it
+    // (it lived in the Tab section's own activities), so there is nothing left to
+    // show for it - remove its nav-link too instead of leaving a dead button behind.
+    const pruneDeletedTabs = () => {
+        let activeWasRemoved = false;
+        resolvedTabs = resolvedTabs.filter(tab => {
+            if (sectionList.contains(tab.groupEls[0])) {
+                return true;
+            }
+            strip.querySelector(`[data-tabid="${tab.sectionid}"]`)?.closest('li')?.remove();
+            activeWasRemoved = activeWasRemoved || (tab.sectionid === activeSectionId);
+            return false;
+        });
+
+        if (!resolvedTabs.length) {
+            strip.remove();
+            return;
+        }
+        if (activeWasRemoved) {
+            setActive(resolvedTabs[0].sectionid);
+        }
+    };
+
+    // Reordering sections (e.g. dragging one above another) makes core rebuild the
+    // section list to match the new state order. It does not know about this strip,
+    // so it gets pushed out and re-appended at the very end of the list instead of
+    // being deleted (see the 'orphan' flag above) - put it back where it belongs.
+    // Deleting a section runs through the same rebuild, so this also catches Tabs
+    // that just got deleted.
+    const sync = () => {
+        if (!strip.isConnected) {
+            return;
+        }
+        pruneDeletedTabs();
+        reposition();
+    };
+
+    reposition();
+    setActive(activeSectionId);
+
+    const observer = new MutationObserver(sync);
+    observer.observe(sectionList, {childList: true});
+
+    // Renaming a section is a separate inplace_editable component nested inside the
+    // section header, so it does not go through the section-list mutations above.
+    // Keep the tab's nav-link (and its cached name) in sync when a Tab gets renamed.
+    sectionList.addEventListener('core/inplace_editable:updated', (event) => {
+        const target = event.target;
+        const itemtype = target?.dataset?.itemtype;
+        if (
+            target?.dataset?.component !== 'format_multipageformat'
+            || (itemtype !== 'sectionname' && itemtype !== 'sectionnamenl')
+        ) {
+            return;
+        }
+
+        const sectionid = Number(target.dataset.itemid);
+        const tab = resolvedTabs.find(t => t.sectionid === sectionid);
+        if (!tab) {
+            return;
+        }
+
+        const newname = target.dataset.value;
+        tab.name = newname;
+        tab.groupEls[0].dataset.sectionname = newname;
+        const link = strip.querySelector(`[data-tabid="${tab.sectionid}"]`);
+        if (link) {
+            link.textContent = newname;
+        }
+    });
 };

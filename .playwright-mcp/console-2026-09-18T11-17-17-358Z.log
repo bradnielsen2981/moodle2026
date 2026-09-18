@@ -1,0 +1,4 @@
+[   11951ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789721282/core/first.js:638
+[   11978ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789721282/core/first.js:5468
+[   11979ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789721282/core/first.js:5468
+[   11984ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789721282/core/first.js:860

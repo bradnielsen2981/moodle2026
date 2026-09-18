@@ -1,0 +1,254 @@
+- generic [ref=f26e1]:
+  - status
+  - generic [ref=f26e2]:
+    - link "Skip to main content" [ref=f26e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f26e4]:
+      - generic [ref=f26e5]:
+        - link "Curved Learning" [ref=f26e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f26e9]:
+          - menubar [ref=f26e10]:
+            - menuitem "Dashboard" [ref=f26e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f26e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f26e13]:
+          - generic [ref=f26e15]:
+            - generic [ref=f26e16]: Edit mode
+            - checkbox "Edit mode" [checked] [ref=f26e18]
+          - button "Show notification window with no new notifications" [ref=f26e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f26e21]: 
+          - button "Toggle messaging drawer" [ref=f26e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f26e24]: 
+          - link "" [ref=f26e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f26e28]: 
+          - button "User menu" [ref=f26e33] [cursor=pointer]:
+            - img "Admin User" [ref=f26e37]: AU
+            - text: 
+    - generic [ref=f26e38]:
+      - generic [ref=f26e40]:
+        - generic:
+          - generic [ref=f26e41]:
+            - button "Open course index" [ref=f26e42] [cursor=pointer]
+            - generic [ref=f26e47]:
+              - link "Course Settings" [ref=f26e48] [cursor=pointer]:
+                - /url: http://moodle.local/course/edit.php?id=9
+                - img [aria-hidden] [ref=f26e49]: 
+              - link "Participants Participants" [ref=f26e51] [cursor=pointer]:
+                - /url: http://moodle.local/user/index.php?id=9
+                - img "Participants" [ref=f26e52]: 
+                - generic [ref=f26e53]: Participants
+              - link "Grades" [ref=f26e54] [cursor=pointer]:
+                - /url: http://moodle.local/grade/report/index.php?id=9
+                - img [aria-hidden] [ref=f26e55]: 
+              - link "Activities" [ref=f26e57] [cursor=pointer]:
+                - /url: http://moodle.local/course/overview.php?id=9
+                - img [aria-hidden] [ref=f26e58]: 
+              - button "More More" [ref=f26e61] [cursor=pointer]:
+                - img "More" [ref=f26e62]: 
+                - generic [ref=f26e63]: More
+          - button "Open block drawer" [ref=f26e65] [cursor=pointer]
+        - text:     
+        - banner [ref=f26e69]:
+          - heading [level=1] [ref=f26e76]:
+            - link "Test" [ref=f26e77] [cursor=pointer]:
+              - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f26e81]:
+          - heading "New Page" [level=2] [ref=f26e83]
+          - generic [ref=f26e84]:
+            - button "Expand all" [ref=f26e86] [cursor=pointer]
+            - group "General" [ref=f26e88]:
+              - generic [ref=f26e91]:
+                - button "General" [expanded] [ref=f26e92] [cursor=pointer]:
+                  - generic "Collapse" [ref=f26e93]:
+                    - generic [aria-hidden] [ref=f26e94]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f26e96]: General
+              - generic [ref=f26e97]:
+                - generic [ref=f26e98]:
+                  - generic [ref=f26e99]:
+                    - generic [ref=f26e100]: Name
+                    - generic [aria-hidden] [ref=f26e103]: 
+                  - textbox "Name" [ref=f26e105]: Test Page for DnD
+                - generic [ref=f26e106]:
+                  - generic [ref=f26e107]: Description
+                  - application [ref=f26e239]:
+                    - generic [ref=f26e240]:
+                      - generic [ref=f26e241]:
+                        - menubar [ref=f26e243]:
+                          - menuitem "Edit" [ref=f26e244] [cursor=pointer]
+                          - menuitem "View" [ref=f26e246] [cursor=pointer]
+                          - menuitem "Insert" [ref=f26e248] [cursor=pointer]
+                          - menuitem "Format" [ref=f26e250] [cursor=pointer]
+                          - menuitem "Tools" [ref=f26e252] [cursor=pointer]
+                          - menuitem "Table" [ref=f26e254] [cursor=pointer]
+                          - menuitem "Help" [ref=f26e256] [cursor=pointer]
+                        - group [ref=f26e258]:
+                          - group [ref=f26e259]:
+                            - toolbar "history" [ref=f26e260]:
+                              - button "Undo" [disabled] [ref=f26e261]
+                              - button "Redo" [disabled] [ref=f26e262]
+                            - toolbar "formatting" [ref=f26e263]:
+                              - button "Bold" [ref=f26e264] [cursor=pointer]
+                              - button "Italic" [ref=f26e265] [cursor=pointer]
+                            - toolbar "content" [ref=f26e266]:
+                              - button "Image" [ref=f26e267] [cursor=pointer]
+                              - button "Multimedia" [ref=f26e268] [cursor=pointer]
+                              - button "Record video" [ref=f26e269] [cursor=pointer]
+                              - button "Insert H5P content" [ref=f26e270] [cursor=pointer]
+                              - button "Link" [ref=f26e271] [cursor=pointer]
+                              - button "Unlink" [ref=f26e272] [cursor=pointer]
+                            - toolbar "view" [ref=f26e273]:
+                              - button "Fullscreen" [ref=f26e274] [cursor=pointer]
+                            - toolbar [ref=f26e275]:
+                              - button "Reveal or hide additional toolbar items" [ref=f26e276] [cursor=pointer]
+                      - iframe [ref=f26e279]:
+                        - generic "Description. Rich text area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help." [ref=f27e1]:
+                          - paragraph [ref=f27e2]
+                    - generic [ref=f26e280]:
+                      - generic [ref=f26e281]:
+                        - navigation [ref=f26e282]:
+                          - button "p" [ref=f26e283]
+                        - generic [ref=f26e284]:
+                          - button "0 words" [ref=f26e285] [cursor=pointer]
+                          - link "Build with TinyMCE" [ref=f26e287]:
+                            - /url: https://www.tiny.cloud/powered-by-tiny?utm_campaign=poweredby&utm_source=tiny&utm_medium=referral&utm_content=v7
+                            - text: Build with
+                      - separator "Press the Up and Down arrow keys to resize the editor." [ref=f26e294]
+                - generic [ref=f26e115]:
+                  - checkbox "Display description on course page" [ref=f26e116]
+                  - generic [ref=f26e117]: Display description on course page
+                  - button "Help" [ref=f26e119] [cursor=pointer]:
+                    - img "Help with Display description on course page" [ref=f26e120]: 
+            - group "Content" [ref=f26e121]:
+              - generic [ref=f26e124]:
+                - button "Content" [expanded] [ref=f26e125] [cursor=pointer]:
+                  - generic "Collapse" [ref=f26e126]:
+                    - generic [aria-hidden] [ref=f26e127]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f26e129]: Content
+              - generic [ref=f26e131]:
+                - generic [ref=f26e132]:
+                  - generic [ref=f26e133]: Page content
+                  - generic [aria-hidden] [ref=f26e136]: 
+                - generic [ref=f26e137]:
+                  - application [ref=f26e298]:
+                    - generic [ref=f26e299]:
+                      - generic [ref=f26e300]:
+                        - menubar [ref=f26e302]:
+                          - menuitem "Edit" [ref=f26e303] [cursor=pointer]
+                          - menuitem "View" [ref=f26e305] [cursor=pointer]
+                          - menuitem "Insert" [ref=f26e307] [cursor=pointer]
+                          - menuitem "Format" [ref=f26e309] [cursor=pointer]
+                          - menuitem "Tools" [ref=f26e311] [cursor=pointer]
+                          - menuitem "Table" [ref=f26e313] [cursor=pointer]
+                          - menuitem "Help" [ref=f26e315] [cursor=pointer]
+                        - group [ref=f26e317]:
+                          - group [ref=f26e318]:
+                            - toolbar "history" [ref=f26e319]:
+                              - button "Undo" [disabled] [ref=f26e320]
+                              - button "Redo" [disabled] [ref=f26e321]
+                            - toolbar "formatting" [ref=f26e322]:
+                              - button "Bold" [ref=f26e323] [cursor=pointer]
+                              - button "Italic" [ref=f26e324] [cursor=pointer]
+                            - toolbar "content" [ref=f26e325]:
+                              - button "Image" [ref=f26e326] [cursor=pointer]
+                              - button "Multimedia" [ref=f26e327] [cursor=pointer]
+                              - button "Record video" [ref=f26e328] [cursor=pointer]
+                              - button "Insert H5P content" [ref=f26e329] [cursor=pointer]
+                              - button "Link" [ref=f26e330] [cursor=pointer]
+                              - button "Unlink" [ref=f26e331] [cursor=pointer]
+                            - toolbar "view" [ref=f26e332]:
+                              - button "Fullscreen" [ref=f26e333] [cursor=pointer]
+                            - toolbar [ref=f26e334]:
+                              - button "Reveal or hide additional toolbar items" [ref=f26e335] [cursor=pointer]
+                      - iframe [active] [ref=f26e338]:
+                        - generic "Page content. Rich text area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help." [active] [ref=f28e1]:
+                          - paragraph [ref=f28e2]
+                    - generic [ref=f26e339]:
+                      - generic [ref=f26e340]:
+                        - navigation [ref=f26e341]:
+                          - button "p" [ref=f26e342]
+                        - generic [ref=f26e343]:
+                          - button "0 words" [ref=f26e344] [cursor=pointer]
+                          - link "Build with TinyMCE" [ref=f26e346]:
+                            - /url: https://www.tiny.cloud/powered-by-tiny?utm_campaign=poweredby&utm_source=tiny&utm_medium=referral&utm_content=v7
+                            - text: Build with
+                      - separator "Press the Up and Down arrow keys to resize the editor." [ref=f26e353]
+                  - generic [ref=f26e238]: Required
+            - group "Appearance" [ref=f26e140]:
+              - generic [ref=f26e143]:
+                - button "Appearance" [ref=f26e144] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e145]:
+                    - generic [aria-hidden] [ref=f26e147]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e149]: Appearance
+            - group "Common module settings" [ref=f26e150]:
+              - generic [ref=f26e153]:
+                - button "Common module settings" [ref=f26e154] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e155]:
+                    - generic [aria-hidden] [ref=f26e157]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e159]: Common module settings
+              - text:  
+            - group "Restrict access" [ref=f26e160]:
+              - generic [ref=f26e163]:
+                - button "Restrict access" [ref=f26e164] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e165]:
+                    - generic [aria-hidden] [ref=f26e167]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e169]: Restrict access
+            - group "Completion conditions" [ref=f26e170]:
+              - generic [ref=f26e173]:
+                - button "Completion conditions" [ref=f26e174] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e175]:
+                    - generic [aria-hidden] [ref=f26e177]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e179]: Completion conditions
+              - text:  
+            - group "Tags" [ref=f26e180]:
+              - generic [ref=f26e183]:
+                - button "Tags" [ref=f26e184] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e185]:
+                    - generic [aria-hidden] [ref=f26e187]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e189]: Tags
+            - group "Competencies" [ref=f26e190]:
+              - generic [ref=f26e193]:
+                - button "Competencies" [ref=f26e194] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f26e195]:
+                    - generic [aria-hidden] [ref=f26e197]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f26e199]: Competencies
+              - text: 
+            - generic [ref=f26e203]:
+              - checkbox "Send content change notification" [ref=f26e204]
+              - generic [ref=f26e205]: Send content change notification
+              - button "Help" [ref=f26e207] [cursor=pointer]:
+                - img "Help with Send content change notification" [ref=f26e208]: 
+            - generic [ref=f26e214]:
+              - button "Save and return to course" [ref=f26e217] [cursor=pointer]
+              - button "Save and display" [ref=f26e220] [cursor=pointer]
+              - button "Cancel" [ref=f26e223] [cursor=pointer]
+            - generic [aria-hidden] [ref=f26e224]:
+              - generic [aria-hidden] [ref=f26e225]: 
+              - text: Required
+      - contentinfo [ref=f26e226]:
+        - button "Show footer" [ref=f26e227] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f26e228]: "?"
+        - text:    
+        - generic [ref=f26e230]:
+          - link "Purge all caches" [ref=f26e232] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=xfodIMXO2D&returnurl=%2Fcourse%2Fmodedit.php%3Fadd%3Dpage%26section%3D4%26course%3D9
+          - generic [ref=f26e234]:
+            - text: "Reactive instances:"
+            - generic [ref=f26e235]:
+              - button "ProcessMonitor" [ref=f26e236] [cursor=pointer]
+              - button "CourseEditor9" [ref=f26e237] [cursor=pointer]

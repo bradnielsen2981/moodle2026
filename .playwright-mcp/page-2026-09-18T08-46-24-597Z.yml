@@ -1,0 +1,252 @@
+- generic [active] [ref=f12e1]:
+  - status
+  - generic [ref=f12e2]:
+    - link "Skip to main content" [ref=f12e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f12e4]:
+      - generic [ref=f12e5]:
+        - link "Curved Learning" [ref=f12e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f12e9]:
+          - menubar [ref=f12e10]:
+            - menuitem "Dashboard" [ref=f12e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f12e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f12e13]:
+          - generic [ref=f12e15]:
+            - generic [ref=f12e16]: Edit mode
+            - checkbox "Edit mode" [checked] [ref=f12e18]
+          - button "Show notification window with no new notifications" [ref=f12e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f12e21]: 
+          - button "Toggle messaging drawer" [ref=f12e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f12e24]: 
+          - link "" [ref=f12e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f12e28]: 
+          - button "User menu" [ref=f12e33] [cursor=pointer]:
+            - img "Admin User" [ref=f12e37]: AU
+            - text: 
+    - generic [ref=f12e38]:
+      - generic [ref=f12e40]:
+        - generic:
+          - generic [ref=f12e41]:
+            - button "Open course index" [ref=f12e42] [cursor=pointer]
+            - generic [ref=f12e47]:
+              - link "Course Settings" [ref=f12e48] [cursor=pointer]:
+                - /url: http://moodle.local/course/edit.php?id=9
+                - img [aria-hidden] [ref=f12e49]: 
+              - link "Participants Participants" [ref=f12e51] [cursor=pointer]:
+                - /url: http://moodle.local/user/index.php?id=9
+                - img "Participants" [ref=f12e52]: 
+                - generic [ref=f12e53]: Participants
+              - link "Grades" [ref=f12e54] [cursor=pointer]:
+                - /url: http://moodle.local/grade/report/index.php?id=9
+                - img [aria-hidden] [ref=f12e55]: 
+              - link "Activities" [ref=f12e57] [cursor=pointer]:
+                - /url: http://moodle.local/course/overview.php?id=9
+                - img [aria-hidden] [ref=f12e58]: 
+              - button "More More" [ref=f12e61] [cursor=pointer]:
+                - img "More" [ref=f12e62]: 
+                - generic [ref=f12e63]: More
+          - button "Open block drawer" [ref=f12e65] [cursor=pointer]
+        - text:     
+        - banner [ref=f12e69]:
+          - generic [ref=f12e71]:
+            - generic [ref=f12e73]:
+              - heading [level=1] [ref=f12e77]:
+                - link "Test" [ref=f12e78] [cursor=pointer]:
+                  - /url: http://moodle.local/course/view.php?id=9
+              - button "Bulk actions" [ref=f12e81] [cursor=pointer]:
+                - text: Bulk actions
+                - generic [aria-hidden] [ref=f12e82]: 
+            - link "Edit course header settings" [ref=f12e85] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9#id_theme_boost_union_course_courseheaderhdr
+              - generic [aria-hidden] [ref=f12e86]: 
+        - main [ref=f12e91]:
+          - generic [ref=f12e94]:
+            - heading "Section outline" [level=2] [ref=f12e95]
+            - list [ref=f12e96]:
+              - listitem [ref=f12e97]:
+                - tablist [ref=f12e98]:
+                  - tab "Introduction to Algebra" [selected] [ref=f12e99] [cursor=pointer]
+                  - tab "Positive and Negative Coefficients" [ref=f12e100] [cursor=pointer]
+                  - tab "Testing" [ref=f12e101] [cursor=pointer]
+              - listitem [ref=f12e102]:
+                - generic [ref=f12e103]:
+                  - generic [ref=f12e104]:
+                    - generic [ref=f12e105]:
+                      - button "Introduction to Algebra" [expanded] [ref=f12e106] [cursor=pointer]:
+                        - generic "Collapse" [ref=f12e107]:
+                          - generic [aria-hidden] [ref=f12e108]: 
+                        - text:  
+                      - heading [level=3] [ref=f12e110]:
+                        - link [ref=f12e112] [cursor=pointer]:
+                          - /url: "#"
+                          - text: Introduction to Algebra
+                          - img "Edit section name" [ref=f12e114]: 
+                    - generic [ref=f12e119]:
+                      - button "Edit" [ref=f12e120] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f12e121]: 
+                      - text:        
+                  - generic [ref=f12e123]:
+                    - list [ref=f12e124]:
+                      - listitem [ref=f12e125]:
+                        - separator [ref=f12e127]
+                        - list [ref=f12e131]:
+                          - listitem [ref=f12e132]:
+                            - generic [ref=f12e133]:
+                              - generic [ref=f12e134]:
+                                - generic [ref=f12e135]:
+                                  - button "TEST" [expanded] [ref=f12e136] [cursor=pointer]:
+                                    - generic "Collapse" [ref=f12e137]:
+                                      - generic [aria-hidden] [ref=f12e138]: 
+                                    - text:  
+                                  - heading [level=4] [ref=f12e140]:
+                                    - link [ref=f12e142] [cursor=pointer]:
+                                      - /url: "#"
+                                      - text: TEST
+                                      - img "Edit section name" [ref=f12e144]: 
+                                - generic [ref=f12e149]:
+                                  - button "Edit" [ref=f12e150] [cursor=pointer]:
+                                    - generic [aria-hidden] [ref=f12e151]: 
+                                  - text:       
+                              - generic [ref=f12e153]:
+                                - list
+                                - generic [ref=f12e154]:
+                                  - separator [ref=f12e155]
+                                  - button [ref=f12e157] [cursor=pointer]:
+                                    - generic [ref=f12e158]:
+                                      - generic [aria-hidden] [ref=f12e159]: +
+                                      - text: Add an activity or resource
+                      - listitem [ref=f12e160]:
+                        - separator [ref=f12e162]
+                        - list [ref=f12e166]:
+                          - listitem [ref=f12e167]:
+                            - generic [ref=f12e168]:
+                              - generic [ref=f12e169]:
+                                - generic [ref=f12e170]:
+                                  - button "Tab One - Child B" [expanded] [ref=f12e171] [cursor=pointer]:
+                                    - generic "Collapse" [ref=f12e172]:
+                                      - generic [aria-hidden] [ref=f12e173]: 
+                                    - text:  
+                                  - heading [level=4] [ref=f12e175]:
+                                    - link [ref=f12e177] [cursor=pointer]:
+                                      - /url: "#"
+                                      - text: Tab One - Child B
+                                      - img "Edit section name" [ref=f12e179]: 
+                                - generic [ref=f12e184]:
+                                  - button "Edit" [ref=f12e185] [cursor=pointer]:
+                                    - generic [aria-hidden] [ref=f12e186]: 
+                                  - text:       
+                              - generic [ref=f12e188]:
+                                - list
+                                - generic [ref=f12e189]:
+                                  - separator [ref=f12e190]
+                                  - button [ref=f12e192] [cursor=pointer]:
+                                    - generic [ref=f12e193]:
+                                      - generic [aria-hidden] [ref=f12e194]: +
+                                      - text: Add an activity or resource
+                    - generic [ref=f12e195]:
+                      - separator [ref=f12e196]
+                      - generic [ref=f12e198]:
+                        - button "Insert content in section 'Introduction to Algebra'" [ref=f12e199] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=f12e200]: +
+                        - text:  
+              - text:                          + +  
+              - listitem [ref=f12e203]:
+                - generic [ref=f12e204]:
+                  - generic [ref=f12e205]:
+                    - generic [ref=f12e206]:
+                      - button "New subsection" [expanded] [ref=f12e207] [cursor=pointer]:
+                        - generic "Collapse" [ref=f12e208]:
+                          - generic [aria-hidden] [ref=f12e209]: 
+                        - text:  
+                      - heading [level=3] [ref=f12e211]:
+                        - link [ref=f12e213] [cursor=pointer]:
+                          - /url: "#"
+                          - text: New subsection
+                          - img "Edit section name" [ref=f12e215]: 
+                    - generic [ref=f12e220]:
+                      - button "Edit" [ref=f12e221] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f12e222]: 
+                      - text:        
+                  - generic [ref=f12e224]:
+                    - list
+                    - generic [ref=f12e225]:
+                      - separator [ref=f12e226]
+                      - generic [ref=f12e228]:
+                        - button "Insert content in section 'New subsection'" [ref=f12e229] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=f12e230]: +
+                        - text:  
+              - listitem [ref=f12e233]:
+                - generic [ref=f12e234]:
+                  - generic [ref=f12e235]:
+                    - generic [ref=f12e236]:
+                      - button "Tab 3 Child B" [expanded] [ref=f12e237] [cursor=pointer]:
+                        - generic "Collapse" [ref=f12e238]:
+                          - generic [aria-hidden] [ref=f12e239]: 
+                        - text:  
+                      - heading [level=3] [ref=f12e241]:
+                        - link [ref=f12e243] [cursor=pointer]:
+                          - /url: "#"
+                          - text: Tab 3 Child B
+                          - img "Edit section name" [ref=f12e245]: 
+                    - generic [ref=f12e250]:
+                      - button "Edit" [ref=f12e251] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f12e252]: 
+                      - text:        
+                  - generic [ref=f12e254]:
+                    - list
+                    - generic [ref=f12e255]:
+                      - separator [ref=f12e256]
+                      - generic [ref=f12e258]:
+                        - button "Insert content in section 'Tab 3 Child B'" [ref=f12e259] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=f12e260]: +
+                        - text:  
+              - text:                          + +  
+            - link "Add section" [ref=f12e264] [cursor=pointer]:
+              - /url: http://moodle.local/course/format/update.php?courseid=9&sesskey=AvmilJUkDL&action=section_add&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+              - generic [aria-hidden] [ref=f12e265]: +
+              - text: Add section
+            - generic [ref=f12e268]:
+              - generic [ref=f12e269]:
+                - checkbox "Select all" [disabled]
+                - generic [ref=f12e270]: Select all
+              - list [ref=f12e272]:
+                - listitem [ref=f12e273]:
+                  - button "Availability" [ref=f12e274] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e276]: 
+                - listitem [ref=f12e278]:
+                  - button "Move" [ref=f12e279] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e281]: 
+                - listitem [ref=f12e283]:
+                  - button "Delete" [ref=f12e284] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e286]: 
+                - listitem [ref=f12e288]:
+                  - button "Availability" [ref=f12e289] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e291]: 
+                - listitem [ref=f12e293]:
+                  - button "Duplicate" [ref=f12e294] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e296]: 
+                - listitem [ref=f12e298]:
+                  - button "Move" [ref=f12e299] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e301]: 
+                - listitem [ref=f12e303]:
+                  - button "Delete" [ref=f12e304] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f12e306]: 
+              - generic [ref=f12e308]:
+                - button "Close bulk actions" [ref=f12e310] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f12e311]: 
+                - status [ref=f12e312]: 0 selected
+      - contentinfo [ref=f12e313]:
+        - button "Show footer" [ref=f12e314] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f12e315]: "?"
+        - text:    
+        - generic [ref=f12e317]:
+          - link "Purge all caches" [ref=f12e319] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=AvmilJUkDL&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+          - generic [ref=f12e321]:
+            - text: "Reactive instances:"
+            - generic [ref=f12e322]:
+              - button "ProcessMonitor" [ref=f12e323] [cursor=pointer]
+              - button "CourseEditor9" [ref=f12e324] [cursor=pointer]
