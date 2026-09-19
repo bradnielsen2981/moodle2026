@@ -92,11 +92,11 @@ export default class extends Section {
     /**
      * Validate if a dragged section can be reordered to be right after this one.
      *
-     * A section that has become a Tab (page) is locked at the top of its own page: it can
-     * never be moved after (below) any of its own children, and none of its children can be
-     * moved to a position above (before) it. This only concerns plain reordering - a dragged
-     * section that is still delegated (still nested inside another section) is handled by
-     * drop() above as a detach instead, and is left untouched here.
+     * A section that has become a Tab (page) is locked in place: it can never be moved at
+     * all. None of its children can be moved to a position above (before) it either. This
+     * only concerns plain reordering - a dragged section that is still delegated (still
+     * nested inside another section) is handled by drop() above as a detach instead, and is
+     * left untouched here.
      *
      * @param {Object} dropdata the exported drop data.
      * @returns {boolean}
@@ -112,8 +112,8 @@ export default class extends Section {
     }
 
     /**
-     * Whether dropping the dragged section right after this one would break the
-     * "a Tab stays at the top of its own page" rule.
+     * Whether dropping the dragged section right after this one would break the Tab locking
+     * rule: a Tab can never be moved at all, and none of its children can move above it.
      *
      * Tab and tab-child relationships are not part of the reactive state (they are a
      * bespoke grouping on top of it), so they are read from the data attributes
@@ -131,12 +131,9 @@ export default class extends Section {
             return false;
         }
 
+        // A Tab (page) is locked in place - it can never be moved at all, regardless of target.
         if (draggedEl.dataset.tabSection === 'true') {
-            const children = (draggedEl.dataset.tabChildren || '').split(',').filter(Boolean);
-            return children.some(childid => {
-                const child = this.reactive.get('section', Number(childid));
-                return child && this.section.number <= child.number;
-            });
+            return true;
         }
 
         const tabParentId = draggedEl.dataset.tabParent;
@@ -196,6 +193,12 @@ export default class extends Section {
         // section header to do that) before it can be nested somewhere else.
         const draggedsection = this.reactive.get('section', dropdata.id);
         if (draggedsection?.component) {
+            return false;
+        }
+        // A Tab (page) is locked in place - it can never be moved at all, including by
+        // nesting it into another section.
+        const draggedEl = document.querySelector(`li[data-for="section"][data-id="${dropdata.id}"]`);
+        if (draggedEl?.dataset?.tabSection === 'true') {
             return false;
         }
         // Moodle's delegated section mechanism does not support subsections nested inside

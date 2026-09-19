@@ -1,0 +1,163 @@
+- generic [active] [ref=f40e1]:
+  - status
+  - generic [ref=f40e2]:
+    - link "Skip to main content" [ref=f40e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f40e4]:
+      - generic [ref=f40e5]:
+        - link "Curved Learning" [ref=f40e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f40e9]:
+          - menubar [ref=f40e10]:
+            - menuitem "Dashboard" [ref=f40e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f40e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f40e13]:
+          - generic [ref=f40e15]:
+            - generic [ref=f40e16]: Edit mode
+            - checkbox "Edit mode" [checked] [ref=f40e18]
+          - button "Show notification window with no new notifications" [ref=f40e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f40e21]: 
+          - button "Toggle messaging drawer" [ref=f40e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f40e24]: 
+          - link "" [ref=f40e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f40e28]: 
+          - button "User menu" [ref=f40e33] [cursor=pointer]:
+            - img "Admin User" [ref=f40e37]: AU
+            - text: 
+    - generic [ref=f40e38]:
+      - generic [ref=f40e40]:
+        - generic:
+          - generic [ref=f40e41]:
+            - button "Open course index" [ref=f40e42] [cursor=pointer]
+            - generic [ref=f40e47]:
+              - link "Course Settings" [ref=f40e48] [cursor=pointer]:
+                - /url: http://moodle.local/course/edit.php?id=9
+                - img [aria-hidden] [ref=f40e49]: 
+              - link "Participants Participants" [ref=f40e51] [cursor=pointer]:
+                - /url: http://moodle.local/user/index.php?id=9
+                - img "Participants" [ref=f40e52]: 
+                - generic [ref=f40e53]: Participants
+              - link "Grades" [ref=f40e54] [cursor=pointer]:
+                - /url: http://moodle.local/grade/report/index.php?id=9
+                - img [aria-hidden] [ref=f40e55]: 
+              - link "Activities" [ref=f40e57] [cursor=pointer]:
+                - /url: http://moodle.local/course/overview.php?id=9
+                - img [aria-hidden] [ref=f40e58]: 
+              - button "More More" [ref=f40e61] [cursor=pointer]:
+                - img "More" [ref=f40e62]: 
+                - generic [ref=f40e63]: More
+          - button "Open block drawer" [ref=f40e65] [cursor=pointer]
+        - text:     
+        - banner [ref=f40e69]:
+          - generic [ref=f40e71]:
+            - generic [ref=f40e73]:
+              - heading [level=1] [ref=f40e77]:
+                - link "Test" [ref=f40e78] [cursor=pointer]:
+                  - /url: http://moodle.local/course/view.php?id=9
+              - button "Bulk actions" [ref=f40e81] [cursor=pointer]:
+                - text: Bulk actions
+                - generic [aria-hidden] [ref=f40e82]: 
+            - link "Edit course header settings" [ref=f40e85] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9#id_theme_boost_union_course_courseheaderhdr
+              - generic [aria-hidden] [ref=f40e86]: 
+        - main [ref=f40e91]:
+          - generic [ref=f40e94]:
+            - heading "Section outline" [level=2] [ref=f40e95]
+            - list [ref=f40e96]:
+              - listitem [ref=f40e97]:
+                - tablist [ref=f40e98]:
+                  - tab "Page 1" [selected] [ref=f40e99] [cursor=pointer]
+                  - tab "Page 2" [ref=f40e100] [cursor=pointer]
+              - listitem [ref=f40e101]:
+                - generic [ref=f40e102]:
+                  - generic [ref=f40e103]:
+                    - generic [ref=f40e104]:
+                      - button "Page 1" [ref=f40e105] [cursor=pointer]:
+                        - text: 
+                        - generic "Expand" [ref=f40e106]:
+                          - generic [aria-hidden] [ref=f40e108]: 
+                          - text: 
+                      - heading [level=3] [ref=f40e110]:
+                        - link [ref=f40e112] [cursor=pointer]:
+                          - /url: "#"
+                          - text: Page 1
+                          - img "Edit section name" [ref=f40e114]: 
+                    - generic [ref=f40e119]:
+                      - button "Edit" [ref=f40e120] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f40e121]: 
+                      - text:        
+                  - text:             +             + +  
+              - listitem [ref=f40e125]:
+                - generic [ref=f40e126]:
+                  - generic [ref=f40e127]:
+                    - generic [ref=f40e128]:
+                      - button "Page 2 Section 3" [expanded] [ref=f40e129] [cursor=pointer]:
+                        - generic "Collapse" [ref=f40e130]:
+                          - generic [aria-hidden] [ref=f40e131]: 
+                        - text:  
+                      - heading [level=3] [ref=f40e133]:
+                        - link [ref=f40e135] [cursor=pointer]:
+                          - /url: "#"
+                          - text: Page 2 Section 3
+                          - img "Edit section name" [ref=f40e137]: 
+                    - generic [ref=f40e142]:
+                      - button "Edit" [ref=f40e143] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f40e144]: 
+                      - text:        
+                  - generic [ref=f40e146]:
+                    - list
+                    - generic [ref=f40e147]:
+                      - separator [ref=f40e148]
+                      - generic [ref=f40e150]:
+                        - button "Insert content in section 'Page 2 Section 3'" [ref=f40e151] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=f40e152]: +
+                        - text:  
+              - text:                          + +  
+            - link "Add section" [ref=f40e156] [cursor=pointer]:
+              - /url: http://moodle.local/course/format/update.php?courseid=9&sesskey=AvmilJUkDL&action=section_add&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+              - generic [aria-hidden] [ref=f40e157]: +
+              - text: Add section
+            - generic [ref=f40e160]:
+              - generic [ref=f40e161]:
+                - checkbox "Select all" [disabled]
+                - generic [ref=f40e162]: Select all
+              - list [ref=f40e164]:
+                - listitem [ref=f40e165]:
+                  - button "Availability" [ref=f40e166] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e168]: 
+                - listitem [ref=f40e170]:
+                  - button "Move" [ref=f40e171] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e173]: 
+                - listitem [ref=f40e175]:
+                  - button "Delete" [ref=f40e176] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e178]: 
+                - listitem [ref=f40e180]:
+                  - button "Availability" [ref=f40e181] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e183]: 
+                - listitem [ref=f40e185]:
+                  - button "Duplicate" [ref=f40e186] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e188]: 
+                - listitem [ref=f40e190]:
+                  - button "Move" [ref=f40e191] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e193]: 
+                - listitem [ref=f40e195]:
+                  - button "Delete" [ref=f40e196] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f40e198]: 
+              - generic [ref=f40e200]:
+                - button "Close bulk actions" [ref=f40e202] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f40e203]: 
+                - status [ref=f40e204]: 0 selected
+      - contentinfo [ref=f40e205]:
+        - button "Show footer" [ref=f40e206] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f40e207]: "?"
+        - text:    
+        - generic [ref=f40e209]:
+          - link "Purge all caches" [ref=f40e211] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=AvmilJUkDL&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+          - generic [ref=f40e213]:
+            - text: "Reactive instances:"
+            - generic [ref=f40e214]:
+              - button "ProcessMonitor" [ref=f40e215] [cursor=pointer]
+              - button "CourseEditor9" [ref=f40e216] [cursor=pointer]

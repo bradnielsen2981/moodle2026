@@ -43,4 +43,5 @@ $string['section_unhighlight_feedback'] = 'Highlighting removed from section {$a
 $string['section0name'] = 'General';
 $string['sectionname'] = 'Section';
 $string['showfromothers'] = 'Show';
-$string['tabmustremainontop'] = 'A page (Tab) must stay at the top of its own page: it cannot be moved below its own sections, and none of its sections can be moved above it.';
+$string['tabcannotbemoved'] = 'A page (Tab) cannot be moved once it has been created.';
+$string['tabmustremainontop'] = 'A section belonging to a page (Tab) cannot be moved above that page.';

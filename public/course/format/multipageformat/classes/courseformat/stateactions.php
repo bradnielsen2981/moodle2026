@@ -207,10 +207,11 @@ class stateactions extends stateactions_base {
     /**
      * Move sections to a position right after a target section.
      *
-     * A section that has become a Tab (page) is locked at the top of its own page: it can
-     * never be moved after (below) any of its own children, and none of its children can be
-     * moved to a position above (before) it. Sections with no Tab relationship at all, and
-     * moves that do not involve a Tab or one of its children, are unrestricted.
+     * A section that has become a Tab (page) is locked in place: it can never be moved at
+     * all, by any means (dragging it, dragging another section onto/around it, etc). None of
+     * its children can be moved to a position above (before) it either. Sections with no Tab
+     * relationship at all, and moves that do not involve a Tab or one of its children, are
+     * unrestricted.
      *
      * @param stateupdates $updates the affected course elements track
      * @param stdClass $course the course object
@@ -225,21 +226,17 @@ class stateactions extends stateactions_base {
         ?int $targetsectionid = null,
         ?int $targetcmid = null
     ): void {
+        foreach ($ids as $sectionid) {
+            if (tabs_manager::is_tab($sectionid)) {
+                throw new moodle_exception('tabcannotbemoved', 'format_multipageformat');
+            }
+        }
+
         if ($targetsectionid) {
             $modinfo = get_fast_modinfo($course);
             $targetsection = $modinfo->get_section_info_by_id($targetsectionid, MUST_EXIST);
 
             foreach ($ids as $sectionid) {
-                if (tabs_manager::is_tab($sectionid)) {
-                    foreach (tabs_manager::get_children_sectionids($course->id, $sectionid) as $childid) {
-                        $child = $modinfo->get_section_info_by_id($childid, IGNORE_MISSING);
-                        if ($child && $child->sectionnum <= $targetsection->sectionnum) {
-                            throw new moodle_exception('tabmustremainontop', 'format_multipageformat');
-                        }
-                    }
-                    continue;
-                }
-
                 $tabid = tabs_manager::get_parent($sectionid);
                 if ($tabid !== null && $tabid !== tabs_manager::TAB) {
                     $tabsection = $modinfo->get_section_info_by_id($tabid, IGNORE_MISSING);
@@ -384,12 +381,10 @@ class stateactions extends stateactions_base {
                 continue;
             }
 
-            // A nested section can no longer be an independent Tab, nor keep children
-            // of its own - clean up any Tab bookkeeping before nesting it.
             if (tabs_manager::is_tab($section->id)) {
-                foreach (tabs_manager::get_children_sectionids($course->id, $section->id) as $childsectionid) {
-                    tabs_manager::remove($childsectionid);
-                }
+                // A Tab (page) is locked in place - it can never be moved at all, including
+                // by nesting it into another section.
+                continue;
             }
             tabs_manager::remove($section->id);
 
