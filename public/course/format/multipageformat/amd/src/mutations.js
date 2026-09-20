@@ -110,6 +110,58 @@ class MultipageformatMutations extends DefaultMutations {
     };
 
     /**
+     * Move sections after a target section.
+     *
+     * Same as core, except that the page is reloaded afterwards when it has Tabs: the server
+     * puts the moved section on the page (Tab) of the section it lands under, and the Tab
+     * strip and its section groups are only built at page load, so without a reload the
+     * moved section would keep showing on the wrong pages until the next visit.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids to move
+     * @param {number} targetSectionId the section they will be placed after
+     */
+    sectionMoveAfter = async function(stateManager, sectionIds, targetSectionId) {
+        await DefaultMutations.prototype.sectionMoveAfter.call(this, stateManager, sectionIds, targetSectionId);
+        if (document.querySelector('.format-multipageformat-tabs')) {
+            window.location.reload();
+        }
+    };
+
+    /**
+     * Add a section after a target section.
+     *
+     * Same as core, plus the reload of sectionMoveAfter above: the server puts the new section
+     * on the page of the section it is added after.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {number} targetSectionId optional the section the new one is added after
+     */
+    addSection = async function(stateManager, targetSectionId) {
+        const tabs = document.querySelector('.format-multipageformat-tabs');
+        if (tabs && !targetSectionId) {
+            // The general "Add section" button has no target section, so the section would be
+            // added at the very end, outside every page and so shown on all of them. Add it
+            // after the last section of the page being viewed instead.
+            const activeid = tabs.querySelector('[data-tabid].active')?.dataset.tabid;
+            const pagesections = [...document.querySelectorAll('li[data-for="section"]')].filter(
+                el => el.dataset.id === activeid || el.dataset.tabParent === activeid
+            );
+            targetSectionId = Number(pagesections.pop()?.dataset.id) || targetSectionId;
+        }
+        await DefaultMutations.prototype.addSection.call(this, stateManager, targetSectionId);
+        if (tabs) {
+            window.location.reload();
+        }
+    };
+
+    /**
      * Attach a section as a subsection of another section.
      *
      * The section's own content stays with it; it just becomes nested inside the target

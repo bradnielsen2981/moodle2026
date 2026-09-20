@@ -107,8 +107,42 @@ export default class extends Section {
             if (!draggedsection?.component && this._violatesTabLock(dropdata)) {
                 return false;
             }
+            if (this._isDirectlyAboveTab(dropdata)) {
+                return false;
+            }
+            // Core refuses the section numbered right after this one, since moving it would
+            // change nothing. A subsection is numbered independently of where it is shown, so
+            // detaching it below this section is always a real move.
+            if (draggedsection?.component) {
+                return this.section.component === null;
+            }
         }
         return super.validateDropData(dropdata);
+    }
+
+    /**
+     * Whether dropping the dragged section right after this one would put it above a Tab,
+     * i.e. above the first section of a page. No section may ever be placed there.
+     *
+     * The position right below a page's own sections (this section being that page's Tab
+     * or one of its children) is the end of that page, not the top of the next one, so
+     * it stays a valid target - that is where a subsection dragged out of the page lands.
+     *
+     * @param {Object} dropdata the exported drop data.
+     * @returns {boolean}
+     */
+    _isDirectlyAboveTab(dropdata) {
+        if (this.element.dataset.tabSection === 'true' || this.element.dataset.tabParent) {
+            return false;
+        }
+        let next = this.element.nextElementSibling;
+        while (next) {
+            if (next.dataset.for === 'section' && next.dataset.id != dropdata.id) {
+                return next.dataset.tabSection === 'true';
+            }
+            next = next.nextElementSibling;
+        }
+        return false;
     }
 
     /**
@@ -158,12 +192,41 @@ export default class extends Section {
         }
         this.nestdragdrop = new DragDrop({
             element: content,
+            fullregion: this.element,
             reactive: this.reactive,
             validateDropData: this._validateNestDropData.bind(this),
             showDropZone: this._showNestDropZone.bind(this),
             hideDropZone: this._hideNestDropZone.bind(this),
             drop: this._nestDrop.bind(this),
         });
+
+        // The whole section box is a drag handle too (see styles.css for its move cursor),
+        // not only the header. Section zero and subsections are not draggable this way (a
+        // subsection is dragged by its header only). Tabs are excluded on drag start, once
+        // they are known. This has no drop side: the dropzones are the ones above.
+        if (this.section.number > 0 && this.section.component === null) {
+            this.boxdragdrop = new DragDrop({
+                element: this.element,
+                fullregion: this.element,
+                reactive: this.reactive,
+                getDraggableData: this._getBoxDraggableData.bind(this),
+                setDragImage: () => this.element,
+                dragStart: (dropdata) => this.dragStart(dropdata),
+                dragEnd: (dropdata) => this.dragEnd(dropdata),
+            });
+        }
+    }
+
+    /**
+     * The drag data when the section is dragged by its body rather than its header.
+     *
+     * @returns {Object|null} the drag data, or null if this section cannot be dragged (a Tab)
+     */
+    _getBoxDraggableData() {
+        if (this.element.dataset.tabSection === 'true') {
+            return null;
+        }
+        return this.reactive.getExporter().sectionDraggableData(this.reactive.state, this.id);
     }
 
     /**
@@ -172,6 +235,7 @@ export default class extends Section {
     destroy() {
         super.destroy();
         this.nestdragdrop?.unregister();
+        this.boxdragdrop?.unregister();
     }
 
     /**
@@ -189,11 +253,12 @@ export default class extends Section {
         if (this.section.component !== null || dropdata?.id == this.id) {
             return false;
         }
-        // A section that is already a subsection must be detached first (drop it onto a
-        // section header to do that) before it can be nested somewhere else.
+        // A section that is already a subsection cannot be nested somewhere else directly.
+        // Dropping it anywhere on this section instead detaches it and places it below this
+        // section (see _showNestDropZone), the same as dropping it onto the section header.
         const draggedsection = this.reactive.get('section', dropdata.id);
         if (draggedsection?.component) {
-            return false;
+            return !this._isDirectlyAboveTab(dropdata);
         }
         // A Tab (page) is locked in place - it can never be moved at all, including by
         // nesting it into another section.
@@ -219,31 +284,45 @@ export default class extends Section {
     }
 
     /**
-     * Display the "will become a subsection here" indicator.
+     * Display the drop indicator.
      *
-     * Mirrors exactly how the outer dropzone already shows where a dragged activity will
-     * land: a line after the last item in the section (or after the section info box, if
-     * the section has no content yet).
+     * For a dragged subsection this is the line below the whole section, exactly what the
+     * section header shows, since the subsection will be detached and placed there.
+     * Otherwise it mirrors how the outer dropzone shows where a dragged activity will land:
+     * a line after the last item in the section (or after the section info box, if the
+     * section has no content yet), as the dragged section will become a subsection here.
+     *
+     * @param {Object} dropdata the accepted drop data
      */
-    _showNestDropZone() {
+    _showNestDropZone(dropdata) {
+        if (this.reactive.get('section', dropdata?.id)?.component) {
+            this.element.classList.remove(this.classes.DROPUP);
+            this.element.classList.add(this.classes.DROPDOWN);
+            return;
+        }
         const target = this.getLastCm() ?? this.getLastCmFallback();
         target?.classList.add(this.classes.DROPDOWN);
     }
 
     /**
-     * Hide the "will become a subsection here" indicator.
+     * Hide the drop indicator.
      */
     _hideNestDropZone() {
+        this.element.classList.remove(this.classes.DROPDOWN);
         const target = this.getLastCm() ?? this.getLastCmFallback();
         target?.classList.remove(this.classes.DROPDOWN);
     }
 
     /**
-     * Nest the dragged section into this one.
+     * Nest the dragged section into this one, or detach it below this one if it is a subsection.
      *
      * @param {Object} dropdata the accepted drop data
      */
     _nestDrop(dropdata) {
+        if (this.reactive.get('section', dropdata.id)?.component) {
+            this.reactive.dispatch('sectionDetach', [dropdata.id], this.id);
+            return;
+        }
         this.reactive.dispatch('sectionAttach', [dropdata.id], this.id);
     }
 }

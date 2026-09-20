@@ -1,0 +1,67 @@
+/*
+ * Edit mode: hint that sections are draggable with the same blue outline that activity
+ * cards (and so subsections) show on hover. Section zero and the Tab (page) sections are
+ * the first section on their page and cannot be dragged, so they get no outline.
+ * Outline is used so the layout does not shift, and it is skipped while an inner
+ * activity/subsection is hovered so only the innermost draggable object is highlighted.
+ */
+body.format-multipageformat.editing .course-content li.section.course-section[data-for="section"]:not([data-number="0"]):not([data-tab-section="true"]):not(.delegated-section):hover:not(:has(.activity:hover)) {
+    outline: 2px solid var(--bs-primary, #0f6cbf);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* The outline is not part of the drag image and would cut into it. */
+body.format-multipageformat.editing .course-content li.section.course-section.dragging:hover {
+    outline: none;
+}
+
+/*
+ * Edit mode: a section can also be dragged from anywhere in its box, not only the header,
+ * so show the move cursor across the whole section (activities, buttons and links keep their
+ * own cursor). Same exclusions as the hover outline above, and a subsection (which can only
+ * be dragged by its header) goes back to the normal cursor.
+ */
+body.format-multipageformat.editing .course-content li.section.course-section[data-for="section"]:not([data-number="0"]):not([data-tab-section="true"]):not(.delegated-section) {
+    cursor: move;
+}
+
+body.format-multipageformat.editing .course-content li.section.delegated-section {
+    cursor: auto;
+}
+
+/*
+ * Drop targets while dragging in edit mode.
+ *
+ * - The drop indicator line is 2px thick instead of core's 1px (the negative margins core uses
+ *   to stop the border shifting the layout are widened to match).
+ * - An empty section or subsection has no activities to draw the line under, so core draws it
+ *   on the 1px tall section info element right below the heading. That element is given a
+ *   10px minimum height (it already spans the full width of its section), which also leaves
+ *   well over 5px of space between the heading and the line.
+ */
+body.format-multipageformat.dragging .drop-up {
+    border-top-width: 2px;
+}
+
+body.format-multipageformat.dragging .drop-down,
+body.format-multipageformat.dragging .course-content .section.dropready.main.drop-down {
+    border-bottom-width: 2px;
+}
+
+body.format-multipageformat.dragging .course-content .section li.activity.dropready.drop-down {
+    border-bottom-width: 2px;
+    margin-bottom: -2px;
+}
+
+body.format-multipageformat.dragging .course-content .section li.activity.dropready.drop-up {
+    border-top-width: 2px;
+    margin-top: -2px;
+}
+
+body.format-multipageformat.editing .course-content .section .content:not(:has(li.activity)) > [data-for="sectioninfo"] {
+    min-height: 10px;
+}
+
+body.format-multipageformat.dragging .course-content .section [data-for="sectioninfo"].drop-down {
+    margin-top: 0;
+}

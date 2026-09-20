@@ -44,4 +44,5 @@ $string['section0name'] = 'General';
 $string['sectionname'] = 'Section';
 $string['showfromothers'] = 'Show';
 $string['tabcannotbemoved'] = 'A page (Tab) cannot be moved once it has been created.';
-$string['tabmustremainontop'] = 'A section belonging to a page (Tab) cannot be moved above that page.';
+$string['cannotplaceabovetab'] = 'A section cannot be placed above the first section of a page (Tab).';
+$string['tabmustremainontop']= 'A section belonging to a page (Tab) cannot be moved above that page.';

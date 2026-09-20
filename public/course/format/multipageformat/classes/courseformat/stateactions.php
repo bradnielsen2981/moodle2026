@@ -247,7 +247,130 @@ class stateactions extends stateactions_base {
             }
         }
 
+        $this->validate_not_above_tab($course, $ids, $targetsectionid);
+
         parent::section_move_after($updates, $course, $ids, $targetsectionid, $targetcmid);
+
+        $this->assign_to_page_of_target($course, $ids, $targetsectionid);
+    }
+
+    /**
+     * Put sections that were just placed after a target section on that target's page.
+     *
+     * A section with no Tab relationship is shown on every page, so a section moved, detached
+     * or created into a page must join it or it would appear on all of them. The page is the
+     * target's own Tab, or the Tab the target belongs to. An untabbed target says nothing about
+     * a page (it is shown on all of them, wherever it sits in the section order), so then
+     * $fallback decides: false leaves the placed sections' pages as they are, null makes them
+     * untabbed, a section id puts them on that Tab. Tabs themselves are never touched.
+     *
+     * @param stdClass $course the course object
+     * @param int[] $ids ids of the sections that were placed
+     * @param int|null $targetsectionid the section they were placed after
+     * @param int|null|false $fallback what to do when the target has no page
+     */
+    protected function assign_to_page_of_target(
+        stdClass $course,
+        array $ids,
+        ?int $targetsectionid,
+        int|null|false $fallback = false
+    ): void {
+        if (!$targetsectionid) {
+            return;
+        }
+
+        $parent = tabs_manager::get_parent($targetsectionid);
+        if ($parent === tabs_manager::TAB) {
+            $tabid = $targetsectionid;
+        } else if ($parent !== null) {
+            $tabid = $parent;
+        } else if ($fallback === false) {
+            return;
+        } else {
+            $tabid = $fallback;
+        }
+
+        foreach ($ids as $sectionid) {
+            if (tabs_manager::is_tab($sectionid)) {
+                continue;
+            }
+            if ($tabid) {
+                tabs_manager::set_tab_child($course->id, $sectionid, $tabid);
+            } else {
+                tabs_manager::remove($sectionid);
+            }
+        }
+    }
+
+    /**
+     * The page (Tab section id) a section is on: itself if it is a Tab, its Tab if it belongs
+     * to one, or null if it has none.
+     *
+     * @param int $sectionid
+     * @return int|null
+     */
+    protected function get_page_of(int $sectionid): ?int {
+        $parent = tabs_manager::get_parent($sectionid);
+        return ($parent === tabs_manager::TAB) ? $sectionid : $parent;
+    }
+
+    /**
+     * Add a section, and put it on the page of the section it is added after.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids not used
+     * @param int|null $targetsectionid the section the new one is added after (none: at the end)
+     * @param int|null $targetcmid not used
+     */
+    public function section_add(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        global $DB;
+
+        $before = $DB->get_fieldset_select('course_sections', 'id', 'course = ?', [$course->id]);
+        parent::section_add($updates, $course, $ids, $targetsectionid, $targetcmid);
+        $after = $DB->get_fieldset_select('course_sections', 'id', 'course = ?', [$course->id]);
+
+        // Without a target the section is added at the very end, outside any page.
+        $this->assign_to_page_of_target($course, array_diff($after, $before), $targetsectionid);
+    }
+
+    /**
+     * Refuse to place sections directly before a Tab, i.e. above the first section of a page.
+     *
+     * Placing a section right after a target puts it above whichever independent section
+     * follows that target, so that following section must not be a Tab.
+     *
+     * @param stdClass $course the course object
+     * @param int[] $ids ids of the sections being placed
+     * @param int|null $targetsectionid the section they will be placed after
+     * @throws moodle_exception if the placement would put a section above a Tab
+     */
+    protected function validate_not_above_tab(stdClass $course, array $ids, ?int $targetsectionid): void {
+        if (!$targetsectionid) {
+            return;
+        }
+        $modinfo = get_fast_modinfo($course);
+        $target = $modinfo->get_section_info_by_id($targetsectionid, MUST_EXIST);
+        // Right below a page's own sections is the end of that page, not the top of the next.
+        if (tabs_manager::get_parent($target->id) !== null) {
+            return;
+        }
+        $targetnum = $target->sectionnum;
+        foreach ($modinfo->get_section_info_all() as $section) {
+            if ($section->sectionnum <= $targetnum || $section->component !== null || in_array($section->id, $ids)) {
+                continue;
+            }
+            if (tabs_manager::is_tab($section->id)) {
+                throw new moodle_exception('cannotplaceabovetab', 'format_multipageformat');
+            }
+            return;
+        }
     }
 
     /**
@@ -276,6 +399,7 @@ class stateactions extends stateactions_base {
         $coursecontext = context_course::instance($course->id);
         require_capability('moodle/course:update', $coursecontext);
         require_capability('moodle/course:manageactivities', $coursecontext);
+        $this->validate_not_above_tab($course, $ids, $targetsectionid);
 
         foreach ($ids as $sectionid) {
             $modinfo = get_fast_modinfo($course);
@@ -313,6 +437,7 @@ class stateactions extends stateactions_base {
             $section = $modinfo->get_section_info_by_id($sectionid, MUST_EXIST);
             $anchorsection = $modinfo->get_section_info_by_id($anchorsectionid, MUST_EXIST);
             \core_courseformat\formatactions::section($course->id)->move_after($section, $anchorsection);
+            $this->assign_to_page_of_target($course, [$sectionid], $anchorsectionid, $this->get_page_of($parentsection->id));
 
             // The subsection activity that used to host it no longer serves a purpose.
             \core_courseformat\formatactions::cm($course->id)->delete($cm->id);
