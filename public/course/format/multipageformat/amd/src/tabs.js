@@ -36,6 +36,8 @@ const SELECTORS = {
 
 const CLASSES = {
     HIDDEN: 'd-none',
+    INDEXCHILD: 'format-multipageformat-index-child',
+    INDEXCOLLAPSED: 'format-multipageformat-index-collapsed',
 };
 
 /**
@@ -75,6 +77,36 @@ const resolveTabs = (sectionList, tabs) => {
             groupEls: [tabEl, ...childEls],
         };
     }).filter(tab => tab !== null);
+};
+
+/**
+ * Arrange the sections of each page under that page in the Course index drawer.
+ *
+ * The Course index lists every section in one flat list. The sections that belong to a page
+ * are marked so they can be indented under the page (see styles.css), and they are only
+ * shown while their page is expanded in the index, like the subsections inside a section.
+ * A page's own subsections are nested in the page by core already.
+ *
+ * @param {Array} resolvedTabs resolved tabs from resolveTabs()
+ */
+const syncCourseIndex = (resolvedTabs) => {
+    const index = document.querySelector('.courseindex');
+    if (!index) {
+        return;
+    }
+    const indexSection = (id) => index.querySelector(`.courseindex-section[data-id="${id}"]:not(.delegated-section)`);
+    resolvedTabs.forEach(tab => {
+        const chevron = indexSection(tab.sectionid)?.querySelector(':scope > .courseindex-section-title .courseindex-chevron');
+        const expanded = chevron?.getAttribute('aria-expanded') === 'true';
+        // The first element of a group is the Tab itself, the rest are its sections.
+        tab.groupEls.slice(1).forEach(el => {
+            const childEl = indexSection(el.dataset.id);
+            if (childEl) {
+                childEl.classList.add(CLASSES.INDEXCHILD);
+                childEl.classList.toggle(CLASSES.INDEXCOLLAPSED, !expanded);
+            }
+        });
+    });
 };
 
 /**
@@ -268,6 +300,29 @@ export const init = (tabs, courseId, addPageLabel = '') => {
 
     reposition();
     setActive(activeSectionId);
+
+    // Keep the Course index in step: it is re-rendered on section changes, and pages are
+    // expanded and collapsed in it. The sync only touches a class when it changes, so the
+    // mutations it causes settle after one extra pass.
+    syncCourseIndex(resolvedTabs);
+    const courseindex = document.querySelector('.courseindex');
+    if (courseindex) {
+        let pending = false;
+        new MutationObserver(() => {
+            if (!pending) {
+                pending = true;
+                requestAnimationFrame(() => {
+                    pending = false;
+                    syncCourseIndex(resolvedTabs);
+                });
+            }
+        }).observe(courseindex, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            attributeFilter: ['aria-expanded', 'class'],
+        });
+    }
 
     const observer = new MutationObserver(sync);
     observer.observe(sectionList, {childList: true});

@@ -67,3 +67,16 @@ body.format-multipageformat.editing .course-content .section .content:not(:has(l
 body.format-multipageformat.dragging .course-content .section [data-for="sectioninfo"].drop-down {
     margin-top: 0;
 }
+
+/*
+ * Course index drawer: the sections that belong to a page are indented under it, and are only
+ * shown while that page is expanded (see syncCourseIndex in tabs.js). Subsections inside a
+ * section are already indented by core, so they end up one level further in again.
+ */
+.courseindex .courseindex-section.format-multipageformat-index-child {
+    padding-left: 1rem;
+}
+
+.courseindex .courseindex-section.format-multipageformat-index-collapsed {
+    display: none;
+}
