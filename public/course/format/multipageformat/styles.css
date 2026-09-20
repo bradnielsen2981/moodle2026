@@ -2,16 +2,18 @@
  * Edit mode: hint that sections are draggable with the same blue outline that activity
  * cards (and so subsections) show on hover. Section zero and the Tab (page) sections are
  * the first section on their page and cannot be dragged, so they get no outline.
+ * The outline is drawn on the rounded section card (not the whole list item, which also holds
+ * the add-section divider below the card), and not while that divider is hovered.
  * Outline is used so the layout does not shift, and it is skipped while an inner
  * activity/subsection is hovered so only the innermost draggable object is highlighted.
  */
-body.format-multipageformat.editing .course-content li.section.course-section[data-for="section"]:not([data-number="0"]):not([data-tab-section="true"]):not(.delegated-section):hover:not(:has(.activity:hover)) {
+body.format-multipageformat.editing .course-content li.section.course-section[data-for="section"]:not([data-number="0"]):not([data-tab-section="true"]):not(.delegated-section):hover:not(:has(.activity:hover)):not(:has(> .changenumsections:hover)) > .section-item {
     outline: 2px solid var(--bs-primary, #0f6cbf);
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
 /* The outline is not part of the drag image and would cut into it. */
-body.format-multipageformat.editing .course-content li.section.course-section.dragging:hover {
+body.format-multipageformat.editing .course-content li.section.course-section.dragging:hover > .section-item {
     outline: none;
 }
 
