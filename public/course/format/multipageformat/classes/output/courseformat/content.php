@@ -72,7 +72,13 @@ class content extends content_base {
 
         $tabs = $this->export_tabs();
         if (!empty($tabs)) {
-            $PAGE->requires->js_call_amd('format_multipageformat/tabs', 'init', [$tabs, $this->format->get_courseid()]);
+            $addpagelabel = ($PAGE->user_is_editing() && has_capability('moodle/course:update', $this->format->get_context()))
+                ? get_string('addpage', 'format_multipageformat') : '';
+            $PAGE->requires->js_call_amd(
+                'format_multipageformat/tabs',
+                'init',
+                [$tabs, $this->format->get_courseid(), $addpagelabel]
+            );
         }
 
         return $data;

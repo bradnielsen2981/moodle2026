@@ -153,6 +153,38 @@ class stateactions extends stateactions_base {
     }
 
     /**
+     * Create a new page: a new section at the end of the course, made a Tab.
+     *
+     * The Tab section is the first section of its page. The caller names it afterwards, using
+     * the section name inplace editable.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids not used
+     * @param int|null $targetsectionid not used
+     * @param int|null $targetcmid not used
+     */
+    public function section_addpage(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        global $CFG;
+        require_once($CFG->dirroot . '/course/lib.php');
+
+        $coursecontext = context_course::instance($course->id);
+        require_capability('moodle/course:update', $coursecontext);
+
+        $section = course_create_section($course, 0);
+        tabs_manager::set_as_tab($course->id, $section->id);
+
+        // Adding a section affects the full course structure.
+        $this->course_state($updates, $course);
+    }
+
+    /**
      * Promote a section to a Tab (page).
      *
      * Any real Moodle subsections (mod_subsection activities) nested directly inside the

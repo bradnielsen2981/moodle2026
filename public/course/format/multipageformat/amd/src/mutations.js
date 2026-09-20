@@ -28,6 +28,7 @@
 
 import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import DefaultMutations from 'core_courseformat/local/courseeditor/mutations';
+import Ajax from 'core/ajax';
 import CourseActions from 'core_courseformat/local/content/actions';
 
 class MultipageformatMutations extends DefaultMutations {
@@ -129,6 +130,39 @@ class MultipageformatMutations extends DefaultMutations {
         if (document.querySelector('.format-multipageformat-tabs')) {
             window.location.reload();
         }
+    };
+
+    /**
+     * Create a new page (a new Tab section at the end of the course) and name it.
+     *
+     * The new section is named through the same inplace editable webservice the section title
+     * uses, then the page is reloaded with the new page open, since the Tab strip is only built
+     * at page load.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {string} name the name of the new page
+     */
+    sectionAddPage = async function(stateManager, name) {
+        const course = stateManager.get('course');
+        const before = new Set(course.sectionlist);
+        const updates = await this._callEditWebservice('section_addpage', course.id, []);
+        stateManager.processUpdates(updates);
+        const newid = stateManager.get('course').sectionlist.find(id => !before.has(id));
+        if (newid !== undefined) {
+            await Ajax.call([{
+                methodname: 'core_update_inplace_editable',
+                args: {component: 'format_multipageformat', itemtype: 'sectionname', itemid: newid, value: name},
+            }])[0];
+            try {
+                sessionStorage.setItem(`format_multipageformat/activetab/${course.id}`, newid);
+            } catch (e) {
+                // Private browsing or storage disabled - the new page just won't open by itself.
+            }
+        }
+        window.location.reload();
     };
 
     /**

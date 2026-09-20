@@ -22,6 +22,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['addpage'] = 'Add page';
+$string['addpagecreate'] = 'Create page';
+$string['addpagename'] = 'Name of Page';
+$string['addpagenamelabel'] = 'Page name';
 $string['currentsection'] = 'Current section';
 $string['deletepage'] = 'Delete page';
 $string['hidefromothers'] = 'Hide';

@@ -26,6 +26,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+import {open as openAddPage} from 'format_multipageformat/addpage';
+
 const SELECTORS = {
     SECTIONLIST: '[data-for="course_sectionlist"]',
     SECTION: (id) => `li[data-for="section"][data-id="${id}"]`,
@@ -81,9 +83,10 @@ const resolveTabs = (sectionList, tabs) => {
  *
  * @param {Array} resolvedTabs resolved tabs from resolveTabs()
  * @param {Function} onSelect callback invoked with the sectionid of the clicked tab
+ * @param {string} addPageLabel label of the trailing "Add page" tab, or empty for none
  * @return {Element} the wrapper <li> ready to be inserted into the section list
  */
-const buildTabStrip = (resolvedTabs, onSelect) => {
+const buildTabStrip = (resolvedTabs, onSelect, addPageLabel) => {
     const wrapper = document.createElement('li');
     wrapper.className = 'format-multipageformat-tabs-wrapper';
     wrapper.style.listStyle = 'none';
@@ -117,6 +120,29 @@ const buildTabStrip = (resolvedTabs, onSelect) => {
         nav.appendChild(item);
     });
 
+    if (addPageLabel) {
+        // A trailing tab that creates a new page. It has no data-tabid, so it is never treated
+        // as one of the pages.
+        const item = document.createElement('li');
+        item.className = 'nav-item';
+        item.setAttribute('role', 'presentation');
+
+        const link = document.createElement('a');
+        link.href = '#';
+        link.className = 'nav-link format-multipageformat-addpage';
+        const icon = document.createElement('i');
+        icon.className = 'icon fa fa-plus fa-fw';
+        icon.setAttribute('aria-hidden', 'true');
+        link.append(icon, addPageLabel);
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            openAddPage();
+        });
+
+        item.appendChild(link);
+        nav.appendChild(item);
+    }
+
     wrapper.appendChild(nav);
     return wrapper;
 };
@@ -140,8 +166,9 @@ const storageKey = (courseId) => `format_multipageformat/activetab/${courseId}`;
  * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
  *     by format_multipageformat\output\courseformat\content::export_tabs()
  * @param {number} courseId the course id, used to remember the active tab across reloads
+ * @param {string} addPageLabel label of the "Add page" tab (edit mode only), empty for none
  */
-export const init = (tabs, courseId) => {
+export const init = (tabs, courseId, addPageLabel = '') => {
     if (!tabs || !tabs.length) {
         return;
     }
@@ -191,7 +218,7 @@ export const init = (tabs, courseId) => {
         });
     };
 
-    strip = buildTabStrip(resolvedTabs, setActive);
+    strip = buildTabStrip(resolvedTabs, setActive, addPageLabel);
 
     // The strip belongs right before the first tabbed section so untabbed sections
     // keep rendering above it, undisturbed.
