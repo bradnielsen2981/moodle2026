@@ -347,6 +347,45 @@ class stateactions extends stateactions_base {
     }
 
     /**
+     * Move activities to a section.
+     *
+     * Moving a subsection activity carries its delegated section with it, possibly onto another
+     * page. A page assignment left on that section would then hide it whenever its old page
+     * is not the one being viewed, so it is cleared: a subsection is shown wherever the section
+     * that contains it is shown.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids cm ids to move
+     * @param int|null $targetsectionid the section to move them to
+     * @param int|null $targetcmid the activity to place them before
+     */
+    public function cm_move(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        parent::cm_move($updates, $course, $ids, $targetsectionid, $targetcmid);
+
+        if (!class_exists(subsection_sectiondelegate::class)) {
+            return;
+        }
+        $modinfo = get_fast_modinfo($course);
+        foreach ($ids as $cmid) {
+            $cm = $modinfo->get_cm($cmid);
+            if ($cm->modname !== 'subsection') {
+                continue;
+            }
+            $delegatedid = subsection_sectiondelegate::delegated_section_id($cm);
+            if ($delegatedid && tabs_manager::get_parent($delegatedid) !== null) {
+                tabs_manager::remove($delegatedid);
+            }
+        }
+    }
+
+    /**
      * Add a section, and put it on the page of the section it is added after.
      *
      * @param stateupdates $updates the affected course elements track

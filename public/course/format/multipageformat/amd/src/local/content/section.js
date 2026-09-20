@@ -253,12 +253,12 @@ export default class extends Section {
         if (this.section.component !== null || dropdata?.id == this.id) {
             return false;
         }
-        // A section that is already a subsection cannot be nested somewhere else directly.
-        // Dropping it anywhere on this section instead detaches it and places it below this
-        // section (see _showNestDropZone), the same as dropping it onto the section header.
+        // A section that is already a subsection is moved into this section: the activity
+        // that hosts it is moved here (see _nestDrop). Dropping it on the section header
+        // instead detaches it and places it below this section.
         const draggedsection = this.reactive.get('section', dropdata.id);
         if (draggedsection?.component) {
-            return !this._isDirectlyAboveTab(dropdata);
+            return this._getHostCm(draggedsection) !== null;
         }
         // A Tab (page) is locked in place - it can never be moved at all, including by
         // nesting it into another section.
@@ -284,43 +284,52 @@ export default class extends Section {
     }
 
     /**
-     * Display the drop indicator.
+     * The activity that hosts a subsection (a section delegated to a subsection activity).
      *
-     * For a dragged subsection this is the line below the whole section, exactly what the
-     * section header shows, since the subsection will be detached and placed there.
-     * Otherwise it mirrors how the outer dropzone shows where a dragged activity will land:
-     * a line after the last item in the section (or after the section info box, if the
-     * section has no content yet), as the dragged section will become a subsection here.
-     *
-     * @param {Object} dropdata the accepted drop data
+     * @param {Object} section the subsection, as found in the reactive state
+     * @returns {Object|null} the host cm state object, or null if it cannot be found
      */
-    _showNestDropZone(dropdata) {
-        if (this.reactive.get('section', dropdata?.id)?.component) {
-            this.element.classList.remove(this.classes.DROPUP);
-            this.element.classList.add(this.classes.DROPDOWN);
-            return;
-        }
+    _getHostCm(section) {
+        let host = null;
+        this.reactive.state.cm.forEach((cm) => {
+            if (cm.delegatesectionid == section.id) {
+                host = cm;
+            }
+        });
+        return host;
+    }
+
+    /**
+     * Display the "will become a subsection here" indicator.
+     *
+     * Mirrors exactly how the outer dropzone already shows where a dragged activity will
+     * land: a line after the last item in the section (or after the section info box, if
+     * the section has no content yet). It is also where a subsection that is moved here
+     * will land.
+     */
+    _showNestDropZone() {
         const target = this.getLastCm() ?? this.getLastCmFallback();
         target?.classList.add(this.classes.DROPDOWN);
     }
 
     /**
-     * Hide the drop indicator.
+     * Hide the "will become a subsection here" indicator.
      */
     _hideNestDropZone() {
-        this.element.classList.remove(this.classes.DROPDOWN);
         const target = this.getLastCm() ?? this.getLastCmFallback();
         target?.classList.remove(this.classes.DROPDOWN);
     }
 
     /**
-     * Nest the dragged section into this one, or detach it below this one if it is a subsection.
+     * Nest the dragged section into this one, or move it here if it already is a subsection.
      *
      * @param {Object} dropdata the accepted drop data
      */
     _nestDrop(dropdata) {
-        if (this.reactive.get('section', dropdata.id)?.component) {
-            this.reactive.dispatch('sectionDetach', [dropdata.id], this.id);
+        const draggedsection = this.reactive.get('section', dropdata.id);
+        if (draggedsection?.component) {
+            // Moving a subsection is moving the activity that hosts it.
+            this.reactive.dispatch('cmMove', [this._getHostCm(draggedsection).id], this.id);
             return;
         }
         this.reactive.dispatch('sectionAttach', [dropdata.id], this.id);
