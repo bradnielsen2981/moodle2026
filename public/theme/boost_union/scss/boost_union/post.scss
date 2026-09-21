@@ -3953,3 +3953,51 @@ body.dir-rtl {
         text-decoration: underline !important;
     }
 }
+
+/*=======================================
+ * Course breadcrumbs (on all pages within a course)
+ ======================================*/
+/* The breadcrumb is lifted up so that its top edge is vertically aligned with the top of the course index drawer
+   toggle button and it leaves 20px of space above the course heading. The course index drawer toggle button is fixed
+   at $navbar-height + 1rem whereas the page header starts 32px below that. */
+@include media-breakpoint-up(md) {
+    body.theme-boost-union-coursebreadcrumbs #page-header #page-navbar {
+        margin-top: -32px;
+        margin-bottom: 16px; // 16px + 4px of header padding = 20px above the course heading.
+        width: 100%;
+
+        .breadcrumb {
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            min-height: $icon-medium-width; // Same height as the toggle button.
+            align-items: center;
+        }
+    }
+
+    /* With the Smart menus menubar, the toggle button sits 10px below the menubar instead of 1rem below the navbar. */
+    body.theme-boost-union-coursebreadcrumbs .navbar.fixed-top.boost-union-menubar ~ #page.drawers #page-header #page-navbar {
+        margin-top: calc(-32px + 1rem - 10px);
+    }
+}
+
+/*=======================================
+ * Secondary navigation icons: popup menu of the "More" button (vertical icon stack next to the course index button)
+ ======================================*/
+/* Instead of dropping down below the button (and running out of the viewport), the popup menu opens to the right of the
+   icon stack with its top edge aligned with the top of the course index drawer button. */
+@include media-breakpoint-up(md) {
+    .drawer-left-toggle .secondary-navigation-icons.vertical .dropdown-menu {
+        position: fixed !important; // Overrides the inline positioning applied by Popper.
+        transform: none !important;
+        inset: calc(#{$navbar-height} + 1rem) auto auto calc(16px + #{$icon-medium-width} + 8px) !important;
+        max-height: calc(100vh - #{$navbar-height} - 2rem);
+        overflow-y: auto;
+    }
+
+    .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-left-toggle .secondary-navigation-icons.vertical .dropdown-menu {
+        top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 10px);
+        inset: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 10px) auto auto calc(16px + #{$icon-medium-width} + 8px) !important;
+        max-height: calc(100vh - #{$navbar-height} - #{$bu-smartmenu-menubar-height} - 20px);
+    }
+}

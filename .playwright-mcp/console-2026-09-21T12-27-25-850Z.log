@@ -1,0 +1,25 @@
+[   16345ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   16347ms] [LOG] Registering new reactive instance "M.reactive.ProcessMonitor" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   16349ms] [LOG] Registering new reactive instance "M.reactive.CourseEditor9" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   16385ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   16385ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   16403ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:860
+[   40620ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:860
+[   46796ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   46797ms] [LOG] Registering new reactive instance "M.reactive.ProcessMonitor" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   46798ms] [LOG] Registering new reactive instance "M.reactive.CourseEditor9" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   46836ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   46836ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   46846ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:860
+[   76750ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   76750ms] [LOG] Registering new reactive instance "M.reactive.ProcessMonitor" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   76751ms] [LOG] Registering new reactive instance "M.reactive.CourseEditor9" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   76786ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   76786ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   76790ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:860
+[   91777ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   91778ms] [LOG] Registering new reactive instance "M.reactive.ProcessMonitor" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   91779ms] [LOG] Registering new reactive instance "M.reactive.CourseEditor9" @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:638
+[   91805ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   91805ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:5470
+[   91809ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789993643/core/first.js:860

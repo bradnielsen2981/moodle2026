@@ -1,0 +1,24 @@
+- generic [ref=f14e3]:
+  - heading "Error" [level=1] [ref=f14e4]
+  - generic [ref=f14e5]: "Exception - theme_boost\\boostnavbar::get_item(): Return value must be of type ?breadcrumb_navigation_node, core\\navigation\\navigation_node returned"
+  - generic [ref=f14e6]: "Debug info: Error code: generalexceptionmessage"
+  - generic [ref=f14e7]:
+    - text: "Stack trace:"
+    - list [ref=f14e8]:
+      - listitem [ref=f14e9]: "line 183 of \\public\\theme\\boost\\classes\\boostnavbar.php: TypeError thrown"
+      - listitem [ref=f14e10]: "line 113 of \\public\\theme\\boost_union\\classes\\boostnavbar.php: call to theme_boost\\boostnavbar->get_item()"
+      - listitem [ref=f14e11]: "line 49 of \\public\\theme\\boost\\classes\\boostnavbar.php: call to theme_boost_union\\boostnavbar->prepare_nodes_for_boost()"
+      - listitem [ref=f14e12]: "line 862 of \\public\\theme\\boost_union\\classes\\output\\core_renderer.php: call to theme_boost\\boostnavbar->__construct()"
+      - listitem [ref=f14e13]: "line 574 of \\public\\theme\\boost_union\\classes\\output\\core_renderer.php: call to theme_boost_union\\output\\core_renderer->navbar()"
+      - listitem [ref=f14e14]: "line 238 of \\public\\lib\\mustache\\src\\Context.php: call to theme_boost_union\\output\\core_renderer->full_header()"
+      - listitem [ref=f14e15]: "line 157 of \\public\\lib\\mustache\\src\\Context.php: call to Mustache\\Context->findVariableInStack()"
+      - listitem [ref=f14e16]: "line 111 of C:\\xampp\\moodledata\\localcache\\mustache\\1789992298\\boost_union\\__Mustache_ec9b8be3213bd9d8b313e07b0f0d0d53.php: call to Mustache\\Context->findDot()"
+      - listitem [ref=f14e17]: "line 71 of \\public\\lib\\mustache\\src\\Template.php: call to __Mustache_ec9b8be3213bd9d8b313e07b0f0d0d53->renderInternal()"
+      - listitem [ref=f14e18]: "line 191 of \\public\\lib\\classes\\output\\renderer_base.php: call to Mustache\\Template->render()"
+      - listitem [ref=f14e19]: "line 377 of \\public\\theme\\boost_union\\layout\\drawers.php: call to core\\output\\renderer_base->render_from_template()"
+      - listitem [ref=f14e20]: "line 951 of \\public\\lib\\classes\\output\\core_renderer.php: call to include()"
+      - listitem [ref=f14e21]: "line 867 of \\public\\lib\\classes\\output\\core_renderer.php: call to core\\output\\core_renderer->render_page_layout()"
+      - listitem [ref=f14e22]: "line 1952 of \\public\\theme\\boost_union\\classes\\output\\core_renderer.php: call to core\\output\\core_renderer->header()"
+      - listitem [ref=f14e23]: "line 0 of : call to theme_boost_union\\output\\core_renderer->header()"
+      - listitem [ref=f14e24]: "line 109 of \\public\\lib\\classes\\output\\bootstrap_renderer.php: call to call_user_func_array()"
+      - listitem [ref=f14e25]: "line 101 of \\public\\user\\index.php: call to core\\output\\bootstrap_renderer->__call()"

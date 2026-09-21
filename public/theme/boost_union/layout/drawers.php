@@ -246,6 +246,14 @@ if (!empty($primarymenu['bottombar']) && !empty($primarymenu['bottombar']['drawe
     $extraclasses[] = 'theme-boost-union-bottombar';
 }
 
+// Add a class selector if the breadcrumbs should be shown on all pages within a course.
+if (
+    get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+        in_array($PAGE->context->contextlevel, [CONTEXT_COURSE, CONTEXT_MODULE])
+) {
+    $extraclasses[] = 'theme-boost-union-coursebreadcrumbs';
+}
+
 // Include the extra classes for the course index modification.
 require_once(__DIR__ . '/includes/courseindex.php');
 

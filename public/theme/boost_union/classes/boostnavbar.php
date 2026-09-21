@@ -46,6 +46,10 @@ class boostnavbar extends \theme_boost\boostnavbar {
         // Defines whether section items with an action should be removed by default.
         $removesections = true;
 
+        // Defines whether the course breadcrumbs are desired on all pages within a course.
+        $showcoursebreadcrumbs = get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+            in_array($this->page->context->contextlevel, [CONTEXT_COURSE, CONTEXT_MODULE]);
+
         if ($this->page->context->contextlevel == CONTEXT_COURSECAT) {
             // Remove the 'Permissions' navbar node in the Check permissions page.
             if ($this->page->pagetype === 'admin-roles-check') {
@@ -54,39 +58,31 @@ class boostnavbar extends \theme_boost\boostnavbar {
         }
         if ($this->page->context->contextlevel == CONTEXT_COURSE) {
             if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Create the categories breadcrumb navigation nodes.
-                $categorynodes = [];
-                foreach (array_reverse($this->get_categories()) as $category) {
-                    $context = \context_coursecat::instance($category->id);
-                    if (!\core_course_category::can_view_category($category)) {
-                        continue;
+                $categorynodes = $this->get_category_nodes();
+                // Not all course pages (e.g. Participants) provide a course node in the navbar, so make sure there is one.
+                $hascoursenode = false;
+                foreach ($this->items as $item) {
+                    if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                        $hascoursenode = true;
                     }
-
-                    $displaycontext = \context_helper::get_navigation_filter_context($context);
-                    $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
-                    $name = format_string($category->name, true, ['context' => $displaycontext]);
-                    $categorynode = \breadcrumb_navigation_node::create(
-                        $name,
-                        $url,
-                        \breadcrumb_navigation_node::TYPE_CATEGORY,
+                }
+                if (!$hascoursenode) {
+                    $course = $this->page->course;
+                    $coursenode = \breadcrumb_navigation_node::create(
+                        format_string($course->shortname, true, ['context' => $this->page->context]),
+                        new moodle_url('/course/view.php', ['id' => $course->id]),
+                        \breadcrumb_navigation_node::TYPE_COURSE,
                         null,
-                        $category->id
+                        $course->id
                     );
-                    if (!$category->visible) {
-                        $categorynode->hidden = true;
-                    }
-                    $categorynodes[] = $categorynode;
+                    array_unshift($this->items, $coursenode);
                 }
                 $itemswithcategories = [];
-                if (!$this->items) {
-                    $itemswithcategories = $categorynodes;
-                } else {
-                    foreach ($this->items as $item) {
-                        if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
-                            $itemswithcategories = array_merge($itemswithcategories, $categorynodes);
-                        }
-                        $itemswithcategories[] = $item;
+                foreach ($this->items as $item) {
+                    if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                        $itemswithcategories = array_merge($itemswithcategories, $categorynodes);
                     }
+                    $itemswithcategories[] = $item;
                 }
                 $this->items = $itemswithcategories;
             }
@@ -108,12 +104,34 @@ class boostnavbar extends \theme_boost\boostnavbar {
                 case THEME_BOOST_UNION_SETTING_SELECT_YES:
                     break;
             }
-            // Remove the course breadcrumb node.
-            if (!str_starts_with($this->page->pagetype, 'course-view-section-')) {
+            // Remove the course breadcrumb node (but keep it if the course breadcrumbs are desired).
+            if (
+                !$showcoursebreadcrumbs &&
+                !str_starts_with($this->page->pagetype, 'course-view-section-')
+            ) {
                 $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
+            }
+            // Remember the course node as it would be removed together with the navbar nodes that already exist in the
+            // secondary navigation menu, but is wanted if the course breadcrumbs are desired.
+            $coursenode = null;
+            foreach ($this->items as $item) {
+                if ($showcoursebreadcrumbs && $item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                    $coursenode = $item;
+                }
             }
             // Remove the navbar nodes that already exist in the secondary navigation menu.
             $this->remove_items_that_exist_in_navigation($PAGE->secondarynav);
+            if (!is_null($coursenode) && !in_array($coursenode, $this->items, true)) {
+                // Put the course node back after the last category node.
+                $position = 0;
+                foreach ($this->items as $key => $item) {
+                    if ($item->type == \breadcrumb_navigation_node::TYPE_CATEGORY) {
+                        $position = $key + 1;
+                    }
+                }
+                array_splice($this->items, $position, 0, [$coursenode]);
+                $this->items = array_values($this->items);
+            }
 
             switch ($this->page->pagetype) {
                 case 'group-groupings':
@@ -182,10 +200,7 @@ class boostnavbar extends \theme_boost\boostnavbar {
 
         // Don't display the navbar if there is only one item. Apparently this is bad UX design.
         // Except, leave it in when in course context and categorybreadcrumbs are desired.
-        if (
-            !(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                $this->page->context->contextlevel == CONTEXT_COURSE)
-        ) {
+        if (!$showcoursebreadcrumbs) {
             if ($this->item_count() <= 1) {
                 $this->clear_items();
                 return;
@@ -194,12 +209,40 @@ class boostnavbar extends \theme_boost\boostnavbar {
 
         // Make sure that the last item is not a link. Not sure if this is always a good idea.
         // Except, leave it when categorybreadcrumbs are desired and if we are on a course page.
-        if (
-            !(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                $this->page->context->contextlevel == CONTEXT_COURSE)
-        ) {
+        if (!$showcoursebreadcrumbs) {
             $this->remove_last_item_action();
         }
+    }
+
+    /**
+     * Creates the breadcrumb navigation nodes for the categories of the current course.
+     *
+     * @return breadcrumb_navigation_node[] The category nodes, outermost category first.
+     */
+    protected function get_category_nodes(): array {
+        $categorynodes = [];
+        foreach (array_reverse($this->get_categories()) as $category) {
+            $context = \context_coursecat::instance($category->id);
+            if (!\core_course_category::can_view_category($category)) {
+                continue;
+            }
+
+            $displaycontext = \context_helper::get_navigation_filter_context($context);
+            $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
+            $name = format_string($category->name, true, ['context' => $displaycontext]);
+            $categorynode = \breadcrumb_navigation_node::create(
+                $name,
+                $url,
+                \breadcrumb_navigation_node::TYPE_CATEGORY,
+                null,
+                $category->id
+            );
+            if (!$category->visible) {
+                $categorynode->hidden = true;
+            }
+            $categorynodes[] = $categorynode;
+        }
+        return $categorynodes;
     }
 
     /**

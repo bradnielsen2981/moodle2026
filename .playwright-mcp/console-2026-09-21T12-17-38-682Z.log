@@ -1,0 +1,5 @@
+[    1467ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://moodle.local/user/index.php?id=8:0
+[    1576ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1789992452/core/first.js:638
+[    1589ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1789992452/core/first.js:5470
+[    1589ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1789992452/core/first.js:5470
+[    1591ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1789992452/core/first.js:860

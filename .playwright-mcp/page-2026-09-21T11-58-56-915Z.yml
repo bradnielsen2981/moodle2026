@@ -1,0 +1,354 @@
+- generic [active] [ref=f3e1]:
+  - status
+  - generic [ref=f3e2]:
+    - link "Skip to main content" [ref=f3e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f3e4]:
+      - generic [ref=f3e5]:
+        - link "Curved Learning" [ref=f3e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f3e9]:
+          - menubar [ref=f3e10]:
+            - menuitem "Dashboard" [ref=f3e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f3e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f3e13]:
+          - generic [ref=f3e15]:
+            - generic [ref=f3e16]: Edit mode
+            - checkbox "Edit mode" [ref=f3e18]
+          - button "Show notification window with no new notifications" [ref=f3e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f3e21]: 
+          - button "Toggle messaging drawer" [ref=f3e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f3e24]: 
+          - link "" [ref=f3e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f3e28]: 
+          - button "User menu" [ref=f3e33] [cursor=pointer]:
+            - img "Admin User" [ref=f3e37]: AU
+            - text: 
+    - generic [ref=f3e38]:
+      - generic [ref=f3e40]:
+        - generic [ref=f3e41]:
+          - button "Open course index" [ref=f3e42] [cursor=pointer]
+          - generic [ref=f3e47]:
+            - link "Course Settings" [ref=f3e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=8
+              - img [aria-hidden] [ref=f3e49]: 
+            - link "Participants Participants" [ref=f3e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=8
+              - img "Participants" [ref=f3e52]: 
+              - generic [ref=f3e53]: Participants
+            - link "Grades" [ref=f3e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=8
+              - img [aria-hidden] [ref=f3e55]: 
+            - link "Activities" [ref=f3e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=8
+              - img [aria-hidden] [ref=f3e58]: 
+            - button "More More" [ref=f3e61] [cursor=pointer]:
+              - img "More" [ref=f3e62]: 
+              - generic [ref=f3e63]: More
+        - text:     
+        - banner [ref=f3e64]:
+          - heading [level=1] [ref=f3e71]:
+            - link "Introduction to Algebra" [ref=f3e72] [cursor=pointer]:
+              - /url: http://moodle.local/course/view.php?id=8
+        - main [ref=f3e76]:
+          - generic [ref=f3e79]:
+            - navigation [ref=f3e81]:
+              - generic [ref=f3e82]:
+                - generic [ref=f3e83]: Participants tertiary navigation.
+                - combobox "Participants tertiary navigation." [ref=f3e84] [cursor=pointer]: Enrolled users 
+                - text: 
+            - button "Enrol users" [ref=f3e90] [cursor=pointer]
+          - generic [ref=f3e92]:
+            - group "Filter 1" [ref=f3e95]:
+              - generic [ref=f3e97]:
+                - generic [ref=f3e98]:
+                  - generic [ref=f3e99]: Match
+                  - combobox "Match" [ref=f3e100]:
+                    - option "None"
+                    - option "Any" [selected]
+                    - option "All"
+                - generic [ref=f3e101]: Filter type
+                - combobox "Filter type" [ref=f3e102]:
+                  - option "Select" [selected]
+                  - option "Keyword"
+                  - option "Status"
+                  - option "Roles"
+                  - option "Enrolment methods"
+                - button "Remove filter row" [ref=f3e103] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f3e104]: 
+            - generic [ref=f3e105]:
+              - button "Add condition" [ref=f3e106] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f3e107]: +
+                - text: Add condition
+              - button "Clear filters" [ref=f3e108] [cursor=pointer]
+              - button "Apply filters" [ref=f3e109] [cursor=pointer]
+          - generic [ref=f3e112]:
+            - paragraph [ref=f3e113]: 1 participants found
+            - generic [ref=f3e114]:
+              - generic [ref=f3e115]:
+                - generic [ref=f3e116]: First name
+                - navigation [ref=f3e117]:
+                  - list [ref=f3e118]:
+                    - listitem [ref=f3e119]:
+                      - link "All" [ref=f3e120] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst
+                  - list [ref=f3e121]:
+                    - listitem [ref=f3e122]:
+                      - link "A" [ref=f3e123] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=A
+                    - listitem [ref=f3e124]:
+                      - link "B" [ref=f3e125] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=B
+                    - listitem [ref=f3e126]:
+                      - link "C" [ref=f3e127] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=C
+                    - listitem [ref=f3e128]:
+                      - link "D" [ref=f3e129] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=D
+                    - listitem [ref=f3e130]:
+                      - link "E" [ref=f3e131] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=E
+                    - listitem [ref=f3e132]:
+                      - link "F" [ref=f3e133] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=F
+                    - listitem [ref=f3e134]:
+                      - link "G" [ref=f3e135] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=G
+                    - listitem [ref=f3e136]:
+                      - link "H" [ref=f3e137] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=H
+                    - listitem [ref=f3e138]:
+                      - link "I" [ref=f3e139] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=I
+                    - listitem [ref=f3e140]:
+                      - link "J" [ref=f3e141] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=J
+                    - listitem [ref=f3e142]:
+                      - link "K" [ref=f3e143] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=K
+                    - listitem [ref=f3e144]:
+                      - link "L" [ref=f3e145] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=L
+                    - listitem [ref=f3e146]:
+                      - link "M" [ref=f3e147] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=M
+                  - list [ref=f3e148]:
+                    - listitem [ref=f3e149]:
+                      - link "N" [ref=f3e150] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=N
+                    - listitem [ref=f3e151]:
+                      - link "O" [ref=f3e152] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=O
+                    - listitem [ref=f3e153]:
+                      - link "P" [ref=f3e154] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=P
+                    - listitem [ref=f3e155]:
+                      - link "Q" [ref=f3e156] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=Q
+                    - listitem [ref=f3e157]:
+                      - link "R" [ref=f3e158] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=R
+                    - listitem [ref=f3e159]:
+                      - link "S" [ref=f3e160] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=S
+                    - listitem [ref=f3e161]:
+                      - link "T" [ref=f3e162] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=T
+                    - listitem [ref=f3e163]:
+                      - link "U" [ref=f3e164] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=U
+                    - listitem [ref=f3e165]:
+                      - link "V" [ref=f3e166] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=V
+                    - listitem [ref=f3e167]:
+                      - link "W" [ref=f3e168] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=W
+                    - listitem [ref=f3e169]:
+                      - link "X" [ref=f3e170] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=X
+                    - listitem [ref=f3e171]:
+                      - link "Y" [ref=f3e172] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=Y
+                    - listitem [ref=f3e173]:
+                      - link "Z" [ref=f3e174] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tifirst=Z
+              - generic [ref=f3e175]:
+                - generic [ref=f3e176]: Last name
+                - navigation [ref=f3e177]:
+                  - list [ref=f3e178]:
+                    - listitem [ref=f3e179]:
+                      - link "All" [ref=f3e180] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast
+                  - list [ref=f3e181]:
+                    - listitem [ref=f3e182]:
+                      - link "A" [ref=f3e183] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=A
+                    - listitem [ref=f3e184]:
+                      - link "B" [ref=f3e185] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=B
+                    - listitem [ref=f3e186]:
+                      - link "C" [ref=f3e187] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=C
+                    - listitem [ref=f3e188]:
+                      - link "D" [ref=f3e189] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=D
+                    - listitem [ref=f3e190]:
+                      - link "E" [ref=f3e191] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=E
+                    - listitem [ref=f3e192]:
+                      - link "F" [ref=f3e193] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=F
+                    - listitem [ref=f3e194]:
+                      - link "G" [ref=f3e195] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=G
+                    - listitem [ref=f3e196]:
+                      - link "H" [ref=f3e197] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=H
+                    - listitem [ref=f3e198]:
+                      - link "I" [ref=f3e199] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=I
+                    - listitem [ref=f3e200]:
+                      - link "J" [ref=f3e201] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=J
+                    - listitem [ref=f3e202]:
+                      - link "K" [ref=f3e203] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=K
+                    - listitem [ref=f3e204]:
+                      - link "L" [ref=f3e205] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=L
+                    - listitem [ref=f3e206]:
+                      - link "M" [ref=f3e207] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=M
+                  - list [ref=f3e208]:
+                    - listitem [ref=f3e209]:
+                      - link "N" [ref=f3e210] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=N
+                    - listitem [ref=f3e211]:
+                      - link "O" [ref=f3e212] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=O
+                    - listitem [ref=f3e213]:
+                      - link "P" [ref=f3e214] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=P
+                    - listitem [ref=f3e215]:
+                      - link "Q" [ref=f3e216] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=Q
+                    - listitem [ref=f3e217]:
+                      - link "R" [ref=f3e218] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=R
+                    - listitem [ref=f3e219]:
+                      - link "S" [ref=f3e220] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=S
+                    - listitem [ref=f3e221]:
+                      - link "T" [ref=f3e222] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=T
+                    - listitem [ref=f3e223]:
+                      - link "U" [ref=f3e224] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=U
+                    - listitem [ref=f3e225]:
+                      - link "V" [ref=f3e226] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=V
+                    - listitem [ref=f3e227]:
+                      - link "W" [ref=f3e228] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=W
+                    - listitem [ref=f3e229]:
+                      - link "X" [ref=f3e230] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=X
+                    - listitem [ref=f3e231]:
+                      - link "Y" [ref=f3e232] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=Y
+                    - listitem [ref=f3e233]:
+                      - link "Z" [ref=f3e234] [cursor=pointer]:
+                        - /url: http://moodle.local/user/index.php?id=8&tilast=Z
+              - table [ref=f3e236]:
+                - rowgroup [ref=f3e237]:
+                  - row [ref=f3e238]:
+                    - columnheader "Select all" [ref=f3e239]:
+                      - generic [ref=f3e240]:
+                        - checkbox "Select all" [ref=f3e241]
+                        - generic [ref=f3e242]: Select all
+                    - columnheader [ref=f3e243]:
+                      - button "Sort by First name ascending" [ref=f3e244] [cursor=pointer]: First name
+                      - text: /
+                      - button "Sort by Last name ascending" [ref=f3e245] [cursor=pointer]: Last name
+                      - generic [aria-hidden] [ref=f3e246]: 
+                      - button "Hide Full name" [expanded] [ref=f3e248] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e249]: 
+                    - columnheader [ref=f3e250]:
+                      - button "Sort by Email address ascending" [ref=f3e251] [cursor=pointer]: Email address
+                      - button "Hide Email address" [expanded] [ref=f3e253] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e254]: 
+                    - columnheader [ref=f3e255]:
+                      - text: Roles
+                      - button "Hide Roles" [expanded] [ref=f3e257] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e258]: 
+                    - columnheader [ref=f3e259]:
+                      - text: Groups
+                      - button "Hide Groups" [expanded] [ref=f3e261] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e262]: 
+                    - columnheader [ref=f3e263]:
+                      - button "Sort by Last access to course ascending" [ref=f3e264] [cursor=pointer]: Last access to course
+                      - button "Hide Last access to course" [expanded] [ref=f3e266] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e267]: 
+                    - columnheader [ref=f3e268]:
+                      - text: Status
+                      - button "Hide Status" [expanded] [ref=f3e270] [cursor=pointer]:
+                        - generic [aria-hidden] [ref=f3e271]: 
+                - rowgroup [ref=f3e272]:
+                  - row [ref=f3e273]:
+                    - cell "Select 'Admin User'" [ref=f3e274]:
+                      - checkbox "Select 'Admin User'" [ref=f3e275]
+                    - rowheader [ref=f3e277]:
+                      - link [ref=f3e278] [cursor=pointer]:
+                        - /url: http://moodle.local/user/view.php?id=2&course=8
+                        - img "Admin User" [ref=f3e279]: AU
+                        - text: Admin User
+                    - cell "brad_nielsen29@hotmail.com" [ref=f3e280]
+                    - cell [ref=f3e281]:
+                      - link [ref=f3e283] [cursor=pointer]:
+                        - /url: "#"
+                        - text: Teacher
+                        - img "Admin User's role assignments" [ref=f3e285]: 
+                    - cell "No groups" [ref=f3e286]
+                    - cell "now" [ref=f3e287]
+                    - cell "Active Manual enrolments Edit enrolment Unenrol" [ref=f3e288]:
+                      - generic [ref=f3e289]:
+                        - generic [ref=f3e290]: Active
+                        - button [ref=f3e291] [cursor=pointer]:
+                          - img "Manual enrolments" [ref=f3e292]: 
+                        - button [ref=f3e293] [cursor=pointer]:
+                          - img "Edit enrolment" [ref=f3e294]: 
+                        - button [ref=f3e295] [cursor=pointer]:
+                          - img "Unenrol" [ref=f3e296]: 
+            - generic [ref=f3e298]:
+              - generic [ref=f3e299]:
+                - generic [ref=f3e300]: With selected users...
+                - combobox "With selected users..." [disabled] [ref=f3e301]:
+                  - option "Choose..." [selected]
+                  - option "Send a message"
+                  - option "Add a new note"
+                  - option "Comma separated values (.csv)"
+                  - option "Microsoft Excel (.xlsx)"
+                  - option "HTML table"
+                  - option "Javascript Object Notation (.json)"
+                  - option "OpenDocument (.ods)"
+                  - option "Portable Document Format (.pdf)"
+                  - option "Edit selected user enrolments"
+                  - option "Delete selected user enrolments"
+                  - option "Edit selected user enrolments"
+                  - option "Delete selected user enrolments"
+              - text: 
+          - button "Enrol users" [ref=f3e306] [cursor=pointer]
+      - contentinfo [ref=f3e307]:
+        - button "Show footer" [ref=f3e308] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f3e309]: "?"
+        - text:    
+        - generic [ref=f3e311]:
+          - link "Purge all caches" [ref=f3e313] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=PCk5UtduOP&returnurl=%2Fuser%2Findex.php%3Fpage%3D0%26perpage%3D20%26contextid%3D0%26id%3D8%26newcourse
+          - generic [ref=f3e315]:
+            - text: "Reactive instances:"
+            - generic [ref=f3e316]:
+              - button "ProcessMonitor" [ref=f3e317] [cursor=pointer]
+              - button "CourseEditor8" [ref=f3e318] [cursor=pointer]

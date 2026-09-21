@@ -852,8 +852,8 @@ $string['courseheaderrestoreoption'] = 'Include course header settings';
 // ... Section: Breadcrumbs.
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
-$string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.';
+$string['categorybreadcrumbs'] = 'Display the course breadcrumbs on all course pages';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the breadcrumbs (course category and course) on all pages within a course, including activity pages. They are aligned with the top of the course index drawer button and shown above the course name.';
 // ... Section: Course index.
 $string['courseindexheading'] = 'Course Index';
 // ... ... Setting: Course index.
