@@ -72,6 +72,8 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
  * Course index drawer: the sections that belong to a page are indented under it, and are only
  * shown while that page is expanded (see syncCourseIndex in tabs.js). Subsections inside a
  * section are already indented by core, so they end up one level further in again.
+ * Three levels result: page, then its sections, then subsections (whether they sit inside the
+ * page's own section or inside one of its other sections).
  */
 .courseindex .courseindex-section.format-multipageformat-index-child {
     padding-left: 1rem;
@@ -79,4 +81,10 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
 
 .courseindex .courseindex-section.format-multipageformat-index-collapsed {
     display: none;
+}
+
+/* Subsections inside the page's own section: indent them one level further than the page's other sections. */
+.courseindex .courseindex-section:not(.delegated-section):not(.format-multipageformat-index-child)
+    > .courseindex-item-content > .courseindex-sectioncontent > .courseindex-item > .courseindex-section.delegated-section {
+    padding-left: 1rem;
 }

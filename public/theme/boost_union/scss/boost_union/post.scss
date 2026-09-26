@@ -44,6 +44,11 @@
     }
 }
 
+/* Indent the "Grader report" heading (the report selector dropdown) on the Grader report page. */
+#page-grade-report-grader-index .tertiary-navigation-selector {
+    margin-left: 1.5rem;
+}
+
 
 /*=======================================
  * Settings: Look -> Site branding

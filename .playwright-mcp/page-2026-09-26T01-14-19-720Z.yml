@@ -1,0 +1,180 @@
+- generic [active] [ref=f14e1]:
+  - status
+  - generic [ref=f14e2]:
+    - link "Skip to main content" [ref=f14e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f14e4]:
+      - generic [ref=f14e5]:
+        - link "Curved Learning" [ref=f14e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f14e9]:
+          - menubar [ref=f14e10]:
+            - menuitem "Dashboard" [ref=f14e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f14e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f14e13]:
+          - generic [ref=f14e15]:
+            - generic [ref=f14e16]: Edit mode
+            - checkbox "Edit mode" [ref=f14e18]
+          - button "Show notification window with no new notifications" [ref=f14e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f14e21]: 
+          - button "Toggle messaging drawer" [ref=f14e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f14e24]: 
+          - link "" [ref=f14e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f14e28]: 
+          - button "User menu" [ref=f14e33] [cursor=pointer]:
+            - img "Admin User" [ref=f14e37]: AU
+            - text: 
+    - generic [ref=f14e38]:
+      - generic [ref=f14e40]:
+        - banner [ref=f14e41]:
+          - generic [ref=f14e42]:
+            - navigation "Breadcrumb" [ref=f14e45]:
+              - list [ref=f14e46]:
+                - listitem [ref=f14e47]:
+                  - link "Courses" [ref=f14e48] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php
+                - listitem [ref=f14e49]:
+                  - text: /
+                  - link "Mathematics" [ref=f14e50] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f14e51]: / Manage courses and categories
+            - heading "Mathematics" [level=1] [ref=f14e57]
+        - navigation [ref=f14e59]:
+          - menubar [ref=f14e60]:
+            - menuitem "Category" [ref=f14e61] [cursor=pointer]
+            - menuitem "Settings" [ref=f14e62] [cursor=pointer]
+            - menuitem "Recycle bin" [ref=f14e63] [cursor=pointer]
+            - menuitem "Upload courses" [ref=f14e64] [cursor=pointer]
+            - menuitem "More " [ref=f14e65] [cursor=pointer]
+        - main [ref=f14e69]:
+          - generic [ref=f14e72]:
+            - generic [ref=f14e75]:
+              - generic [ref=f14e76]: "Viewing:"
+              - combobox "Viewing:" [ref=f14e77]:
+                - option "Course categories and courses" [selected]
+                - option "Course categories"
+                - option "Courses"
+            - generic [ref=f14e81]:
+              - textbox "Search courses" [ref=f14e82]
+              - generic: Search courses
+              - button "Search courses" [ref=f14e84] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f14e85]: 
+          - heading "Manage course categories and courses" [level=2] [ref=f14e87]
+          - generic [ref=f14e88]:
+            - generic [ref=f14e89]:
+              - link "Skip to the category listings" [ref=f14e90] [cursor=pointer]:
+                - /url: http://moodle.local/course/management.php?categoryid=1#category-listing
+              - link "Skip to the course listings" [ref=f14e91] [cursor=pointer]:
+                - /url: http://moodle.local/course/management.php?categoryid=1#course-listing
+            - generic [ref=f14e92]:
+              - generic [ref=f14e94]:
+                - heading "Course categories" [level=3] [ref=f14e95]
+                - generic [ref=f14e96]:
+                  - link "Create new category" [ref=f14e98] [cursor=pointer]:
+                    - /url: http://moodle.local/course/editcategory.php?parent=1
+                  - tree "Course categories" [ref=f14e99]:
+                    - treeitem "Mathematics bulk action selection Mathematics Courses" [ref=f14e100]:
+                      - generic [ref=f14e101]:
+                        - generic [ref=f14e103]:
+                          - checkbox "Mathematics bulk action selection" [ref=f14e104]
+                          - generic: Mathematics bulk action selection
+                        - link "Mathematics" [ref=f14e107] [cursor=pointer]:
+                          - /url: http://moodle.local/course/management.php?categoryid=1
+                        - generic [ref=f14e108]:
+                          - menubar [ref=f14e109]:
+                            - generic [ref=f14e110]:
+                              - menuitem [ref=f14e112] [cursor=pointer]:
+                                - img "Hide" [ref=f14e113]: 
+                              - generic: 
+                              - generic: 
+                              - generic: 
+                              - generic [ref=f14e115]:
+                                - menuitem "Actions menu" [ref=f14e116] [cursor=pointer]:
+                                  - generic [aria-hidden] [ref=f14e117]: 
+                                - text:          
+                          - generic "Courses" [ref=f14e119]:
+                            - text: "1"
+                            - img "Courses" [ref=f14e121]: 
+                  - generic [ref=f14e122]:
+                    - generic [ref=f14e123]: Bulk actions for selected categories
+                    - generic [ref=f14e124]:
+                      - generic [ref=f14e125]: Sorting
+                      - generic [ref=f14e128]:
+                        - combobox "Which categories would you like to sort?" [ref=f14e130]:
+                          - option "This category"
+                          - option "Selected categories" [selected]
+                          - option "All categories"
+                        - combobox "Select how you would like to sort categories" [disabled] [ref=f14e132]:
+                          - option "Sort by Category name ascending" [selected]
+                          - option "Sort by Category name descending"
+                          - option "Sort by Category ID number ascending"
+                          - option "Sort by Category ID number descending"
+                          - option "Don't sort categories"
+                        - combobox "Select how you would like to sort courses" [disabled] [ref=f14e134]:
+                          - option "Sort by Course full name ascending" [selected]
+                          - option "Sort by Course full name descending"
+                          - option "Sort by Course short name ascending"
+                          - option "Sort by Course short name descending"
+                          - option "Sort by Course ID number ascending"
+                          - option "Sort by Course ID number descending"
+                          - option "Sort by Course time created ascending"
+                          - option "Sort by Course time created descending"
+                          - option "Don't sort courses"
+                        - button "Sort" [ref=f14e135] [cursor=pointer]
+                    - generic [ref=f14e136]:
+                      - generic [ref=f14e137]: Move selected categories to
+                      - generic [ref=f14e141]:
+                        - combobox "Move selected categories to" [disabled] [ref=f14e142]:
+                          - option "Choose..." [selected]
+                          - option "Top"
+                          - option "Mathematics"
+                        - button "Move" [ref=f14e143] [cursor=pointer]
+              - generic [ref=f14e145]:
+                - heading "Mathematics" [level=3] [ref=f14e146]
+                - generic [ref=f14e147]:
+                  - generic [ref=f14e148]:
+                    - link "Create new course" [ref=f14e149] [cursor=pointer]:
+                      - /url: http://moodle.local/course/edit.php?category=1&returnto=catmanage
+                    - button "Sort courses" [ref=f14e154] [cursor=pointer]: Sort courses 
+                    - 'button "Per page: 20" [ref=f14e159] [cursor=pointer]': "Per page: 20 "
+                  - list [ref=f14e160]:
+                    - listitem [ref=f14e161]:
+                      - generic [ref=f14e162]:
+                        - img "You can drag and drop this course to alter its sorting or to move it to another category." [ref=f14e164] [cursor=pointer]: 
+                        - generic [ref=f14e166]:
+                          - checkbox "Year 8 Algebra bulk action selection" [ref=f14e167]
+                          - generic: Year 8 Algebra bulk action selection
+                        - link "Year 8 Algebra" [ref=f14e169] [cursor=pointer]:
+                          - /url: http://moodle.local/course/management.php?categoryid=1&courseid=9
+                        - generic [ref=f14e171]:
+                          - button "Edit" [ref=f14e172] [cursor=pointer]:
+                            - generic [aria-hidden] [ref=f14e173]: 
+                          - button "Copy course" [ref=f14e174] [cursor=pointer]:
+                            - generic [aria-hidden] [ref=f14e175]: 
+                          - button "Delete" [ref=f14e176] [cursor=pointer]:
+                            - generic [aria-hidden] [ref=f14e177]: 
+                          - button "Hide" [ref=f14e178] [cursor=pointer]:
+                            - generic [aria-hidden] [ref=f14e179]: 
+                          - text:   
+                  - generic [ref=f14e180]: Showing all 1 courses
+                  - generic [ref=f14e181]:
+                    - generic [ref=f14e182]: Bulk actions for selected courses
+                    - generic [ref=f14e183]:
+                      - generic [ref=f14e184]: Move selected courses to...
+                      - generic [ref=f14e188]:
+                        - combobox "Move selected courses to..." [disabled] [ref=f14e189]:
+                          - option "Choose..." [selected]
+                          - option "Mathematics"
+                        - button "Move" [ref=f14e190] [cursor=pointer]
+      - contentinfo [ref=f14e191]:
+        - button "Show footer" [ref=f14e192] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f14e193]: "?"
+        - text:    
+        - generic [ref=f14e195]:
+          - link "Purge all caches" [ref=f14e197] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fcourse%2Fmanagement.php%3Fcategoryid%3D1
+          - generic [ref=f14e199]:
+            - text: "Reactive instances:"
+            - generic [ref=f14e200]: This page has no reactive instances.

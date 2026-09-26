@@ -1,0 +1,58 @@
+- generic [active] [ref=f13e1]:
+  - status
+  - generic [ref=f13e2]:
+    - link "Skip to main content" [ref=f13e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f13e4]:
+      - generic [ref=f13e5]:
+        - link "Curved Learning" [ref=f13e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f13e9]:
+          - menubar [ref=f13e10]:
+            - menuitem "Dashboard" [ref=f13e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f13e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f13e13]:
+          - generic [ref=f13e15]:
+            - generic [ref=f13e16]: Edit mode
+            - checkbox "Edit mode" [ref=f13e18]
+          - button "Show notification window with no new notifications" [ref=f13e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f13e21]: 
+          - button "Toggle messaging drawer" [ref=f13e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f13e24]: 
+          - link "" [ref=f13e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f13e28]: 
+          - button "User menu" [ref=f13e33] [cursor=pointer]:
+            - img "Admin User" [ref=f13e37]: AU
+            - text: 
+    - generic [ref=f13e38]:
+      - generic [ref=f13e40]:
+        - banner [ref=f13e41]:
+          - heading "Curved Learning" [level=1] [ref=f13e48]
+        - main [ref=f13e52]:
+          - generic [ref=f13e54]:
+            - paragraph [ref=f13e55]: You are trying to use an invalid course ID
+            - paragraph [ref=f13e56]:
+              - link "More information about this error" [ref=f13e57] [cursor=pointer]:
+                - /url: https://docs.moodle.org/502/en/error/moodle/invalidcourseid
+          - alert [ref=f13e58]:
+            - strong [ref=f13e59]: "Debug info:"
+            - text: "Error code: invalidcourseid"
+            - button "Dismiss this notification" [ref=f13e60] [cursor=pointer]
+          - alert [ref=f13e62]:
+            - strong [ref=f13e63]: "Stack trace:"
+            - list [ref=f13e64]:
+              - listitem [ref=f13e65]: "line 59 of \\public\\grade\\report\\grader\\index.php: core\\exception\\moodle_exception thrown"
+            - button "Dismiss this notification" [ref=f13e66] [cursor=pointer]
+          - button "Continue" [ref=f13e70] [cursor=pointer]
+      - contentinfo [ref=f13e71]:
+        - button "Show footer" [ref=f13e72] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f13e73]: "?"
+        - text:    
+        - generic [ref=f13e75]:
+          - link "Purge all caches" [ref=f13e77] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2F
+          - generic [ref=f13e79]:
+            - text: "Reactive instances:"
+            - generic [ref=f13e80]: This page has no reactive instances.
