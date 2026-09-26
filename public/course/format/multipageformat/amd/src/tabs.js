@@ -27,10 +27,12 @@
  */
 
 import {open as openAddPage} from 'format_multipageformat/addpage';
+import Collapse from 'theme_boost/bootstrap/collapse';
 
 const SELECTORS = {
     SECTIONLIST: '[data-for="course_sectionlist"]',
     SECTION: (id) => `li[data-for="section"][data-id="${id}"]`,
+    SINGLESECTION: '.single-section ul.section-list > li[data-for="section"]',
     TABLINK: '[data-tabid]',
 };
 
@@ -38,6 +40,7 @@ const CLASSES = {
     HIDDEN: 'd-none',
     INDEXCHILD: 'format-multipageformat-index-child',
     INDEXCOLLAPSED: 'format-multipageformat-index-collapsed',
+    INDEXFOCUSED: 'format-multipageformat-index-focused',
 };
 
 /**
@@ -87,20 +90,31 @@ const resolveTabs = (sectionList, tabs) => {
  * shown while their page is expanded in the index, like the subsections inside a section.
  * A page's own subsections are nested in the page by core already.
  *
- * @param {Array} resolvedTabs resolved tabs from resolveTabs()
+ * This works directly off the raw Tab data from PHP against the Course index's own DOM,
+ * deliberately not the main content's section list: the Course index always lists every
+ * section regardless of which page is loaded (see format_multipageformat\output\courseformat\
+ * state\course, which is core's, unfiltered), but the main content does not - visiting a
+ * single section's own page (a Tab, or any of its real delegated subsections) only renders
+ * that one section there. Keying this off the main content would leave every other page's
+ * grouping undone whenever that happens.
+ *
+ * @param {Array} tabs array of {sectionid, childsectionids} as passed to init()
  */
-const syncCourseIndex = (resolvedTabs) => {
+const syncCourseIndex = (tabs) => {
     const index = document.querySelector('.courseindex');
     if (!index) {
         return;
     }
     const indexSection = (id) => index.querySelector(`.courseindex-section[data-id="${id}"]:not(.delegated-section)`);
-    resolvedTabs.forEach(tab => {
-        const chevron = indexSection(tab.sectionid)?.querySelector(':scope > .courseindex-section-title .courseindex-chevron');
+    tabs.forEach(tab => {
+        const tabEl = indexSection(tab.sectionid);
+        if (!tabEl) {
+            return;
+        }
+        const chevron = tabEl.querySelector(':scope > .courseindex-section-title .courseindex-chevron');
         const expanded = chevron?.getAttribute('aria-expanded') === 'true';
-        // The first element of a group is the Tab itself, the rest are its sections.
-        tab.groupEls.slice(1).forEach(el => {
-            const childEl = indexSection(el.dataset.id);
+        tab.childsectionids.forEach(childid => {
+            const childEl = indexSection(childid);
             if (childEl) {
                 childEl.classList.add(CLASSES.INDEXCHILD);
                 childEl.classList.toggle(CLASSES.INDEXCOLLAPSED, !expanded);
@@ -193,6 +207,144 @@ const buildTabStrip = (resolvedTabs, onSelect, addPageLabel) => {
 const storageKey = (courseId) => `format_multipageformat/activetab/${courseId}`;
 
 /**
+ * Find the id of the section actually on screen, whichever kind of page this is.
+ *
+ * @return {?number} the section id, or null if none can be determined
+ */
+const getFocusSectionId = () => {
+    // A Tab's own page, or one of its real delegated subsections: that page shows exactly
+    // one top-level section, which is the one in view.
+    const singleSection = document.querySelector(SELECTORS.SINGLESECTION);
+    if (singleSection) {
+        return Number(singleSection.dataset.id);
+    }
+    // The full course page: whichever section the URL anchor points at, if any.
+    const match = window.location.hash.match(/^#section-(\d+)$/);
+    const target = match ? document.getElementById(`section-${match[1]}`) : null;
+    return target ? Number(target.dataset.id) : null;
+};
+
+/**
+ * Whether a section id is a given Tab itself, or one of its plain (tabs_manager) children.
+ *
+ * @param {Array} tabs array of {sectionid, childsectionids} as passed to init()
+ * @param {number} id the section id to check
+ * @return {?Object} the owning tab ({sectionid, childsectionids}), or undefined if none found
+ */
+const tabOwning = (tabs, id) => tabs.find(
+    (tab) => tab.sectionid === id || tab.childsectionids.some((childid) => Number(childid) === id)
+);
+
+/**
+ * Find which Tab owns a section.
+ *
+ * The section can be a Tab itself, one of its plain (tabs_manager) children, or - one level
+ * further in - a real delegated subsection nested inside either of those. In that last case
+ * there is no data for it in `tabs`, so this walks up the actual DOM nesting instead, from
+ * the subsection to the plain section it lives in, until it reaches one `tabs` does know
+ * about (or runs out of ancestors, for a section with no Tab relationship at all).
+ *
+ * @param {Array} tabs array of {sectionid, childsectionids} as passed to init()
+ * @param {number} focusId the section id to resolve
+ * @return {?Object} the owning tab ({sectionid, childsectionids}), or null if none found
+ */
+const findOwningTab = (tabs, focusId) => {
+    let currentId = focusId;
+    const seen = new Set();
+    while (currentId !== null && !seen.has(currentId)) {
+        seen.add(currentId);
+        const owningTab = tabOwning(tabs, currentId);
+        if (owningTab) {
+            return owningTab;
+        }
+        const sectionEl = document.querySelector(`[data-for="section"][data-id="${currentId}"]`);
+        const parentEl = sectionEl?.parentElement?.closest('[data-for="section"]');
+        currentId = parentEl ? Number(parentEl.dataset.id) : null;
+    }
+    return null;
+};
+
+/**
+ * Expand or collapse a Tab's own node in the Course index, directly through Bootstrap.
+ *
+ * This mirrors core's own courseindex.js _expandSectionNode: a plain DOM/Bootstrap-Collapse
+ * operation, not a reactive state mutation. core uses that same direct approach for the one
+ * other case where it auto-reveals a section to match what's on screen (see its
+ * _expandPageCmSectionIfNecessary) rather than dispatching sectionIndexCollapsed, because
+ * that mutation is only safe once the Course index component has registered its watchers -
+ * timing this module has no reliable way to know from the outside.
+ *
+ * @param {number} tabSectionId the Tab's section id
+ * @param {boolean} expand true to expand it, false to collapse it
+ */
+const setTabExpandedInIndex = (tabSectionId, expand) => {
+    const toggler = document
+        .querySelector(`.courseindex .courseindex-section[data-id="${tabSectionId}"]:not(.delegated-section)`)
+        ?.querySelector(':scope > .courseindex-section-title .courseindex-chevron');
+    let collapsibleId = toggler?.dataset.target ?? toggler?.getAttribute('href');
+    if (!collapsibleId) {
+        return;
+    }
+    const collapsible = document.getElementById(collapsibleId.replace('#', ''));
+    if (!collapsible) {
+        return;
+    }
+    Collapse.getOrCreateInstance(collapsible, {toggle: false})[expand ? 'show' : 'hide']();
+};
+
+/**
+ * The Course index item currently marked as the one on screen, so it can be un-marked
+ * once a different one takes over.
+ */
+let focusedIndexEl = null;
+
+/**
+ * Highlight whichever Course index item corresponds to the section actually on screen, so the
+ * drawer shows what was just clicked - whether that click was a Course index link itself, or a
+ * section/subsection heading link within the page (both change the URL the same way).
+ *
+ * This is deliberately not core's own "current" class: that one reflects the course's marker
+ * (the "Highlight" action on a topic) and has nothing to do with what is currently being viewed.
+ *
+ * @param {?number} focusId the section id actually on screen, or null for none
+ */
+const highlightFocusedSection = (focusId) => {
+    if (focusedIndexEl) {
+        focusedIndexEl.classList.remove(CLASSES.INDEXFOCUSED);
+        focusedIndexEl = null;
+    }
+    if (!focusId) {
+        return;
+    }
+    const el = document.querySelector(`.courseindex .courseindex-section[data-id="${focusId}"]`);
+    if (el) {
+        el.classList.add(CLASSES.INDEXFOCUSED);
+        focusedIndexEl = el;
+    }
+};
+
+/**
+ * Show only the path to the section actually on screen in the Course index: expand its Tab
+ * and collapse every other one, so the drawer always reflects where you are instead of
+ * whatever was left expanded from earlier browsing. Also highlights the exact section or
+ * subsection on screen (see highlightFocusedSection).
+ *
+ * @param {Array} tabs array of {sectionid, childsectionids} as passed to init()
+ */
+const expandCurrentPathInIndex = (tabs) => {
+    const focusId = getFocusSectionId();
+    highlightFocusedSection(focusId);
+    if (!focusId) {
+        return;
+    }
+    const owningTab = findOwningTab(tabs, focusId);
+    if (!owningTab) {
+        return;
+    }
+    tabs.forEach((tab) => setTabExpandedInIndex(tab.sectionid, tab.sectionid === owningTab.sectionid));
+};
+
+/**
  * Initialise the Tabs UI.
  *
  * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
@@ -205,6 +357,35 @@ export const init = (tabs, courseId, addPageLabel = '') => {
         return;
     }
 
+    // Keep the Course index grouped by page on every page, including pages where the main
+    // content only ever shows a single section (a Tab's own page, or one of its real delegated
+    // subsections) and so has nothing for the code below to build a Tab strip out of.
+    syncCourseIndex(tabs);
+    const courseindex = document.querySelector('.courseindex');
+    if (courseindex) {
+        let pending = false;
+        new MutationObserver(() => {
+            if (!pending) {
+                pending = true;
+                requestAnimationFrame(() => {
+                    pending = false;
+                    syncCourseIndex(tabs);
+                });
+            }
+        }).observe(courseindex, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            attributeFilter: ['aria-expanded', 'class'],
+        });
+    }
+
+    expandCurrentPathInIndex(tabs);
+    window.addEventListener('hashchange', () => expandCurrentPathInIndex(tabs));
+
+    // Everything from here on builds the Tab strip and switches between tab groups in the
+    // main content, which only makes sense when this page actually renders more than one
+    // section for it to switch between.
     const sectionList = document.querySelector(SELECTORS.SECTIONLIST);
     if (!sectionList) {
         return;
@@ -298,31 +479,34 @@ export const init = (tabs, courseId, addPageLabel = '') => {
         reposition();
     };
 
+    // If the URL already points at a section (e.g. the Course index link that brought us here,
+    // or a browser back/forward through history), that section's tab takes priority over the
+    // remembered one, and the section is scrolled into view once its tab is visible.
+    const focusSectionFromHash = () => {
+        const match = window.location.hash.match(/^#section-(\d+)$/);
+        if (!match) {
+            return;
+        }
+        const target = document.getElementById(`section-${match[1]}`);
+        if (!target) {
+            return;
+        }
+        const targetId = Number(target.dataset.id);
+        const owningTab = findOwningTab(tabs, targetId);
+        const tab = owningTab ? resolvedTabs.find(t => t.sectionid === owningTab.sectionid) : null;
+        if (tab && tab.sectionid !== activeSectionId) {
+            setActive(tab.sectionid);
+        }
+        target.scrollIntoView({block: 'start'});
+    };
+
     reposition();
     setActive(activeSectionId);
+    focusSectionFromHash();
 
-    // Keep the Course index in step: it is re-rendered on section changes, and pages are
-    // expanded and collapsed in it. The sync only touches a class when it changes, so the
-    // mutations it causes settle after one extra pass.
-    syncCourseIndex(resolvedTabs);
-    const courseindex = document.querySelector('.courseindex');
-    if (courseindex) {
-        let pending = false;
-        new MutationObserver(() => {
-            if (!pending) {
-                pending = true;
-                requestAnimationFrame(() => {
-                    pending = false;
-                    syncCourseIndex(resolvedTabs);
-                });
-            }
-        }).observe(courseindex, {
-            subtree: true,
-            childList: true,
-            attributes: true,
-            attributeFilter: ['aria-expanded', 'class'],
-        });
-    }
+    // The Course index link is a plain in-page anchor when it targets the currently loaded
+    // page, so the browser only fires 'hashchange' for it (no navigation/reload happens).
+    window.addEventListener('hashchange', focusSectionFromHash);
 
     const observer = new MutationObserver(sync);
     observer.observe(sectionList, {childList: true});

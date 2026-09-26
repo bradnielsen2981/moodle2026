@@ -1,2 +1,0 @@
-[    1222ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://moodle.local/user/index.php?id=8:0
-[    1268ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://moodle.local/favicon.ico:0

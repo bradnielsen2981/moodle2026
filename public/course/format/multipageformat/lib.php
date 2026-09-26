@@ -118,11 +118,13 @@ class format_multipageformat extends core_courseformat\base {
         // Determine page.
         if (array_key_exists('sr', $options)) {
             $pagesection = !is_null($options['sr']) ? $this->get_section($options['sr'], IGNORE_MISSING) : null;
-        } else if ($options['navigation'] ?? false) {
-            $pagesection = ($section && $section->get_component_instance()) ?
-                            $section->get_component_instance()->get_parent_section()
-                            : $section;
         } else {
+            // Every section - a Tab, one of its plain children, or a real delegated subsection
+            // (e.g. mod_subsection) nested inside either - stays on the course page. Tabs are
+            // simulated client-side (see format_multipageformat/tabs), so sending any of them to
+            // their own single-section page would only show that one section's own card, hiding
+            // the rest of the page it belongs to, and would also break the Course index grouping
+            // (it would fall back to a flat list, see format_multipageformat/tabs::syncCourseIndex()).
             $pagesection = null;
         }
 

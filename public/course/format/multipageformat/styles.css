@@ -88,3 +88,45 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
     > .courseindex-item-content > .courseindex-sectioncontent > .courseindex-item > .courseindex-section.delegated-section {
     padding-left: 1rem;
 }
+
+/*
+ * core's own "page item" highlight (courseindex/section.js, driven by content.js's scroll-spy)
+ * is prone to landing on the wrong section right after a Tab switch: revealing a hidden Tab
+ * shifts the layout, so the scroll-spy can sample a transient scroll position instead of the
+ * one scrollIntoView (see focusSectionFromHash in tabs.js) settles on. Rather than show two
+ * competing highlights, core's is hidden here for sections, and format-multipageformat-index-
+ * focused below - our own, deterministic equivalent - is given the exact same look so there is
+ * still exactly one highlight, and it is always correct.
+ */
+.courseindex .courseindex-section > .courseindex-item.pageitem,
+.courseindex .courseindex-section > .courseindex-item:hover.pageitem,
+.courseindex .courseindex-section > .courseindex-item:focus.pageitem {
+    background-color: transparent;
+    color: inherit;
+}
+
+.courseindex .courseindex-section > .courseindex-item.pageitem .courseindex-link,
+.courseindex .courseindex-section > .courseindex-item.pageitem .courseindex-link a,
+.courseindex .courseindex-section > .courseindex-item.pageitem .courseindex-chevron,
+.courseindex .courseindex-section > .courseindex-item:hover.pageitem .courseindex-link,
+.courseindex .courseindex-section > .courseindex-item:hover.pageitem .courseindex-link a,
+.courseindex .courseindex-section > .courseindex-item:hover.pageitem .courseindex-chevron,
+.courseindex .courseindex-section > .courseindex-item:focus.pageitem .courseindex-link,
+.courseindex .courseindex-section > .courseindex-item:focus.pageitem .courseindex-link a,
+.courseindex .courseindex-section > .courseindex-item:focus.pageitem .courseindex-chevron {
+    color: inherit;
+}
+
+/* Highlights whichever Course index item corresponds to the section or subsection actually on
+ * screen (see highlightFocusedSection in tabs.js), in core's own "page item" colours (see above).
+ */
+.courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item {
+    background-color: #0f6cbf;
+    color: #ffffff;
+}
+
+.courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-link,
+.courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-link a,
+.courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-chevron {
+    color: #ffffff;
+}

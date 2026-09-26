@@ -1,8 +1,0 @@
-[    1761ms] [LOG] Debug module "M.reactive" loaded. @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:638
-[    1763ms] [LOG] Registering new reactive instance "M.reactive.ProcessMonitor" @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:638
-[    1764ms] [LOG] Registering new reactive instance "M.reactive.CourseEditor9" @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:638
-[    1813ms] [LOG] Page is missing a drawer region @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:5470
-[    1814ms] [LOG] Page is missing a drawer toggle link @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:5470
-[    1882ms] [LOG] Starting Moodle session timeout warning. @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:860
-[   12837ms] [INFO] tiny_autosave/id_summary_editor: Attempting to restore draft @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:824
-[   12847ms] [LOG] tiny_autosave/id_summary_editor: Ignoring undo event as there is no undo history @ http://moodle.local/lib/requirejs.php/1790388235/core/first.js:824
