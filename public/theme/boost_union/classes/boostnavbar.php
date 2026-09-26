@@ -155,6 +155,30 @@ class boostnavbar extends \theme_boost\boostnavbar {
                 case 'course-user':
                     $this->remove('mygrades');
                     $this->remove('grades');
+                    break;
+                case 'course-view-participants':
+                    // The 'Participants' navbar node was just removed above (in
+                    // remove_items_that_exist_in_navigation($PAGE->secondarynav)) because it duplicates the
+                    // 'Participants' secondary navigation tab. We want to keep showing it in the breadcrumb
+                    // on the participants page though, so add it back here as the new last item.
+                    $lastitem = end($this->items);
+                    if (is_a($lastitem, 'breadcrumb_navigation_node')) {
+                        $lastitem->set_last(false);
+                    }
+                    reset($this->items);
+                    $participantsnode = \breadcrumb_navigation_node::create(
+                        get_string('participants'),
+                        new moodle_url('/user/index.php', ['id' => $this->page->course->id]),
+                        navigation_node::TYPE_CUSTOM,
+                        null,
+                        'participants'
+                    );
+                    // navigation_node::create() always returns a plain navigation_node (even when called via
+                    // breadcrumb_navigation_node::create()), so it has to be wrapped to get access to set_last().
+                    $participantsnode = new \breadcrumb_navigation_node($participantsnode);
+                    $participantsnode->set_last(true);
+                    $this->items[] = $participantsnode;
+                    break;
             }
         }
 

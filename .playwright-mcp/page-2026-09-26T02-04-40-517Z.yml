@@ -1,0 +1,111 @@
+- generic [active] [ref=f64e1]:
+  - status
+  - generic [ref=f64e2]:
+    - link "Skip to main content" [ref=f64e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f64e4]:
+      - generic [ref=f64e5]:
+        - link "Curved Learning" [ref=f64e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f64e9]:
+          - menubar [ref=f64e10]:
+            - menuitem "Dashboard" [ref=f64e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f64e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f64e13]:
+          - generic [ref=f64e15]:
+            - generic [ref=f64e16]: Edit mode
+            - checkbox "Edit mode" [ref=f64e18]
+          - button "Show notification window with no new notifications" [ref=f64e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f64e21]: 
+          - button "Toggle messaging drawer" [ref=f64e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f64e24]: 
+          - link "" [ref=f64e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f64e28]: 
+          - button "User menu" [ref=f64e33] [cursor=pointer]:
+            - img "Admin User" [ref=f64e37]: AU
+            - text: 
+    - generic [ref=f64e38]:
+      - generic [ref=f64e40]:
+        - generic [ref=f64e41]:
+          - button "Open course index" [ref=f64e42] [cursor=pointer]
+          - generic [ref=f64e47]:
+            - link "Course Settings" [ref=f64e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f64e49]: 
+            - link "Participants Participants" [ref=f64e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f64e52]: 
+              - generic [ref=f64e53]: Participants
+            - link "Grades" [ref=f64e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f64e55]: 
+            - link "Activities" [ref=f64e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f64e58]: 
+            - button "More More" [ref=f64e61] [cursor=pointer]:
+              - img "More" [ref=f64e62]: 
+              - generic [ref=f64e63]: More
+        - text:     
+        - banner [ref=f64e64]:
+          - generic [ref=f64e65]:
+            - navigation "Breadcrumb" [ref=f64e68]:
+              - list [ref=f64e69]:
+                - listitem [ref=f64e70]:
+                  - link "Mathematics" [ref=f64e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f64e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f64e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f64e74]: / Users
+                - listitem [ref=f64e75]:
+                  - text: /
+                  - link "Groups" [ref=f64e76] [cursor=pointer]:
+                    - /url: http://moodle.local/group/index.php?id=9
+            - heading [level=1] [ref=f64e82]:
+              - link "Year 8 Algebra" [ref=f64e83] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f64e87]:
+          - navigation [ref=f64e92]:
+            - generic [ref=f64e93]:
+              - generic [ref=f64e94]: Participants tertiary navigation.
+              - combobox "Participants tertiary navigation." [ref=f64e95] [cursor=pointer]: Groups 
+              - text: 
+          - generic [ref=f64e98]:
+            - generic [ref=f64e99]:
+              - generic [ref=f64e100]:
+                - generic [ref=f64e101]: Groups
+                - listbox "Groups" [ref=f64e102]
+              - heading "With selected" [level=3] [ref=f64e103]
+              - generic [ref=f64e104]:
+                - button "Edit group settings" [disabled]
+              - generic [ref=f64e105]:
+                - button "Delete" [disabled]
+              - generic [ref=f64e106]:
+                - button "Disable messaging" [disabled]
+              - generic [ref=f64e107]:
+                - button "Enable messaging" [disabled]
+              - heading "Manage" [level=3] [ref=f64e108]
+              - button "Create group" [ref=f64e110] [cursor=pointer]
+              - button "Auto-create groups" [ref=f64e112] [cursor=pointer]
+              - button "Import groups" [ref=f64e114] [cursor=pointer]
+            - generic [ref=f64e115]:
+              - generic [ref=f64e116]:
+                - generic [ref=f64e117]: "Members of:"
+                - listbox "Members of:" [ref=f64e118]
+              - generic [ref=f64e119]:
+                - button "Add/remove users" [disabled]
+      - contentinfo [ref=f64e120]:
+        - button "Show footer" [ref=f64e121] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f64e122]: "?"
+        - text:    
+        - generic [ref=f64e124]:
+          - link "Purge all caches" [ref=f64e126] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgroup%2Findex.php%3Fid%3D9
+          - generic [ref=f64e128]:
+            - text: "Reactive instances:"
+            - generic [ref=f64e129]:
+              - button "ProcessMonitor" [ref=f64e130] [cursor=pointer]
+              - button "CourseEditor9" [ref=f64e131] [cursor=pointer]

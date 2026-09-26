@@ -1,0 +1,254 @@
+- generic [active] [ref=f125e1]:
+  - status
+  - generic [ref=f125e2]:
+    - link "Skip to main content" [ref=f125e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f125e4]:
+      - generic [ref=f125e5]:
+        - link "Curved Learning" [ref=f125e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f125e9]:
+          - menubar [ref=f125e10]:
+            - menuitem "Dashboard" [ref=f125e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f125e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f125e13]:
+          - generic [ref=f125e15]:
+            - generic [ref=f125e16]: Edit mode
+            - checkbox "Edit mode" [ref=f125e18]
+          - button "Show notification window with no new notifications" [ref=f125e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f125e21]: 
+          - button "Toggle messaging drawer" [ref=f125e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f125e24]: 
+          - link "" [ref=f125e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f125e28]: 
+          - button "User menu" [ref=f125e33] [cursor=pointer]:
+            - img "Admin User" [ref=f125e37]: AU
+            - text: 
+    - generic [ref=f125e38]:
+      - generic [ref=f125e40]:
+        - banner [ref=f125e41]:
+          - generic [ref=f125e43]:
+            - heading "Site administration" [level=1] [ref=f125e48]
+            - generic [ref=f125e53]:
+              - textbox "Search" [ref=f125e54]
+              - generic: Search
+              - button "Search" [ref=f125e56] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f125e57]: 
+        - navigation [ref=f125e60]:
+          - tablist [ref=f125e61]:
+            - tab "General" [selected] [ref=f125e62] [cursor=pointer]
+            - tab "Users" [ref=f125e63] [cursor=pointer]
+            - tab "Courses" [ref=f125e64] [cursor=pointer]
+            - tab "Grades" [ref=f125e65] [cursor=pointer]
+            - tab "Plugins" [ref=f125e66] [cursor=pointer]
+            - tab "Appearance" [ref=f125e67] [cursor=pointer]
+            - tab "Server" [ref=f125e68] [cursor=pointer]
+            - tab "Reports" [ref=f125e69] [cursor=pointer]
+            - tab "Development" [ref=f125e70] [cursor=pointer]
+            - text: 
+        - main [ref=f125e74]:
+          - generic [ref=f125e78]:
+            - list [ref=f125e82]:
+              - listitem [ref=f125e83]:
+                - link "Notifications" [ref=f125e84] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/index.php
+              - listitem [ref=f125e85]:
+                - link "Registration" [ref=f125e86] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/registration/index.php
+              - listitem [ref=f125e87]:
+                - link "Feedback settings" [ref=f125e88] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=userfeedback
+              - listitem [ref=f125e89]:
+                - link "Advanced features" [ref=f125e90] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=optionalsubsystems
+              - listitem [ref=f125e91]:
+                - link "Site admin presets" [ref=f125e92] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/tool/admin_presets/index.php
+            - separator [ref=f125e93]
+            - generic [ref=f125e94]:
+              - heading [level=4] [ref=f125e96]:
+                - link "AI" [ref=f125e97] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=ai
+              - list [ref=f125e99]:
+                - listitem [ref=f125e100]:
+                  - link "AI providers" [ref=f125e101] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=aiprovider
+                - listitem [ref=f125e102]:
+                  - link "AI placements" [ref=f125e103] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=aiplacement
+            - separator [ref=f125e104]
+            - generic [ref=f125e105]:
+              - heading [level=4] [ref=f125e107]:
+                - link "Competencies" [ref=f125e108] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=competencies
+              - list [ref=f125e110]:
+                - listitem [ref=f125e111]:
+                  - link "Competencies settings" [ref=f125e112] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=competencysettings
+                - listitem [ref=f125e113]:
+                  - link "Migrate frameworks" [ref=f125e114] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/lpmigrate/frameworks.php
+                - listitem [ref=f125e115]:
+                  - link "Import competency framework" [ref=f125e116] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/lpimportcsv/index.php
+                - listitem [ref=f125e117]:
+                  - link "Export competency framework" [ref=f125e118] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/lpimportcsv/export.php
+                - listitem [ref=f125e119]:
+                  - link "Competency frameworks" [ref=f125e120] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/lp/competencyframeworks.php?pagecontextid=1
+                - listitem [ref=f125e121]:
+                  - link "Learning plan templates" [ref=f125e122] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/lp/learningplans.php?pagecontextid=1
+            - separator [ref=f125e123]
+            - generic [ref=f125e124]:
+              - heading [level=4] [ref=f125e126]:
+                - link "Badges" [ref=f125e127] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=badges
+              - list [ref=f125e129]:
+                - listitem [ref=f125e130]:
+                  - link "Badges settings" [ref=f125e131] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=badgesettings
+                - listitem [ref=f125e132]:
+                  - link "Manage badges" [ref=f125e133] [cursor=pointer]:
+                    - /url: http://moodle.local/badges/index.php?type=1
+                - listitem [ref=f125e134]:
+                  - link "Add a new badge" [ref=f125e135] [cursor=pointer]:
+                    - /url: http://moodle.local/badges/edit.php?action=new
+                - listitem [ref=f125e136]:
+                  - link "Manage backpacks" [ref=f125e137] [cursor=pointer]:
+                    - /url: http://moodle.local/badges/backpacks.php
+            - separator [ref=f125e138]
+            - generic [ref=f125e139]:
+              - heading [level=4] [ref=f125e141]:
+                - link "H5P" [ref=f125e142] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=h5p
+              - list [ref=f125e144]:
+                - listitem [ref=f125e145]:
+                  - link "H5P overview" [ref=f125e146] [cursor=pointer]:
+                    - /url: http://moodle.local/h5p/overview.php
+                - listitem [ref=f125e147]:
+                  - link "Manage H5P content types" [ref=f125e148] [cursor=pointer]:
+                    - /url: http://moodle.local/h5p/libraries.php
+                - listitem [ref=f125e149]:
+                  - link "H5P settings" [ref=f125e150] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=h5psettings
+            - separator [ref=f125e151]
+            - generic [ref=f125e152]:
+              - heading [level=4] [ref=f125e154]:
+                - link "Licence" [ref=f125e155] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=license
+              - list [ref=f125e157]:
+                - listitem [ref=f125e158]:
+                  - link "Licence settings" [ref=f125e159] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=licensesettings
+                - listitem [ref=f125e160]:
+                  - link "Licence manager" [ref=f125e161] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/licensemanager/index.php
+            - separator [ref=f125e162]
+            - generic [ref=f125e163]:
+              - heading [level=4] [ref=f125e165]:
+                - link "Location" [ref=f125e166] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=location
+              - list [ref=f125e168]:
+                - listitem [ref=f125e169]:
+                  - link "Location settings" [ref=f125e170] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=locationsettings
+            - separator [ref=f125e171]
+            - generic [ref=f125e172]:
+              - heading [level=4] [ref=f125e174]:
+                - link "Login" [ref=f125e175] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=login
+              - list [ref=f125e177]:
+                - listitem [ref=f125e178]:
+                  - link "Login settings" [ref=f125e179] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=loginsettings
+            - separator [ref=f125e180]
+            - generic [ref=f125e181]:
+              - heading [level=4] [ref=f125e183]:
+                - link "Language" [ref=f125e184] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=language
+              - list [ref=f125e186]:
+                - listitem [ref=f125e187]:
+                  - link "Language settings" [ref=f125e188] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=langsettings
+                - listitem [ref=f125e189]:
+                  - link "Language customisation" [ref=f125e190] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/customlang/index.php
+                - listitem [ref=f125e191]:
+                  - link "Language packs" [ref=f125e192] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/tool/langimport/index.php
+            - separator [ref=f125e193]
+            - generic [ref=f125e194]:
+              - heading [level=4] [ref=f125e196]:
+                - link "Messaging" [ref=f125e197] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=messaging
+              - list [ref=f125e199]:
+                - listitem [ref=f125e200]:
+                  - link "Messaging settings" [ref=f125e201] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=messages
+                - listitem [ref=f125e202]:
+                  - link "Notification settings" [ref=f125e203] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/message.php
+                - listitem [ref=f125e204]:
+                  - link "Mobile" [ref=f125e205] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=messagesettingairnotifier
+            - separator [ref=f125e206]
+            - generic [ref=f125e207]:
+              - heading [level=4] [ref=f125e209]:
+                - link "Payments" [ref=f125e210] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=payment
+              - list [ref=f125e212]:
+                - listitem [ref=f125e213]:
+                  - link "Payment accounts" [ref=f125e214] [cursor=pointer]:
+                    - /url: http://moodle.local/payment/accounts.php
+            - separator [ref=f125e215]
+            - generic [ref=f125e216]:
+              - heading [level=4] [ref=f125e218]:
+                - link "Security" [ref=f125e219] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=security
+              - list [ref=f125e221]:
+                - listitem [ref=f125e222]:
+                  - link "IP blocker" [ref=f125e223] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=ipblocker
+                - listitem [ref=f125e224]:
+                  - link "Site security settings" [ref=f125e225] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=sitepolicies
+                - listitem [ref=f125e226]:
+                  - link "HTTP security" [ref=f125e227] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=httpsecurity
+                - listitem [ref=f125e228]:
+                  - link "Notifications" [ref=f125e229] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=notifications
+            - separator [ref=f125e230]
+            - generic [ref=f125e231]:
+              - heading [level=4] [ref=f125e233]:
+                - link "Site home" [ref=f125e234] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=frontpage
+              - list [ref=f125e236]:
+                - listitem [ref=f125e237]:
+                  - link "Site home settings" [ref=f125e238] [cursor=pointer]:
+                    - /url: http://moodle.local/admin/settings.php?section=frontpagesettings
+            - separator [ref=f125e239]
+            - generic [ref=f125e240]:
+              - heading [level=4] [ref=f125e242]:
+                - link "Custom fields" [ref=f125e243] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/category.php?category=customfield
+              - list [ref=f125e245]:
+                - listitem [ref=f125e246]:
+                  - link "Shared custom fields" [ref=f125e247] [cursor=pointer]:
+                    - /url: http://moodle.local/customfield/customfield.php
+      - contentinfo [ref=f125e248]:
+        - button "Show footer" [ref=f125e249] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f125e250]: "?"
+        - text:    
+        - generic [ref=f125e252]:
+          - link "Purge all caches" [ref=f125e254] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fadmin%2Fsearch.php%3Fquery
+          - generic [ref=f125e255]:
+            - generic [ref=f125e256]:
+              - text: "Reactive instances:"
+              - generic [ref=f125e257]: This page has no reactive instances.
+            - img "Loading" [ref=f125e260]: 

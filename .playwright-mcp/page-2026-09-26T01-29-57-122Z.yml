@@ -1,0 +1,98 @@
+- generic [active] [ref=f36e1]:
+  - status
+  - generic [ref=f36e2]:
+    - link "Skip to main content" [ref=f36e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f36e4]:
+      - generic [ref=f36e5]:
+        - link "Curved Learning" [ref=f36e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f36e9]:
+          - menubar [ref=f36e10]:
+            - menuitem "Dashboard" [ref=f36e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f36e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f36e13]:
+          - generic [ref=f36e15]:
+            - generic [ref=f36e16]: Edit mode
+            - checkbox "Edit mode" [ref=f36e18]
+          - button "Show notification window with no new notifications" [ref=f36e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f36e21]: 
+          - button "Toggle messaging drawer" [ref=f36e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f36e24]: 
+          - link "" [ref=f36e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f36e28]: 
+          - button "User menu" [ref=f36e33] [cursor=pointer]:
+            - img "Admin User" [ref=f36e37]: AU
+            - text: 
+    - generic [ref=f36e38]:
+      - generic [ref=f36e40]:
+        - generic [ref=f36e41]:
+          - button "Open course index" [ref=f36e42] [cursor=pointer]
+          - generic [ref=f36e47]:
+            - link "Course Settings" [ref=f36e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f36e49]: 
+            - link "Participants Participants" [ref=f36e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f36e52]: 
+              - generic [ref=f36e53]: Participants
+            - link "Grades" [ref=f36e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f36e55]: 
+            - link "Activities" [ref=f36e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f36e58]: 
+            - button "More More" [ref=f36e61] [cursor=pointer]:
+              - img "More" [ref=f36e62]: 
+              - generic [ref=f36e63]: More
+        - text:     
+        - banner [ref=f36e64]:
+          - generic [ref=f36e65]:
+            - navigation "Breadcrumb" [ref=f36e68]:
+              - list [ref=f36e69]:
+                - listitem [ref=f36e70]:
+                  - link "Mathematics" [ref=f36e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f36e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f36e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+            - heading [level=1] [ref=f36e79]:
+              - link "Year 8 Algebra" [ref=f36e80] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f36e84]:
+          - heading "Activities" [level=2] [ref=f36e86]
+          - paragraph [ref=f36e87]: An overview of all activities in the course, with dates and other information.
+          - generic [ref=f36e88]:
+            - generic [ref=f36e89]:
+              - generic [ref=f36e91]:
+                - button "Expand" [ref=f36e92] [cursor=pointer]:
+                  - generic "Expand" [ref=f36e93]:
+                    - generic [aria-hidden] [ref=f36e95]: 
+                    - text: 
+                  - text: 
+                - heading "Forums" [level=3] [ref=f36e97]
+              - text: 
+            - generic [ref=f36e99]:
+              - generic [ref=f36e101]:
+                - button "Expand" [ref=f36e102] [cursor=pointer]:
+                  - generic "Expand" [ref=f36e103]:
+                    - generic [aria-hidden] [ref=f36e105]: 
+                    - text: 
+                  - text: 
+                - heading "Resources" [level=3] [ref=f36e107]
+              - text: 
+      - contentinfo [ref=f36e109]:
+        - button "Show footer" [ref=f36e110] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f36e111]: "?"
+        - text:    
+        - generic [ref=f36e113]:
+          - link "Purge all caches" [ref=f36e115] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fcourse%2Foverview.php%3Fid%3D9
+          - generic [ref=f36e117]:
+            - text: "Reactive instances:"
+            - generic [ref=f36e118]:
+              - button "ProcessMonitor" [ref=f36e119] [cursor=pointer]
+              - button "CourseEditor9" [ref=f36e120] [cursor=pointer]

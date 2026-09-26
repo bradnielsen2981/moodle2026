@@ -1,0 +1,92 @@
+- generic [active] [ref=f105e1]:
+  - status
+  - generic [ref=f105e2]:
+    - link "Skip to main content" [ref=f105e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f105e4]:
+      - generic [ref=f105e5]:
+        - link "Curved Learning" [ref=f105e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f105e9]:
+          - menubar [ref=f105e10]:
+            - menuitem "Dashboard" [ref=f105e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f105e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f105e13]:
+          - generic [ref=f105e15]:
+            - generic [ref=f105e16]: Edit mode
+            - checkbox "Edit mode" [ref=f105e18]
+          - button "Show notification window with no new notifications" [ref=f105e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f105e21]: 
+          - button "Toggle messaging drawer" [ref=f105e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f105e24]: 
+          - link "" [ref=f105e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f105e28]: 
+          - button "User menu" [ref=f105e33] [cursor=pointer]:
+            - img "Admin User" [ref=f105e37]: AU
+            - text: 
+    - generic [ref=f105e38]:
+      - generic [ref=f105e40]:
+        - generic [ref=f105e41]:
+          - button "Open course index" [ref=f105e42] [cursor=pointer]
+          - generic [ref=f105e47]:
+            - link "Course Settings" [ref=f105e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f105e49]: 
+            - link "Participants Participants" [ref=f105e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f105e52]: 
+              - generic [ref=f105e53]: Participants
+            - link "Grades" [ref=f105e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f105e55]: 
+            - link "Activities" [ref=f105e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f105e58]: 
+            - button "More More" [ref=f105e61] [cursor=pointer]:
+              - img "More" [ref=f105e62]: 
+              - generic [ref=f105e63]: More
+        - text:     
+        - banner [ref=f105e64]:
+          - generic [ref=f105e65]:
+            - navigation "Breadcrumb" [ref=f105e68]:
+              - list [ref=f105e69]:
+                - listitem [ref=f105e70]:
+                  - link "Mathematics" [ref=f105e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f105e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f105e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f105e74]: / Grade administration
+                - listitem [ref=f105e75]:
+                  - text: /
+                  - link "Grade summary" [ref=f105e76] [cursor=pointer]:
+                    - /url: http://moodle.local/grade/report/summary/index.php?id=9
+            - heading [level=1] [ref=f105e82]:
+              - link "Year 8 Algebra" [ref=f105e83] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f105e87]:
+          - navigation [ref=f105e92]:
+            - generic [ref=f105e93]:
+              - generic [ref=f105e94]: Gradebook navigation menu
+              - combobox "Gradebook navigation menu" [ref=f105e95] [cursor=pointer]: Grade summary 
+              - text: 
+          - generic [ref=f105e98]:
+            - button "Filters" [ref=f105e100] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f105e101]: 
+              - text: Filters
+            - alert [ref=f105e104]: Nothing to display
+      - contentinfo [ref=f105e105]:
+        - button "Show footer" [ref=f105e106] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f105e107]: "?"
+        - text:    
+        - generic [ref=f105e109]:
+          - link "Purge all caches" [ref=f105e111] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgrade%2Freport%2Fsummary%2Findex.php%3Fid%3D9
+          - generic [ref=f105e113]:
+            - text: "Reactive instances:"
+            - generic [ref=f105e114]:
+              - button "ProcessMonitor" [ref=f105e115] [cursor=pointer]
+              - button "CourseEditor9" [ref=f105e116] [cursor=pointer]

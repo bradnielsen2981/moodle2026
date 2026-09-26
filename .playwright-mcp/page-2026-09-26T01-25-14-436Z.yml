@@ -1,0 +1,184 @@
+- generic [active] [ref=f31e1]:
+  - status
+  - generic [ref=f31e2]:
+    - link "Skip to main content" [ref=f31e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f31e4]:
+      - generic [ref=f31e5]:
+        - link "Curved Learning" [ref=f31e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f31e9]:
+          - menubar [ref=f31e10]:
+            - menuitem "Dashboard" [ref=f31e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f31e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f31e13]:
+          - generic [ref=f31e15]:
+            - generic [ref=f31e16]: Edit mode
+            - checkbox "Edit mode" [ref=f31e18]
+          - button "Show notification window with no new notifications" [ref=f31e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f31e21]: 
+          - button "Toggle messaging drawer" [ref=f31e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f31e24]: 
+          - link "" [ref=f31e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f31e28]: 
+          - button "User menu" [ref=f31e33] [cursor=pointer]:
+            - img "Admin User" [ref=f31e37]: AU
+            - text: 
+    - generic [ref=f31e38]:
+      - generic [ref=f31e40]:
+        - generic [ref=f31e41]:
+          - button "Open course index" [ref=f31e42] [cursor=pointer]
+          - generic [ref=f31e47]:
+            - link "Course Settings" [ref=f31e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f31e49]: 
+            - link "Participants Participants" [ref=f31e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f31e52]: 
+              - generic [ref=f31e53]: Participants
+            - link "Grades" [ref=f31e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f31e55]: 
+            - link "Activities" [ref=f31e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f31e58]: 
+            - button "More More" [ref=f31e61] [cursor=pointer]:
+              - img "More" [ref=f31e62]: 
+              - generic [ref=f31e63]: More
+        - text:     
+        - banner [ref=f31e64]:
+          - generic [ref=f31e65]:
+            - navigation "Breadcrumb" [ref=f31e68]:
+              - list [ref=f31e69]:
+                - listitem [ref=f31e70]:
+                  - link "Mathematics" [ref=f31e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f31e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f31e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+            - heading [level=1] [ref=f31e80]:
+              - link "Year 8 Algebra" [ref=f31e81] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f31e86]:
+          - generic [ref=f31e89]:
+            - heading "Section outline" [level=2] [ref=f31e90]
+            - list [ref=f31e91]:
+              - listitem [ref=f31e92]:
+                - tablist [ref=f31e93]:
+                  - tab "Introduction to Algebra" [selected] [ref=f31e94] [cursor=pointer]
+                  - tab "Collecting Like Terms" [ref=f31e95] [cursor=pointer]
+                  - tab "One Step Equations" [ref=f31e96] [cursor=pointer]
+                  - tab "Two Step Equations" [ref=f31e97] [cursor=pointer]
+              - listitem [ref=f31e98]:
+                - generic [ref=f31e99]:
+                  - generic [ref=f31e101]:
+                    - button "Introduction to Algebra" [expanded] [ref=f31e102] [cursor=pointer]:
+                      - generic "Collapse" [ref=f31e103]:
+                        - generic [aria-hidden] [ref=f31e104]: 
+                      - text:  
+                    - heading [level=3] [ref=f31e106]:
+                      - link "Introduction to Algebra" [ref=f31e107] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=25
+                  - list [ref=f31e109]:
+                    - listitem [ref=f31e110]:
+                      - list [ref=f31e114]:
+                        - listitem [ref=f31e115]:
+                          - generic [ref=f31e116]:
+                            - generic [ref=f31e118]:
+                              - button "New subsection" [expanded] [ref=f31e119] [cursor=pointer]:
+                                - generic "Collapse" [ref=f31e120]:
+                                  - generic [aria-hidden] [ref=f31e121]: 
+                                - text:  
+                              - heading [level=4] [ref=f31e123]:
+                                - link "New subsection" [ref=f31e124] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=25#section-6
+                            - list [ref=f31e126]:
+                              - listitem [ref=f31e127]:
+                                - generic [ref=f31e129]:
+                                  - link "Introduction to Algebra Page" [ref=f31e134] [cursor=pointer]:
+                                    - /url: http://moodle.local/mod/page/view.php?id=65
+                                    - generic [ref=f31e135]:
+                                      - text: Introduction to Algebra
+                                      - generic [ref=f31e136]: Page
+                                  - paragraph [ref=f31e140]: Read about the history of Algebra
+                    - listitem [ref=f31e141]:
+                      - list [ref=f31e145]:
+                        - listitem [ref=f31e146]:
+                          - generic [ref=f31e147]:
+                            - generic [ref=f31e149]:
+                              - button "Page 1 Section 4" [expanded] [ref=f31e150] [cursor=pointer]:
+                                - generic "Collapse" [ref=f31e151]:
+                                  - generic [aria-hidden] [ref=f31e152]: 
+                                - text:  
+                              - heading [level=4] [ref=f31e154]:
+                                - link "Page 1 Section 4" [ref=f31e155] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=25#section-5
+                            - generic:
+                              - list
+              - listitem [ref=f31e156]:
+                - generic [ref=f31e157]:
+                  - generic [ref=f31e159]:
+                    - button "Page 1 Section 3" [expanded] [ref=f31e160] [cursor=pointer]:
+                      - generic "Collapse" [ref=f31e161]:
+                        - generic [aria-hidden] [ref=f31e162]: 
+                      - text:  
+                    - heading [level=3] [ref=f31e164]:
+                      - link "Page 1 Section 3" [ref=f31e165] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=87
+                  - generic:
+                    - list
+              - listitem [ref=f31e166]:
+                - generic [ref=f31e167]:
+                  - generic [ref=f31e169]:
+                    - button "Page 1 Section 2" [expanded] [ref=f31e170] [cursor=pointer]:
+                      - generic "Collapse" [ref=f31e171]:
+                        - generic [aria-hidden] [ref=f31e172]: 
+                      - text:  
+                    - heading [level=3] [ref=f31e174]:
+                      - link "Page 1 Section 2" [ref=f31e175] [cursor=pointer]:
+                        - /url: http://moodle.local/course/section.php?id=81
+                  - list [ref=f31e177]:
+                    - listitem [ref=f31e178]:
+                      - list [ref=f31e182]:
+                        - listitem [ref=f31e183]:
+                          - generic [ref=f31e184]:
+                            - generic [ref=f31e186]:
+                              - button "Page 1 Section 3 Subsection A" [expanded] [ref=f31e187] [cursor=pointer]:
+                                - generic "Collapse" [ref=f31e188]:
+                                  - generic [aria-hidden] [ref=f31e189]: 
+                                - text:  
+                              - heading [level=4] [ref=f31e191]:
+                                - link "Page 1 Section 3 Subsection A" [ref=f31e192] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=81#section-17
+                            - generic [ref=f31e193]:
+                              - list
+                    - listitem [ref=f31e194]:
+                      - list [ref=f31e198]:
+                        - listitem [ref=f31e199]:
+                          - generic [ref=f31e200]:
+                            - generic [ref=f31e202]:
+                              - button "Page 1 Section 2 Subsection A" [expanded] [ref=f31e203] [cursor=pointer]:
+                                - generic "Collapse" [ref=f31e204]:
+                                  - generic [aria-hidden] [ref=f31e205]: 
+                                - text:  
+                              - heading [level=4] [ref=f31e207]:
+                                - link "Page 1 Section 2 Subsection A" [ref=f31e208] [cursor=pointer]:
+                                  - /url: http://moodle.local/course/section.php?id=81#section-16
+                            - generic:
+                              - list
+              - text:                        
+      - contentinfo [ref=f31e209]:
+        - button "Show footer" [ref=f31e210] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f31e211]: "?"
+        - text:    
+        - generic [ref=f31e213]:
+          - link "Purge all caches" [ref=f31e215] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fcourse%2Fview.php%3Fid%3D9
+          - generic [ref=f31e217]:
+            - text: "Reactive instances:"
+            - generic [ref=f31e218]:
+              - button "ProcessMonitor" [ref=f31e219] [cursor=pointer]
+              - button "CourseEditor9" [ref=f31e220] [cursor=pointer]

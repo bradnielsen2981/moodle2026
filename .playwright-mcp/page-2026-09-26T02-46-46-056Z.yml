@@ -1,0 +1,536 @@
+- generic [ref=f152e1]:
+  - status
+  - generic [ref=f152e2]:
+    - link "Skip to main content" [ref=f152e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f152e4]:
+      - generic [ref=f152e5]:
+        - link "Curved Learning" [ref=f152e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f152e9]:
+          - menubar [ref=f152e10]:
+            - menuitem "Dashboard" [ref=f152e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f152e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f152e13]:
+          - generic [ref=f152e15]:
+            - generic [ref=f152e16]: Edit mode
+            - checkbox "Edit mode" [ref=f152e18]
+          - button "Show notification window with no new notifications" [ref=f152e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f152e21]: 
+          - button "Toggle messaging drawer" [ref=f152e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f152e24]: 
+          - link "" [ref=f152e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f152e28]: 
+          - button "User menu" [ref=f152e33] [cursor=pointer]:
+            - img "Admin User" [ref=f152e37]: AU
+            - text: 
+    - generic [ref=f152e38]:
+      - generic [ref=f152e40]:
+        - generic [ref=f152e41]:
+          - button "Open course index" [ref=f152e42] [cursor=pointer]
+          - generic [ref=f152e47]:
+            - link "Course Settings" [ref=f152e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f152e49]: 
+            - link "Participants Participants" [ref=f152e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f152e52]: 
+              - generic [ref=f152e53]: Participants
+            - link "Grades" [ref=f152e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f152e55]: 
+            - link "Activities" [ref=f152e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f152e58]: 
+            - button "More More" [ref=f152e61] [cursor=pointer]:
+              - img "More" [ref=f152e62]: 
+              - generic [ref=f152e63]: More
+        - text:     
+        - banner [ref=f152e64]:
+          - generic [ref=f152e65]:
+            - navigation "Breadcrumb" [ref=f152e68]:
+              - list [ref=f152e69]:
+                - listitem [ref=f152e70]:
+                  - link "Mathematics" [ref=f152e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f152e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f152e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f152e74]:
+                  - text: /
+                  - link "Grade history" [ref=f152e75] [cursor=pointer]:
+                    - /url: http://moodle.local/grade/report/history/index.php?id=9
+            - heading [level=1] [ref=f152e81]:
+              - link "Year 8 Algebra" [ref=f152e82] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - alert [ref=f152e84]:
+          - text: All caches were purged.
+          - button "Dismiss this notification" [ref=f152e85] [cursor=pointer]
+        - main [ref=f152e90]:
+          - heading "Grade administration" [level=2] [ref=f152e92]
+          - navigation [ref=f152e96]:
+            - generic [ref=f152e97]:
+              - generic [ref=f152e98]: Gradebook navigation menu
+              - combobox "Gradebook navigation menu" [ref=f152e99] [cursor=pointer]: Grade history 
+              - text: 
+          - generic [ref=f152e101]:
+            - generic [ref=f152e102]:
+              - generic [ref=f152e103]: Select users
+              - button "Select users" [ref=f152e109] [cursor=pointer]
+            - generic [ref=f152e110]: Selected users
+            - generic [ref=f152e114]:
+              - generic [ref=f152e115]: Grade item
+              - combobox "Grade item" [ref=f152e118]:
+                - option "All grade items" [selected]
+            - generic [ref=f152e119]:
+              - generic [ref=f152e120]: Grader
+              - combobox "Grader" [ref=f152e123]:
+                - option "All graders" [selected]
+            - generic [ref=f152e124]:
+              - paragraph [aria-hidden] [ref=f152e126]: Date from
+              - group "Date from" [ref=f152e128]:
+                - generic [ref=f152e130]:
+                  - generic [ref=f152e131]:
+                    - checkbox "Enable" [ref=f152e132]
+                    - text: Enable
+                  - generic [ref=f152e133]:
+                    - generic [ref=f152e134]: Day
+                    - combobox "Day" [ref=f152e136]:
+                      - option "1"
+                      - option "2"
+                      - option "3"
+                      - option "4"
+                      - option "5"
+                      - option "6"
+                      - option "7"
+                      - option "8"
+                      - option "9"
+                      - option "10"
+                      - option "11"
+                      - option "12"
+                      - option "13"
+                      - option "14"
+                      - option "15"
+                      - option "16"
+                      - option "17"
+                      - option "18"
+                      - option "19"
+                      - option "20"
+                      - option "21"
+                      - option "22"
+                      - option "23"
+                      - option "24"
+                      - option "25"
+                      - option "26" [selected]
+                      - option "27"
+                      - option "28"
+                      - option "29"
+                      - option "30"
+                      - option "31"
+                  - generic [ref=f152e137]:
+                    - generic [ref=f152e138]: Month
+                    - combobox "Month" [ref=f152e140]:
+                      - option "January"
+                      - option "February"
+                      - option "March"
+                      - option "April"
+                      - option "May"
+                      - option "June"
+                      - option "July"
+                      - option "August"
+                      - option "September" [selected]
+                      - option "October"
+                      - option "November"
+                      - option "December"
+                  - generic [ref=f152e141]:
+                    - generic [ref=f152e142]: Year
+                    - combobox "Year" [ref=f152e144]:
+                      - option "1900"
+                      - option "1901"
+                      - option "1902"
+                      - option "1903"
+                      - option "1904"
+                      - option "1905"
+                      - option "1906"
+                      - option "1907"
+                      - option "1908"
+                      - option "1909"
+                      - option "1910"
+                      - option "1911"
+                      - option "1912"
+                      - option "1913"
+                      - option "1914"
+                      - option "1915"
+                      - option "1916"
+                      - option "1917"
+                      - option "1918"
+                      - option "1919"
+                      - option "1920"
+                      - option "1921"
+                      - option "1922"
+                      - option "1923"
+                      - option "1924"
+                      - option "1925"
+                      - option "1926"
+                      - option "1927"
+                      - option "1928"
+                      - option "1929"
+                      - option "1930"
+                      - option "1931"
+                      - option "1932"
+                      - option "1933"
+                      - option "1934"
+                      - option "1935"
+                      - option "1936"
+                      - option "1937"
+                      - option "1938"
+                      - option "1939"
+                      - option "1940"
+                      - option "1941"
+                      - option "1942"
+                      - option "1943"
+                      - option "1944"
+                      - option "1945"
+                      - option "1946"
+                      - option "1947"
+                      - option "1948"
+                      - option "1949"
+                      - option "1950"
+                      - option "1951"
+                      - option "1952"
+                      - option "1953"
+                      - option "1954"
+                      - option "1955"
+                      - option "1956"
+                      - option "1957"
+                      - option "1958"
+                      - option "1959"
+                      - option "1960"
+                      - option "1961"
+                      - option "1962"
+                      - option "1963"
+                      - option "1964"
+                      - option "1965"
+                      - option "1966"
+                      - option "1967"
+                      - option "1968"
+                      - option "1969"
+                      - option "1970"
+                      - option "1971"
+                      - option "1972"
+                      - option "1973"
+                      - option "1974"
+                      - option "1975"
+                      - option "1976"
+                      - option "1977"
+                      - option "1978"
+                      - option "1979"
+                      - option "1980"
+                      - option "1981"
+                      - option "1982"
+                      - option "1983"
+                      - option "1984"
+                      - option "1985"
+                      - option "1986"
+                      - option "1987"
+                      - option "1988"
+                      - option "1989"
+                      - option "1990"
+                      - option "1991"
+                      - option "1992"
+                      - option "1993"
+                      - option "1994"
+                      - option "1995"
+                      - option "1996"
+                      - option "1997"
+                      - option "1998"
+                      - option "1999"
+                      - option "2000"
+                      - option "2001"
+                      - option "2002"
+                      - option "2003"
+                      - option "2004"
+                      - option "2005"
+                      - option "2006"
+                      - option "2007"
+                      - option "2008"
+                      - option "2009"
+                      - option "2010"
+                      - option "2011"
+                      - option "2012"
+                      - option "2013"
+                      - option "2014"
+                      - option "2015"
+                      - option "2016"
+                      - option "2017"
+                      - option "2018"
+                      - option "2019"
+                      - option "2020"
+                      - option "2021"
+                      - option "2022"
+                      - option "2023"
+                      - option "2024"
+                      - option "2025"
+                      - option "2026" [selected]
+                      - option "2027"
+                      - option "2028"
+                      - option "2029"
+                      - option "2030"
+                      - option "2031"
+                      - option "2032"
+                      - option "2033"
+                      - option "2034"
+                      - option "2035"
+                      - option "2036"
+                      - option "2037"
+                      - option "2038"
+                      - option "2039"
+                      - option "2040"
+                      - option "2041"
+                      - option "2042"
+                      - option "2043"
+                      - option "2044"
+                      - option "2045"
+                      - option "2046"
+                      - option "2047"
+                      - option "2048"
+                      - option "2049"
+                      - option "2050"
+                  - generic [ref=f152e146]:
+                    - button "Date picker" [disabled]:
+                      - generic [aria-hidden]: 
+            - generic [ref=f152e147]:
+              - paragraph [aria-hidden] [ref=f152e149]: Date to
+              - group "Date to" [ref=f152e151]:
+                - generic [ref=f152e153]:
+                  - generic [ref=f152e154]:
+                    - checkbox "Enable" [ref=f152e155]
+                    - text: Enable
+                  - generic [ref=f152e156]:
+                    - generic [ref=f152e157]: Day
+                    - combobox "Day" [ref=f152e159]:
+                      - option "1"
+                      - option "2"
+                      - option "3"
+                      - option "4"
+                      - option "5"
+                      - option "6"
+                      - option "7"
+                      - option "8"
+                      - option "9"
+                      - option "10"
+                      - option "11"
+                      - option "12"
+                      - option "13"
+                      - option "14"
+                      - option "15"
+                      - option "16"
+                      - option "17"
+                      - option "18"
+                      - option "19"
+                      - option "20"
+                      - option "21"
+                      - option "22"
+                      - option "23"
+                      - option "24"
+                      - option "25"
+                      - option "26" [selected]
+                      - option "27"
+                      - option "28"
+                      - option "29"
+                      - option "30"
+                      - option "31"
+                  - generic [ref=f152e160]:
+                    - generic [ref=f152e161]: Month
+                    - combobox "Month" [ref=f152e163]:
+                      - option "January"
+                      - option "February"
+                      - option "March"
+                      - option "April"
+                      - option "May"
+                      - option "June"
+                      - option "July"
+                      - option "August"
+                      - option "September" [selected]
+                      - option "October"
+                      - option "November"
+                      - option "December"
+                  - generic [ref=f152e164]:
+                    - generic [ref=f152e165]: Year
+                    - combobox "Year" [ref=f152e167]:
+                      - option "1900"
+                      - option "1901"
+                      - option "1902"
+                      - option "1903"
+                      - option "1904"
+                      - option "1905"
+                      - option "1906"
+                      - option "1907"
+                      - option "1908"
+                      - option "1909"
+                      - option "1910"
+                      - option "1911"
+                      - option "1912"
+                      - option "1913"
+                      - option "1914"
+                      - option "1915"
+                      - option "1916"
+                      - option "1917"
+                      - option "1918"
+                      - option "1919"
+                      - option "1920"
+                      - option "1921"
+                      - option "1922"
+                      - option "1923"
+                      - option "1924"
+                      - option "1925"
+                      - option "1926"
+                      - option "1927"
+                      - option "1928"
+                      - option "1929"
+                      - option "1930"
+                      - option "1931"
+                      - option "1932"
+                      - option "1933"
+                      - option "1934"
+                      - option "1935"
+                      - option "1936"
+                      - option "1937"
+                      - option "1938"
+                      - option "1939"
+                      - option "1940"
+                      - option "1941"
+                      - option "1942"
+                      - option "1943"
+                      - option "1944"
+                      - option "1945"
+                      - option "1946"
+                      - option "1947"
+                      - option "1948"
+                      - option "1949"
+                      - option "1950"
+                      - option "1951"
+                      - option "1952"
+                      - option "1953"
+                      - option "1954"
+                      - option "1955"
+                      - option "1956"
+                      - option "1957"
+                      - option "1958"
+                      - option "1959"
+                      - option "1960"
+                      - option "1961"
+                      - option "1962"
+                      - option "1963"
+                      - option "1964"
+                      - option "1965"
+                      - option "1966"
+                      - option "1967"
+                      - option "1968"
+                      - option "1969"
+                      - option "1970"
+                      - option "1971"
+                      - option "1972"
+                      - option "1973"
+                      - option "1974"
+                      - option "1975"
+                      - option "1976"
+                      - option "1977"
+                      - option "1978"
+                      - option "1979"
+                      - option "1980"
+                      - option "1981"
+                      - option "1982"
+                      - option "1983"
+                      - option "1984"
+                      - option "1985"
+                      - option "1986"
+                      - option "1987"
+                      - option "1988"
+                      - option "1989"
+                      - option "1990"
+                      - option "1991"
+                      - option "1992"
+                      - option "1993"
+                      - option "1994"
+                      - option "1995"
+                      - option "1996"
+                      - option "1997"
+                      - option "1998"
+                      - option "1999"
+                      - option "2000"
+                      - option "2001"
+                      - option "2002"
+                      - option "2003"
+                      - option "2004"
+                      - option "2005"
+                      - option "2006"
+                      - option "2007"
+                      - option "2008"
+                      - option "2009"
+                      - option "2010"
+                      - option "2011"
+                      - option "2012"
+                      - option "2013"
+                      - option "2014"
+                      - option "2015"
+                      - option "2016"
+                      - option "2017"
+                      - option "2018"
+                      - option "2019"
+                      - option "2020"
+                      - option "2021"
+                      - option "2022"
+                      - option "2023"
+                      - option "2024"
+                      - option "2025"
+                      - option "2026" [selected]
+                      - option "2027"
+                      - option "2028"
+                      - option "2029"
+                      - option "2030"
+                      - option "2031"
+                      - option "2032"
+                      - option "2033"
+                      - option "2034"
+                      - option "2035"
+                      - option "2036"
+                      - option "2037"
+                      - option "2038"
+                      - option "2039"
+                      - option "2040"
+                      - option "2041"
+                      - option "2042"
+                      - option "2043"
+                      - option "2044"
+                      - option "2045"
+                      - option "2046"
+                      - option "2047"
+                      - option "2048"
+                      - option "2049"
+                      - option "2050"
+                  - generic [ref=f152e169]:
+                    - button "Date picker" [disabled]:
+                      - generic [aria-hidden]: 
+            - generic [ref=f152e173]:
+              - checkbox "Revised grades only" [ref=f152e174]
+              - generic [ref=f152e175]: Revised grades only
+              - button "Help" [ref=f152e177] [cursor=pointer]:
+                - img "Help with Revised grades only" [ref=f152e178]: 
+            - button "Submit" [ref=f152e182] [cursor=pointer]
+      - contentinfo [ref=f152e183]:
+        - button "Show footer" [ref=f152e184] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f152e185]: "?"
+        - text:    
+        - generic [ref=f152e187]:
+          - link "Purge all caches" [ref=f152e189] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgrade%2Freport%2Fhistory%2Findex.php%3Fid%3D9%26showreport%3D1
+          - generic [ref=f152e191]:
+            - text: "Reactive instances:"
+            - generic [ref=f152e192]:
+              - button "ProcessMonitor" [ref=f152e193] [cursor=pointer]
+              - button "CourseEditor9" [ref=f152e194] [cursor=pointer]
+  - text: ×

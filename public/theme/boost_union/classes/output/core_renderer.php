@@ -864,6 +864,33 @@ class core_renderer extends core_renderer_intermediate {
     }
 
     /**
+     * Renders the tertiary navigation on the participants page and its related pages
+     * (Enrolment methods, Groups, Other users etc).
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php.
+     * It amends the exported data with a flag which tells the theme's participants_actionbar template
+     * override whether to show the "Participants" heading above the tertiary navigation dropdown.
+     * This heading should only be shown on the actual participants list page itself (i.e. not on the
+     * related Enrolment methods / Groups / Groupings / Other users / ... pages which reuse the same
+     * tertiary navigation).
+     *
+     * @param object $course The course object.
+     * @param string|null $renderedbuttons Rendered buttons to be displayed in-line with the select box.
+     * @return string
+     */
+    public function render_participants_tertiary_nav(object $course, ?string $renderedbuttons = null): string {
+        $actionbar = new \core\output\participants_action_bar($course, $this->page, $renderedbuttons);
+        $data = $actionbar->export_for_template($this);
+
+        // Only show the "Participants" heading when we are on the participants list page itself.
+        $participantsurl = new moodle_url('/user/index.php', ['id' => $course->id]);
+        $data['showparticipantsheading'] = $this->page->url->compare($participantsurl, URL_MATCH_BASE);
+
+        $content = $this->render_from_template('core_course/participants_actionbar', $data);
+        return $content ?: '';
+    }
+
+    /**
      * Prints a nice side block with an optional header.
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php

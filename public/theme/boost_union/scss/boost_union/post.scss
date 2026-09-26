@@ -44,10 +44,26 @@
     }
 }
 
-/* Indent the "Grader report" heading (the report selector dropdown) on the Grader report page. */
-#page-grade-report-grader-index .tertiary-navigation-selector {
+/* Indent the report/tool selector dropdown (e.g. "Grader report", "Gradebook setup", "Scales", ...) on all
+   pages in the Grade section, matching the indent of the "Grade administration" heading above it. ".path-grade"
+   scopes this to the Grade section only. */
+.path-grade .tertiary-navigation-selector {
     margin-left: 1.5rem;
 }
+
+/* Make the "Activities" heading on the course overview page (course/overview.php) render as a plain h2,
+   the same as the "Edit course settings" heading on the course settings page and the "Grade administration" /
+   "Participants" headings above the Grader report / Participants tertiary navigation dropdowns. Moodle core
+   renders this heading as <h2 class="h4">, so the h4 utility class' font-size has to be overridden here to
+   get the plain h2 look (the class selector otherwise takes precedence over the h2 tag's own default style). */
+#page-course-overview h2.h4 {
+    font-size: 2rem;
+}
+
+/* Note: the "Grade administration" heading (above the Grader report dropdown) and the "Participants" heading
+   (above the Enrolled users dropdown) intentionally have no custom styling here. They are plain h2 elements,
+   the same as the "Edit course settings" heading on the course settings page. See the theme's
+   gradereport_grader/action_bar and core_course/participants_actionbar template overrides. */
 
 
 /*=======================================
@@ -3927,7 +3943,14 @@ body.dir-rtl {
  ======================================*/
 @include media-breakpoint-up(md) {
     .pagelayout-incourse,
-    .pagelayout-report {
+    .pagelayout-report,
+    /* Several pages in the Grade section (Gradebook setup, Course grade settings, Preferences: Grader report,
+       Scales, Grade letters, Import, Export) use the pagelayout-admin layout instead of pagelayout-report, so
+       they would otherwise stay full-width while the rest of the Grade section (Grader report, Grade history,
+       Overview report, Single view, Grade summary, User report) is aligned to $course-content-maxwidth.
+       ".path-grade" scopes this to the Grade section only, so other pagelayout-admin pages (e.g. Site
+       administration) are left untouched. */
+    .path-grade.pagelayout-admin {
         #page.drawers {
             .main-inner {
                 max-width: $course-content-maxwidth;

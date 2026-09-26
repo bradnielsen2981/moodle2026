@@ -1,0 +1,294 @@
+- generic [active] [ref=f112e1]:
+  - status
+  - generic [ref=f112e2]:
+    - link "Skip to main content" [ref=f112e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f112e4]:
+      - generic [ref=f112e5]:
+        - link "Curved Learning" [ref=f112e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f112e9]:
+          - menubar [ref=f112e10]:
+            - menuitem "Dashboard" [ref=f112e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f112e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f112e13]:
+          - generic [ref=f112e15]:
+            - generic [ref=f112e16]: Edit mode
+            - checkbox "Edit mode" [ref=f112e18]
+          - button "Show notification window with no new notifications" [ref=f112e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f112e21]: 
+          - button "Toggle messaging drawer" [ref=f112e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f112e24]: 
+          - link "" [ref=f112e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f112e28]: 
+          - button "User menu" [ref=f112e33] [cursor=pointer]:
+            - img "Admin User" [ref=f112e37]: AU
+            - text: 
+    - generic [ref=f112e38]:
+      - generic [ref=f112e40]:
+        - generic [ref=f112e41]:
+          - button "Open course index" [ref=f112e42] [cursor=pointer]
+          - generic [ref=f112e47]:
+            - link "Course Settings" [ref=f112e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f112e49]: 
+            - link "Participants Participants" [ref=f112e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f112e52]: 
+              - generic [ref=f112e53]: Participants
+            - link "Grades" [ref=f112e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f112e55]: 
+            - link "Activities" [ref=f112e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f112e58]: 
+            - button "More More" [ref=f112e61] [cursor=pointer]:
+              - img "More" [ref=f112e62]: 
+              - generic [ref=f112e63]: More
+        - text:     
+        - banner [ref=f112e64]:
+          - generic [ref=f112e65]:
+            - navigation "Breadcrumb" [ref=f112e68]:
+              - list [ref=f112e69]:
+                - listitem [ref=f112e70]:
+                  - link "Mathematics" [ref=f112e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f112e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f112e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f112e74]: / Grade administration
+                - listitem [ref=f112e75]: / Setup
+                - listitem [ref=f112e76]:
+                  - text: /
+                  - link "Course grade settings" [ref=f112e77] [cursor=pointer]:
+                    - /url: http://moodle.local/grade/edit/settings/index.php?id=9
+            - heading [level=1] [ref=f112e83]:
+              - link "Year 8 Algebra" [ref=f112e84] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f112e88]:
+          - heading "Grade administration" [level=2] [ref=f112e90]
+          - navigation [ref=f112e94]:
+            - generic [ref=f112e95]:
+              - generic [ref=f112e96]: Gradebook navigation menu
+              - combobox "Gradebook navigation menu" [ref=f112e97] [cursor=pointer]: Course grade settings 
+              - text: 
+          - generic [ref=f112e99]: Course grade settings determine how the gradebook appears for all participants in the course.
+          - generic [ref=f112e100]:
+            - button "Collapse all" [expanded] [ref=f112e102] [cursor=pointer]
+            - group "General settings" [ref=f112e104]:
+              - generic [ref=f112e107]:
+                - button "General settings" [expanded] [ref=f112e108] [cursor=pointer]:
+                  - generic "Collapse" [ref=f112e109]:
+                    - generic [aria-hidden] [ref=f112e110]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f112e112]: General settings
+              - generic [ref=f112e113]:
+                - link "Change defaults" [ref=f112e118] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=gradessettings
+                - generic [ref=f112e119]:
+                  - generic [ref=f112e120]:
+                    - generic [ref=f112e121]: Aggregation position
+                    - button "Help" [ref=f112e123] [cursor=pointer]:
+                      - img "Help with Aggregation position" [ref=f112e124]: 
+                  - combobox "Aggregation position" [ref=f112e126]:
+                    - option "Default (Last)" [selected]
+                    - option "First"
+                    - option "Last"
+                - generic [ref=f112e127]:
+                  - generic [ref=f112e128]:
+                    - generic [ref=f112e129]: Min and max grades used in calculation
+                    - button "Help" [ref=f112e131] [cursor=pointer]:
+                      - img "Help with Min and max grades used in calculation" [ref=f112e132]: 
+                  - combobox "Min and max grades used in calculation" [ref=f112e134]:
+                    - option "Default (Min and max grades as specified in grade item settings)" [selected]
+                    - option "Min and max grades as specified in grade item settings"
+                    - option "Initial min and max grades"
+            - group "Grade item settings" [ref=f112e135]:
+              - generic [ref=f112e138]:
+                - button "Grade item settings" [expanded] [ref=f112e139] [cursor=pointer]:
+                  - generic "Collapse" [ref=f112e140]:
+                    - generic [aria-hidden] [ref=f112e141]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f112e143]: Grade item settings
+              - generic [ref=f112e144]:
+                - link "Change defaults" [ref=f112e149] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=gradeitemsettings
+                - generic [ref=f112e150]:
+                  - generic [ref=f112e151]:
+                    - generic [ref=f112e152]: Grade display type
+                    - button "Help" [ref=f112e154] [cursor=pointer]:
+                      - img "Help with Grade display type" [ref=f112e155]: 
+                  - combobox "Grade display type" [ref=f112e157]:
+                    - option "Default (Real)" [selected]
+                    - option "Real"
+                    - option "Real (percentage)"
+                    - option "Real (letter)"
+                    - option "Percentage"
+                    - option "Percentage (real)"
+                    - option "Percentage (letter)"
+                    - option "Letter"
+                    - option "Letter (real)"
+                    - option "Letter (percentage)"
+                - generic [ref=f112e158]:
+                  - generic [ref=f112e159]:
+                    - generic [ref=f112e160]: Overall decimal places
+                    - button "Help" [ref=f112e162] [cursor=pointer]:
+                      - img "Help with Overall decimal places" [ref=f112e163]: 
+                  - combobox "Overall decimal places" [ref=f112e165]:
+                    - option "Default (2)" [selected]
+                    - option "0"
+                    - option "1"
+                    - option "2"
+                    - option "3"
+                    - option "4"
+                    - option "5"
+            - group "Overview report" [ref=f112e166]:
+              - generic [ref=f112e169]:
+                - button "Overview report" [expanded] [ref=f112e170] [cursor=pointer]:
+                  - generic "Collapse" [ref=f112e171]:
+                    - generic [aria-hidden] [ref=f112e172]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f112e174]: Overview report
+              - generic [ref=f112e175]:
+                - link "Change defaults" [ref=f112e180] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=gradereportoverview
+                - generic [ref=f112e181]:
+                  - generic [ref=f112e182]:
+                    - generic [ref=f112e183]: Show rank
+                    - button "Help" [ref=f112e185] [cursor=pointer]:
+                      - img "Help with Show rank" [ref=f112e186]: 
+                  - combobox "Show rank" [ref=f112e188]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e189]:
+                  - generic [ref=f112e190]:
+                    - generic [ref=f112e191]: Hide totals if they contain hidden items
+                    - button "Help" [ref=f112e193] [cursor=pointer]:
+                      - img "Help with Hide totals if they contain hidden items" [ref=f112e194]: 
+                  - combobox "Hide totals if they contain hidden items" [ref=f112e196]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show totals excluding hidden items"
+                    - option "Show totals including hidden items"
+            - group "User report" [ref=f112e197]:
+              - generic [ref=f112e200]:
+                - button "User report" [expanded] [ref=f112e201] [cursor=pointer]:
+                  - generic "Collapse" [ref=f112e202]:
+                    - generic [aria-hidden] [ref=f112e203]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f112e205]: User report
+              - generic [ref=f112e206]:
+                - link "Change defaults" [ref=f112e211] [cursor=pointer]:
+                  - /url: http://moodle.local/admin/settings.php?section=gradereportuser
+                - generic [ref=f112e212]:
+                  - generic [ref=f112e213]:
+                    - generic [ref=f112e214]: Show rank
+                    - button "Help" [ref=f112e216] [cursor=pointer]:
+                      - img "Help with Show rank" [ref=f112e217]: 
+                  - combobox "Show rank" [ref=f112e219]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e220]:
+                  - generic [ref=f112e221]:
+                    - generic [ref=f112e222]: Show percentage
+                    - button "Help" [ref=f112e224] [cursor=pointer]:
+                      - img "Help with Show percentage" [ref=f112e225]: 
+                  - combobox "Show percentage" [ref=f112e227]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e228]:
+                  - generic [ref=f112e229]: Show grades
+                  - combobox "Show grades" [ref=f112e232]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e233]:
+                  - generic [ref=f112e234]: Show feedback
+                  - combobox "Show feedback" [ref=f112e237]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e238]:
+                  - generic [ref=f112e239]: Show weightings
+                  - combobox "Show weightings" [ref=f112e242]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e243]:
+                  - generic [ref=f112e244]:
+                    - generic [ref=f112e245]: Show average
+                    - button "Help" [ref=f112e247] [cursor=pointer]:
+                      - img "Help with Show average" [ref=f112e248]: 
+                  - combobox "Show average" [ref=f112e250]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e251]:
+                  - generic [ref=f112e252]: Show letter grades
+                  - combobox "Show letter grades" [ref=f112e255]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e256]:
+                  - generic [ref=f112e257]:
+                    - generic [ref=f112e258]: Show contribution to course total
+                    - button "Help" [ref=f112e260] [cursor=pointer]:
+                      - img "Help with Show contribution to course total" [ref=f112e261]: 
+                  - combobox "Show contribution to course total" [ref=f112e263]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e264]:
+                  - generic [ref=f112e265]: Show ranges
+                  - combobox "Show ranges" [ref=f112e268]:
+                    - option "Default (Show)" [selected]
+                    - option "Hide"
+                    - option "Show"
+                - generic [ref=f112e269]:
+                  - generic [ref=f112e270]: Range decimal places
+                  - combobox "Range decimal places" [ref=f112e273]:
+                    - option "0" [selected]
+                    - option "1"
+                    - option "2"
+                    - option "3"
+                    - option "4"
+                    - option "5"
+                - generic [ref=f112e274]:
+                  - generic [ref=f112e275]:
+                    - generic [ref=f112e276]: Show hidden items
+                    - button "Help" [ref=f112e278] [cursor=pointer]:
+                      - img "Help with Show hidden items" [ref=f112e279]: 
+                  - combobox "Show hidden items" [ref=f112e281]:
+                    - option "Default (Only hidden until)" [selected]
+                    - option "Do not show"
+                    - option "Only hidden until"
+                    - option "Show hidden"
+                - generic [ref=f112e282]:
+                  - generic [ref=f112e283]:
+                    - generic [ref=f112e284]: Hide totals if they contain hidden items
+                    - button "Help" [ref=f112e286] [cursor=pointer]:
+                      - img "Help with Hide totals if they contain hidden items" [ref=f112e287]: 
+                  - combobox "Hide totals if they contain hidden items" [ref=f112e289]:
+                    - option "Default (Hide)" [selected]
+                    - option "Hide"
+                    - option "Show totals excluding hidden items"
+                    - option "Show totals including hidden items"
+            - button "Save changes" [ref=f112e293] [cursor=pointer]
+      - contentinfo [ref=f112e294]:
+        - button "Show footer" [ref=f112e295] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f112e296]: "?"
+        - text:    
+        - generic [ref=f112e298]:
+          - link "Purge all caches" [ref=f112e300] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgrade%2Fedit%2Fsettings%2Findex.php%3Fid%3D9
+          - generic [ref=f112e302]:
+            - text: "Reactive instances:"
+            - generic [ref=f112e303]:
+              - button "ProcessMonitor" [ref=f112e304] [cursor=pointer]
+              - button "CourseEditor9" [ref=f112e305] [cursor=pointer]

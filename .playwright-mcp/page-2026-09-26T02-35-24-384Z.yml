@@ -1,0 +1,120 @@
+- generic [active] [ref=f119e1]:
+  - status
+  - generic [ref=f119e2]:
+    - link "Skip to main content" [ref=f119e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f119e4]:
+      - generic [ref=f119e5]:
+        - link "Curved Learning" [ref=f119e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f119e9]:
+          - menubar [ref=f119e10]:
+            - menuitem "Dashboard" [ref=f119e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f119e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f119e13]:
+          - generic [ref=f119e15]:
+            - generic [ref=f119e16]: Edit mode
+            - checkbox "Edit mode" [ref=f119e18]
+          - button "Show notification window with no new notifications" [ref=f119e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f119e21]: 
+          - button "Toggle messaging drawer" [ref=f119e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f119e24]: 
+          - link "" [ref=f119e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f119e28]: 
+          - button "User menu" [ref=f119e33] [cursor=pointer]:
+            - img "Admin User" [ref=f119e37]: AU
+            - text: 
+    - generic [ref=f119e38]:
+      - generic [ref=f119e40]:
+        - generic [ref=f119e41]:
+          - button "Open course index" [ref=f119e42] [cursor=pointer]
+          - generic [ref=f119e47]:
+            - link "Course Settings" [ref=f119e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f119e49]: 
+            - link "Participants Participants" [ref=f119e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f119e52]: 
+              - generic [ref=f119e53]: Participants
+            - link "Grades" [ref=f119e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f119e55]: 
+            - link "Activities" [ref=f119e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f119e58]: 
+            - button "More More" [ref=f119e61] [cursor=pointer]:
+              - img "More" [ref=f119e62]: 
+              - generic [ref=f119e63]: More
+        - text:     
+        - banner [ref=f119e64]:
+          - generic [ref=f119e65]:
+            - navigation "Breadcrumb" [ref=f119e68]:
+              - list [ref=f119e69]:
+                - listitem [ref=f119e70]:
+                  - link "Mathematics" [ref=f119e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f119e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f119e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f119e74]: / Grade administration
+                - listitem [ref=f119e75]: / Export
+                - listitem [ref=f119e76]:
+                  - text: /
+                  - link "OpenDocument spreadsheet" [ref=f119e77] [cursor=pointer]:
+                    - /url: http://moodle.local/grade/export/ods/index.php?id=9
+            - heading [level=1] [ref=f119e83]:
+              - link "Year 8 Algebra" [ref=f119e84] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f119e88]:
+          - heading "Grade administration" [level=2] [ref=f119e90]
+          - generic [ref=f119e92]:
+            - navigation [ref=f119e94]:
+              - generic [ref=f119e95]:
+                - generic [ref=f119e96]: Gradebook navigation menu
+                - combobox "Gradebook navigation menu" [ref=f119e97] [cursor=pointer]: Export 
+                - text: 
+            - generic [ref=f119e100]:
+              - text: Export as
+              - combobox "Export as" [ref=f119e101] [cursor=pointer]: OpenDocument spreadsheet 
+              - text: 
+          - heading "Export to OpenDocument spreadsheet" [level=2] [ref=f119e102]
+          - generic [ref=f119e104]:
+            - button "Expand all" [ref=f119e106] [cursor=pointer]
+            - group "Grade items to be included" [ref=f119e108]:
+              - generic [ref=f119e111]:
+                - button "Grade items to be included" [expanded] [ref=f119e112] [cursor=pointer]:
+                  - generic "Collapse" [ref=f119e113]:
+                    - generic [aria-hidden] [ref=f119e114]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f119e116]: Grade items to be included
+              - generic [ref=f119e117]:
+                - generic [ref=f119e121]:
+                  - checkbox "Course total" [checked] [ref=f119e122]
+                  - generic [ref=f119e123]: Course total
+                - link "Select all/none" [ref=f119e127] [cursor=pointer]:
+                  - /url: "#"
+            - group "Export format options" [ref=f119e128]:
+              - generic [ref=f119e131]:
+                - button "Export format options" [ref=f119e132] [cursor=pointer]:
+                  - text: 
+                  - generic "Expand" [ref=f119e133]:
+                    - generic [aria-hidden] [ref=f119e135]: 
+                    - text: 
+                - heading [level=3] [aria-hidden] [ref=f119e137]: Export format options
+              - text: 
+            - button "Download" [ref=f119e144] [cursor=pointer]
+      - contentinfo [ref=f119e145]:
+        - button "Show footer" [ref=f119e146] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f119e147]: "?"
+        - text:    
+        - generic [ref=f119e149]:
+          - link "Purge all caches" [ref=f119e151] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgrade%2Fexport%2Fods%2Findex.php%3Fid%3D9
+          - generic [ref=f119e153]:
+            - text: "Reactive instances:"
+            - generic [ref=f119e154]:
+              - button "ProcessMonitor" [ref=f119e155] [cursor=pointer]
+              - button "CourseEditor9" [ref=f119e156] [cursor=pointer]

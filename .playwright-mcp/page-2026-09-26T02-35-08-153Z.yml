@@ -1,0 +1,249 @@
+- generic [active] [ref=f118e1]:
+  - status
+  - generic [ref=f118e2]:
+    - link "Skip to main content" [ref=f118e3] [cursor=pointer]:
+      - /url: "#maincontent"
+    - navigation "Site navigation" [ref=f118e4]:
+      - generic [ref=f118e5]:
+        - link "Curved Learning" [ref=f118e6] [cursor=pointer]:
+          - /url: http://moodle.local/my/
+        - navigation [ref=f118e9]:
+          - menubar [ref=f118e10]:
+            - menuitem "Dashboard" [ref=f118e11] [cursor=pointer]
+            - menuitem "Site administration" [ref=f118e12] [cursor=pointer]
+            - text: 
+        - generic [ref=f118e13]:
+          - generic [ref=f118e15]:
+            - generic [ref=f118e16]: Edit mode
+            - checkbox "Edit mode" [ref=f118e18]
+          - button "Show notification window with no new notifications" [ref=f118e20] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f118e21]: 
+          - button "Toggle messaging drawer" [ref=f118e23] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f118e24]: 
+          - link "" [ref=f118e27] [cursor=pointer]:
+            - /url: http://moodle.local/local/adminer/lib/run_adminer.php
+            - generic "Moodle Adminer" [ref=f118e28]: 
+          - button "User menu" [ref=f118e33] [cursor=pointer]:
+            - img "Admin User" [ref=f118e37]: AU
+            - text: 
+    - generic [ref=f118e38]:
+      - generic [ref=f118e40]:
+        - generic [ref=f118e41]:
+          - button "Open course index" [ref=f118e42] [cursor=pointer]
+          - generic [ref=f118e47]:
+            - link "Course Settings" [ref=f118e48] [cursor=pointer]:
+              - /url: http://moodle.local/course/edit.php?id=9
+              - img [aria-hidden] [ref=f118e49]: 
+            - link "Participants Participants" [ref=f118e51] [cursor=pointer]:
+              - /url: http://moodle.local/user/index.php?id=9
+              - img "Participants" [ref=f118e52]: 
+              - generic [ref=f118e53]: Participants
+            - link "Grades" [ref=f118e54] [cursor=pointer]:
+              - /url: http://moodle.local/grade/report/index.php?id=9
+              - img [aria-hidden] [ref=f118e55]: 
+            - link "Activities" [ref=f118e57] [cursor=pointer]:
+              - /url: http://moodle.local/course/overview.php?id=9
+              - img [aria-hidden] [ref=f118e58]: 
+            - button "More More" [ref=f118e61] [cursor=pointer]:
+              - img "More" [ref=f118e62]: 
+              - generic [ref=f118e63]: More
+        - text:     
+        - banner [ref=f118e64]:
+          - generic [ref=f118e65]:
+            - navigation "Breadcrumb" [ref=f118e68]:
+              - list [ref=f118e69]:
+                - listitem [ref=f118e70]:
+                  - link "Mathematics" [ref=f118e71] [cursor=pointer]:
+                    - /url: http://moodle.local/course/index.php?categoryid=1
+                - listitem [ref=f118e72]:
+                  - text: /
+                  - link "Year 8 Algebra" [ref=f118e73] [cursor=pointer]:
+                    - /url: http://moodle.local/course/view.php?id=9
+                - listitem [ref=f118e74]: / Grade administration
+                - listitem [ref=f118e75]: / Import
+                - listitem [ref=f118e76]:
+                  - text: /
+                  - link "CSV file" [ref=f118e77] [cursor=pointer]:
+                    - /url: http://moodle.local/grade/import/csv/index.php?id=9
+            - heading [level=1] [ref=f118e83]:
+              - link "Year 8 Algebra" [ref=f118e84] [cursor=pointer]:
+                - /url: http://moodle.local/course/view.php?id=9
+        - main [ref=f118e88]:
+          - heading "Grade administration" [level=2] [ref=f118e90]
+          - generic [ref=f118e92]:
+            - navigation [ref=f118e94]:
+              - generic [ref=f118e95]:
+                - generic [ref=f118e96]: Gradebook navigation menu
+                - combobox "Gradebook navigation menu" [ref=f118e97] [cursor=pointer]: Import 
+                - text: 
+            - generic [ref=f118e100]:
+              - text: Import as
+              - combobox "Import as" [ref=f118e101] [cursor=pointer]: CSV file 
+              - text: 
+          - heading [level=2] [ref=f118e102]:
+            - text: Import CSV
+            - button "Help" [ref=f118e103] [cursor=pointer]:
+              - img "Help with Import CSV" [ref=f118e104]: 
+          - generic [ref=f118e106]:
+            - group "Import file" [ref=f118e107]:
+              - generic [ref=f118e110]:
+                - button "Import file" [expanded] [ref=f118e111] [cursor=pointer]:
+                  - generic "Collapse" [ref=f118e112]:
+                    - generic [aria-hidden] [ref=f118e113]: 
+                  - text:  
+                - heading [level=3] [aria-hidden] [ref=f118e115]: Import file
+              - generic [ref=f118e116]:
+                - generic [ref=f118e117]:
+                  - generic [ref=f118e118]:
+                    - paragraph [aria-hidden] [ref=f118e119]: File
+                    - generic [aria-hidden] [ref=f118e122]: 
+                  - group "File" [ref=f118e124]:
+                    - img "Loading..." [ref=f118e127]: 
+                    - text:  
+                    - generic [ref=f118e128]: "Accepted file types:"
+                    - list [ref=f118e130]:
+                      - listitem [ref=f118e131]: Comma-separated values .csv
+                      - listitem [ref=f118e132]: Text file .txt
+                - generic [ref=f118e133]:
+                  - generic [ref=f118e134]:
+                    - generic [ref=f118e135]: Encoding
+                    - button "Help" [ref=f118e137] [cursor=pointer]:
+                      - img "Help with Encoding" [ref=f118e138]: 
+                  - combobox "Encoding" [ref=f118e140]:
+                    - option "UTF-8" [selected]
+                    - option "ISO-8859-1"
+                    - option "BASE64"
+                    - option "UUENCODE"
+                    - option "HTML-ENTITIES"
+                    - option "QUOTED-PRINTABLE"
+                    - option "7BIT"
+                    - option "8BIT"
+                    - option "UCS-4"
+                    - option "UCS-4BE"
+                    - option "UCS-4LE"
+                    - option "UCS-2"
+                    - option "UCS-2BE"
+                    - option "UCS-2LE"
+                    - option "UTF-32"
+                    - option "UTF-32BE"
+                    - option "UTF-32LE"
+                    - option "UTF-16"
+                    - option "UTF-16BE"
+                    - option "UTF-16LE"
+                    - option "UTF-7"
+                    - option "UTF7-IMAP"
+                    - option "ASCII"
+                    - option "EUC-JP"
+                    - option "SJIS"
+                    - option "EUCJP-WIN"
+                    - option "EUC-JP-2004"
+                    - option "SJIS-MOBILE#DOCOMO"
+                    - option "SJIS-MOBILE#KDDI"
+                    - option "SJIS-MOBILE#SOFTBANK"
+                    - option "SJIS-MAC"
+                    - option "SJIS-2004"
+                    - option "UTF-8-MOBILE#DOCOMO"
+                    - option "UTF-8-MOBILE#KDDI-A"
+                    - option "UTF-8-MOBILE#KDDI-B"
+                    - option "UTF-8-MOBILE#SOFTBANK"
+                    - option "CP932"
+                    - option "SJIS-WIN"
+                    - option "CP51932"
+                    - option "JIS"
+                    - option "ISO-2022-JP"
+                    - option "ISO-2022-JP-MS"
+                    - option "GB18030"
+                    - option "WINDOWS-1252"
+                    - option "WINDOWS-1254"
+                    - option "ISO-8859-2"
+                    - option "ISO-8859-3"
+                    - option "ISO-8859-4"
+                    - option "ISO-8859-5"
+                    - option "ISO-8859-6"
+                    - option "ISO-8859-7"
+                    - option "ISO-8859-8"
+                    - option "ISO-8859-9"
+                    - option "ISO-8859-10"
+                    - option "ISO-8859-13"
+                    - option "ISO-8859-14"
+                    - option "ISO-8859-15"
+                    - option "ISO-8859-16"
+                    - option "EUC-CN"
+                    - option "CP936"
+                    - option "HZ"
+                    - option "EUC-TW"
+                    - option "BIG-5"
+                    - option "CP950"
+                    - option "EUC-KR"
+                    - option "UHC"
+                    - option "ISO-2022-KR"
+                    - option "WINDOWS-1251"
+                    - option "CP866"
+                    - option "KOI8-R"
+                    - option "KOI8-U"
+                    - option "ARMSCII-8"
+                    - option "CP850"
+                    - option "ISO-2022-JP-2004"
+                    - option "ISO-2022-JP-MOBILE#KDDI"
+                    - option "CP50220"
+                    - option "CP50221"
+                    - option "CP50222"
+                - generic [ref=f118e141]:
+                  - generic [ref=f118e142]:
+                    - paragraph [aria-hidden] [ref=f118e143]: Separator
+                    - button "Help" [ref=f118e145] [cursor=pointer]:
+                      - img "Help with Separator" [ref=f118e146]: 
+                  - group "Separator" [ref=f118e148]:
+                    - generic [ref=f118e150]:
+                      - generic [ref=f118e151]:
+                        - radio "Tab" [ref=f118e152]
+                        - text: Tab
+                      - generic [ref=f118e153]:
+                        - radio "Comma" [checked] [ref=f118e154]
+                        - text: Comma
+                      - generic [ref=f118e155]:
+                        - radio "Colon" [ref=f118e156]
+                        - text: Colon
+                      - generic [ref=f118e157]:
+                        - radio "Semicolon" [ref=f118e158]
+                        - text: Semicolon
+                - generic [ref=f118e159]:
+                  - generic [ref=f118e160]:
+                    - generic [ref=f118e161]: Verbose scales
+                    - button "Help" [ref=f118e163] [cursor=pointer]:
+                      - img "Help with Verbose scales" [ref=f118e164]: 
+                  - combobox "Verbose scales" [ref=f118e166]:
+                    - option "Yes" [selected]
+                    - option "No"
+                - generic [ref=f118e167]:
+                  - generic [ref=f118e168]:
+                    - generic [ref=f118e169]: Preview rows
+                    - button "Help" [ref=f118e171] [cursor=pointer]:
+                      - img "Help with Preview rows" [ref=f118e172]: 
+                  - combobox "Preview rows" [ref=f118e174]:
+                    - option "10" [selected]
+                    - option "20"
+                    - option "100"
+                    - option "1000"
+                    - option "100000"
+                - generic [ref=f118e178]:
+                  - checkbox "Force import" [ref=f118e179]
+                  - generic [ref=f118e180]: Force import
+                  - button "Help" [ref=f118e182] [cursor=pointer]:
+                    - img "Help with Force import" [ref=f118e183]: 
+            - button "Upload grades" [ref=f118e190] [cursor=pointer]
+            - generic [aria-hidden] [ref=f118e191]:
+              - generic [aria-hidden] [ref=f118e192]: 
+              - text: Required
+      - contentinfo [ref=f118e193]:
+        - button "Show footer" [ref=f118e194] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f118e195]: "?"
+        - text:    
+        - generic [ref=f118e197]:
+          - link "Purge all caches" [ref=f118e199] [cursor=pointer]:
+            - /url: http://moodle.local/admin/purgecaches.php?confirm=1&sesskey=iMRixrV2dR&returnurl=%2Fgrade%2Fimport%2Fcsv%2Findex.php%3Fid%3D9
+          - generic [ref=f118e201]:
+            - text: "Reactive instances:"
+            - generic [ref=f118e202]:
+              - button "ProcessMonitor" [ref=f118e203] [cursor=pointer]
+              - button "CourseEditor9" [ref=f118e204] [cursor=pointer]
