@@ -3950,7 +3950,13 @@ body.dir-rtl {
        Overview report, Single view, Grade summary, User report) is aligned to $course-content-maxwidth.
        ".path-grade" scopes this to the Grade section only, so other pagelayout-admin pages (e.g. Site
        administration) are left untouched. */
-    .path-grade.pagelayout-admin {
+    .path-grade.pagelayout-admin,
+    /* Course administration > Filters and Course administration > Completion tracking (course/completion.php,
+       filter/manage.php) are the same case: both use pagelayout-admin instead of pagelayout-report, so without
+       this they would stay full-width unlike every other course administration page. Scoped by body id since
+       each is the only page of its kind, so nothing else under pagelayout-admin is affected. */
+    #page-course-completion,
+    #page-filter-manage {
         #page.drawers {
             .main-inner {
                 max-width: $course-content-maxwidth;
