@@ -32,6 +32,19 @@ import Ajax from 'core/ajax';
 import CourseActions from 'core_courseformat/local/content/actions';
 import {open as openMovePage} from 'format_multipageformat/movepage';
 
+/**
+ * Reload the page if any of the sections is a page (a Tab), since the Tab strip is only built
+ * at page load.
+ *
+ * @param {array} sectionIds the list of section ids
+ */
+const reloadIfPage = (sectionIds) => {
+    const isPage = (id) => document.querySelector(`li[data-for="section"][data-id="${id}"][data-tab-section="true"]`);
+    if (sectionIds.some(isPage)) {
+        window.location.reload();
+    }
+};
+
 class MultipageformatMutations extends DefaultMutations {
 
     /**
@@ -131,6 +144,39 @@ class MultipageformatMutations extends DefaultMutations {
         if (document.querySelector('.format-multipageformat-tabs')) {
             window.location.reload();
         }
+    };
+
+    /**
+     * Hide sections.
+     *
+     * Same as core, but hiding a page (a Tab) hides every section on it too (done by the
+     * server), and the page is reloaded so its Tab is marked as hidden.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids
+     */
+    sectionHide = async function(stateManager, sectionIds) {
+        await DefaultMutations.prototype.sectionHide.call(this, stateManager, sectionIds);
+        reloadIfPage(sectionIds);
+    };
+
+    /**
+     * Show sections.
+     *
+     * The mirror of sectionHide above: showing a page shows the sections hidden with it.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the list of section ids
+     */
+    sectionShow = async function(stateManager, sectionIds) {
+        await DefaultMutations.prototype.sectionShow.call(this, stateManager, sectionIds);
+        reloadIfPage(sectionIds);
     };
 
     /**

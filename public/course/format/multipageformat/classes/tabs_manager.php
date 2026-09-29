@@ -47,6 +47,12 @@ class tabs_manager {
     /** @var int Sentinel value stored for a section that is itself a Tab. */
     const TAB = -1;
 
+    /** @var string The option name marking a section hidden only because its page was hidden. */
+    const HIDDENBYPAGE = 'hiddenbypage';
+
+    /** @var array Per course, the page (Tab section id) of every section on a page, see get_page_of(). */
+    protected static $pages = [];
+
     /**
      * Returns the raw 'parent' value stored for a section.
      *
@@ -119,6 +125,7 @@ class tabs_manager {
             'sectionid' => $sectionid,
             'name' => self::OPTIONNAME,
         ]);
+        self::$pages = [];
     }
 
     /**
@@ -167,6 +174,80 @@ class tabs_manager {
     }
 
     /**
+     * The page a section is on: its own id if it is a Tab, its Tab's id if it belongs to one.
+     *
+     * The Tab relationships of the whole course are read once and kept until they change, as this
+     * is asked for every section whenever the course is shown.
+     *
+     * @param int $courseid
+     * @param int $sectionid
+     * @return int|null the page's Tab section id, or null if the section is not on a page
+     */
+    public static function get_page_of(int $courseid, int $sectionid): ?int {
+        global $DB;
+        if (!isset(self::$pages[$courseid])) {
+            $parents = $DB->get_records_menu('custom_course_format_options', [
+                'courseid' => $courseid,
+                'format' => self::FORMAT,
+                'name' => self::OPTIONNAME,
+            ], '', 'sectionid, value');
+            self::$pages[$courseid] = [];
+            foreach ($parents as $id => $value) {
+                self::$pages[$courseid][(int) $id] = ((int) $value === self::TAB) ? (int) $id : (int) $value;
+            }
+        }
+        return self::$pages[$courseid][$sectionid] ?? null;
+    }
+
+    /**
+     * Marks a section as hidden only because its page was hidden, so showing the page shows it again.
+     *
+     * @param int $courseid
+     * @param int $sectionid
+     */
+    public static function mark_hidden_by_page(int $courseid, int $sectionid): void {
+        global $DB;
+        $params = [
+            'courseid' => $courseid,
+            'format' => self::FORMAT,
+            'sectionid' => $sectionid,
+            'name' => self::HIDDENBYPAGE,
+        ];
+        if (!$DB->record_exists('custom_course_format_options', $params)) {
+            $DB->insert_record('custom_course_format_options', $params + ['value' => 1]);
+        }
+    }
+
+    /**
+     * Whether a section was hidden only because its page was hidden.
+     *
+     * @param int $sectionid
+     * @return bool
+     */
+    public static function is_hidden_by_page(int $sectionid): bool {
+        global $DB;
+        return $DB->record_exists('custom_course_format_options', [
+            'format' => self::FORMAT,
+            'sectionid' => $sectionid,
+            'name' => self::HIDDENBYPAGE,
+        ]);
+    }
+
+    /**
+     * Removes the hidden-by-page mark of a section, e.g. when its own visibility is changed.
+     *
+     * @param int $sectionid
+     */
+    public static function clear_hidden_by_page(int $sectionid): void {
+        global $DB;
+        $DB->delete_records('custom_course_format_options', [
+            'format' => self::FORMAT,
+            'sectionid' => $sectionid,
+            'name' => self::HIDDENBYPAGE,
+        ]);
+    }
+
+    /**
      * Inserts or updates the 'parent' row for a section.
      *
      * @param int $courseid
@@ -189,5 +270,6 @@ class tabs_manager {
             $params['value'] = $value;
             $DB->insert_record('custom_course_format_options', $params);
         }
+        unset(self::$pages[$courseid]);
     }
 }

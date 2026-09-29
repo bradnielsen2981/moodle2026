@@ -78,6 +78,7 @@ const resolveTabs = (sectionList, tabs) => {
         return {
             sectionid,
             name: tabEl.dataset.sectionname,
+            hiddenLabel: tab.hiddenlabel ?? '',
             groupEls: [tabEl, ...childEls],
         };
     }).filter(tab => tab !== null);
@@ -157,7 +158,22 @@ const buildTabStrip = (resolvedTabs, onSelect, addPageLabel) => {
         link.className = 'nav-link';
         link.dataset.tabid = tab.sectionid;
         link.setAttribute('role', 'tab');
-        link.textContent = tab.name;
+        const name = document.createElement('span');
+        name.dataset.for = 'tabname';
+        name.textContent = tab.name;
+        link.append(name);
+        if (tab.hiddenLabel) {
+            // A hidden page: its Tab is only shown in Edit mode, marked like other hidden items.
+            link.classList.add('format-multipageformat-hiddentab');
+            link.title = tab.hiddenLabel;
+            const icon = document.createElement('i');
+            icon.className = 'icon fa fa-eye-slash fa-fw ms-1 me-0';
+            icon.setAttribute('aria-hidden', 'true');
+            const label = document.createElement('span');
+            label.className = 'visually-hidden';
+            label.textContent = tab.hiddenLabel;
+            link.append(icon, label);
+        }
         link.addEventListener('click', (event) => {
             event.preventDefault();
             onSelect(tab.sectionid);
@@ -537,9 +553,9 @@ export const init = (tabs, courseId, addPageLabel = '') => {
         const newname = target.dataset.value;
         tab.name = newname;
         tab.groupEls[0].dataset.sectionname = newname;
-        const link = strip.querySelector(`[data-tabid="${tab.sectionid}"]`);
-        if (link) {
-            link.textContent = newname;
+        const name = strip.querySelector(`[data-tabid="${tab.sectionid}"] [data-for="tabname"]`);
+        if (name) {
+            name.textContent = newname;
         }
     });
 };

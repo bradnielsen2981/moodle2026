@@ -367,6 +367,9 @@ class format_multipageformat extends core_courseformat\base {
      * The General section (section 0) can be completely hidden via the
      * 'hidegeneralsection' format option, regardless of its own visibility state.
      *
+     * A hidden page (its Tab section hidden), and every section on it, is only shown in Edit
+     * mode: outside it, it is left out completely, even for users who can see hidden sections.
+     *
      * @param section_info $section
      * @return bool
      */
@@ -374,7 +377,36 @@ class format_multipageformat extends core_courseformat\base {
         if (!$section->section && !empty($this->get_course()->hidegeneralsection)) {
             return false;
         }
+        if ($section->section && !$this->show_editor()) {
+            $page = $this->get_page_section($section);
+            if ($page && !$page->visible) {
+                return false;
+            }
+        }
         return parent::is_section_visible($section);
+    }
+
+    /**
+     * The page (Tab section) a section is on, looking through the sections containing a subsection.
+     *
+     * @param section_info $section
+     * @return section_info|null the page's Tab section, or null if the section is not on a page
+     */
+    public function get_page_section(section_info $section): ?section_info {
+        $modinfo = $this->get_modinfo();
+        // A subsection is on the page of the section containing it (guarded against loops).
+        for ($depth = 0; $depth < 10 && $section; $depth++) {
+            $pageid = \format_multipageformat\tabs_manager::get_page_of($this->courseid, $section->id);
+            if ($pageid) {
+                return $modinfo->get_section_info_by_id($pageid);
+            }
+            $delegate = $section->get_component_instance();
+            if (!$delegate instanceof \core_courseformat\sectiondelegatemodule) {
+                return null;
+            }
+            $section = $delegate->get_parent_section();
+        }
+        return null;
     }
 
     /**

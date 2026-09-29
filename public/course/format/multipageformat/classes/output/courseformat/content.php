@@ -105,11 +105,17 @@ class content extends content_base {
         $sectionnum = fn($id) => $modinfo->get_section_info_by_id($id)?->sectionnum ?? PHP_INT_MAX;
         usort($tabsectionids, fn($a, $b) => $sectionnum($a) <=> $sectionnum($b));
 
+        // A hidden page only has a Tab in Edit mode (see format_multipageformat::is_section_visible()).
         $tabs = [];
         foreach ($tabsectionids as $tabsectionid) {
+            $tabsection = $modinfo->get_section_info_by_id($tabsectionid);
+            if (!$tabsection || !$this->format->is_section_visible($tabsection)) {
+                continue;
+            }
             $tabs[] = [
                 'sectionid' => $tabsectionid,
                 'childsectionids' => tabs_manager::get_children_sectionids($courseid, $tabsectionid),
+                'hiddenlabel' => $tabsection->visible ? '' : get_string('hiddenfromstudents'),
             ];
         }
         return $tabs;

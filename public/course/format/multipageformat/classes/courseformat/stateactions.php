@@ -144,12 +144,96 @@ class stateactions extends stateactions_base {
             if (tabs_manager::is_tab($sectionid)) {
                 foreach (tabs_manager::get_children_sectionids($course->id, $sectionid) as $childsectionid) {
                     tabs_manager::remove($childsectionid);
+                    tabs_manager::clear_hidden_by_page($childsectionid);
                 }
             }
             tabs_manager::remove($sectionid);
+            tabs_manager::clear_hidden_by_page($sectionid);
         }
 
         parent::section_delete($updates, $course, $ids, $targetsectionid, $targetcmid);
+    }
+
+    /**
+     * Hide course sections.
+     *
+     * Hiding a page (its Tab section) hides the whole page: every section on it is hidden too.
+     * The sections that were visible until then are marked, so showing the page again shows
+     * only those, and a section hidden on its own before stays hidden.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids section ids
+     * @param int|null $targetsectionid not used
+     * @param int|null $targetcmid not used
+     */
+    public function section_hide(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        $this->validate_sections($course, $ids, __FUNCTION__);
+        $modinfo = get_fast_modinfo($course);
+        $pagesections = [];
+        foreach ($ids as $sectionid) {
+            if (!tabs_manager::is_tab($sectionid)) {
+                tabs_manager::clear_hidden_by_page($sectionid);
+                continue;
+            }
+            foreach (tabs_manager::get_children_sectionids($course->id, $sectionid) as $childid) {
+                $child = $modinfo->get_section_info_by_id($childid, IGNORE_MISSING);
+                if ($child && $child->visible && !in_array($childid, $ids)) {
+                    $pagesections[] = $childid;
+                }
+            }
+        }
+
+        parent::section_hide($updates, $course, array_merge($ids, $pagesections), $targetsectionid, $targetcmid);
+
+        foreach ($pagesections as $childid) {
+            tabs_manager::mark_hidden_by_page($course->id, $childid);
+        }
+    }
+
+    /**
+     * Show course sections.
+     *
+     * Showing a page (its Tab section) shows again the sections on it that were hidden with it.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids section ids
+     * @param int|null $targetsectionid not used
+     * @param int|null $targetcmid not used
+     */
+    public function section_show(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        $this->validate_sections($course, $ids, __FUNCTION__);
+        $pagesections = [];
+        foreach ($ids as $sectionid) {
+            if (!tabs_manager::is_tab($sectionid)) {
+                tabs_manager::clear_hidden_by_page($sectionid);
+                continue;
+            }
+            foreach (tabs_manager::get_children_sectionids($course->id, $sectionid) as $childid) {
+                if (tabs_manager::is_hidden_by_page($childid) && !in_array($childid, $ids)) {
+                    $pagesections[] = $childid;
+                }
+            }
+        }
+
+        parent::section_show($updates, $course, array_merge($ids, $pagesections), $targetsectionid, $targetcmid);
+
+        foreach ($pagesections as $childid) {
+            tabs_manager::clear_hidden_by_page($childid);
+        }
     }
 
     /**

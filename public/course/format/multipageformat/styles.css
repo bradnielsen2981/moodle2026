@@ -130,3 +130,8 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
 .courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-chevron {
     color: #ffffff;
 }
+
+/* The Tab of a hidden page, only shown in Edit mode (see buildTabStrip in tabs.js). */
+.format-multipageformat-tabs .nav-link.format-multipageformat-hiddentab {
+    opacity: .6;
+}
