@@ -67,6 +67,11 @@ class controlmenu extends controlmenu_base {
             $parentcontrols['movesection']->attributes['data-action'] = 'movePage';
         }
 
+        // A page's top section cannot be duplicated (see stateactions::section_duplicate()).
+        if ($istab) {
+            unset($parentcontrols['duplicate']);
+        }
+
         if ($section->is_orphan() || !$section->sectionnum) {
             return $parentcontrols;
         }

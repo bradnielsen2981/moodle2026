@@ -135,3 +135,8 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
 .format-multipageformat-tabs .nav-link.format-multipageformat-hiddentab {
     opacity: .6;
 }
+
+/* The bulk Move action while a page's top section is selected (see local/content/bulkpages.js). */
+.format-multipageformat-bulkhidden {
+    display: none !important;
+}

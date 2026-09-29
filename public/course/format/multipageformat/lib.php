@@ -422,6 +422,19 @@ class format_multipageformat extends core_courseformat\base {
     }
 
     /**
+     * Duplicate a section, unless it is a page's top section (its Tab), which can never be duplicated.
+     *
+     * @param section_info $originalsection The section to be duplicated
+     * @return section_info The new duplicated section
+     */
+    public function duplicate_section(section_info $originalsection): section_info {
+        if (\format_multipageformat\tabs_manager::is_tab($originalsection->id)) {
+            throw new moodle_exception('pagecannotbeduplicated', 'format_multipageformat');
+        }
+        return parent::duplicate_section($originalsection);
+    }
+
+    /**
      * Indicates whether the course format supports the creation of a news forum.
      *
      * @return bool

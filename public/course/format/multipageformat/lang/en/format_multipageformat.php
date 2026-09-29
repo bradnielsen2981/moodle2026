@@ -52,6 +52,7 @@ $string['movepage_info'] = 'Move {$a} to';
 $string['movepage_title'] = 'Move page';
 $string['movepageafter'] = 'After {$a}';
 $string['movepagebefore'] = 'Before {$a}';
+$string['pagecannotbeduplicated'] = 'The top section of a page cannot be duplicated.';
 $string['pagemoveonlytopage'] = 'A page can only be moved before or after another page.';
 $string['cannotplaceabovetab'] = 'A section cannot be placed above the first section of a page (Tab).';
 $string['tabmustremainontop']= 'A section belonging to a page (Tab) cannot be moved above that page.';

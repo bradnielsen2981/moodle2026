@@ -155,6 +155,33 @@ class stateactions extends stateactions_base {
     }
 
     /**
+     * Duplicate course sections.
+     *
+     * A page's top section (its Tab) can never be duplicated, however it is asked for (its
+     * section menu, bulk actions, the webservice).
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids section ids
+     * @param int|null $targetsectionid not used
+     * @param int|null $targetcmid not used
+     */
+    public function section_duplicate(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        foreach ($ids as $sectionid) {
+            if (tabs_manager::is_tab($sectionid)) {
+                throw new moodle_exception('pagecannotbeduplicated', 'format_multipageformat');
+            }
+        }
+        parent::section_duplicate($updates, $course, $ids, $targetsectionid, $targetcmid);
+    }
+
+    /**
      * Hide course sections.
      *
      * Hiding a page (its Tab section) hides the whole page: every section on it is hidden too.
