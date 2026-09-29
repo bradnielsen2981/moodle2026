@@ -62,6 +62,11 @@ class controlmenu extends controlmenu_base {
             $parentcontrols['delete']->text = get_string('deletepage', 'format_multipageformat');
         }
 
+        // A page is moved as a whole, before or after another page (see format_multipageformat/movepage).
+        if ($istab && isset($parentcontrols['movesection'])) {
+            $parentcontrols['movesection']->attributes['data-action'] = 'movePage';
+        }
+
         if ($section->is_orphan() || !$section->sectionnum) {
             return $parentcontrols;
         }

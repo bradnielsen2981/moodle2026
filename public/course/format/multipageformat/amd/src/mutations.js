@@ -30,6 +30,7 @@ import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import DefaultMutations from 'core_courseformat/local/courseeditor/mutations';
 import Ajax from 'core/ajax';
 import CourseActions from 'core_courseformat/local/content/actions';
+import {open as openMovePage} from 'format_multipageformat/movepage';
 
 class MultipageformatMutations extends DefaultMutations {
 
@@ -130,6 +131,33 @@ class MultipageformatMutations extends DefaultMutations {
         if (document.querySelector('.format-multipageformat-tabs')) {
             window.location.reload();
         }
+    };
+
+    /**
+     * Move a whole page before or after another page.
+     *
+     * The page is reloaded afterwards, since the Tab strip is only built at page load.
+     *
+     * It is important to note this mutation method is declared as a class attribute,
+     * See the class jsdoc for more details on why.
+     *
+     * @param {StateManager} stateManager the current state manager
+     * @param {array} sectionIds the Tab section id of the page to move
+     * @param {number} targetSectionId the Tab section id of the page to move it before or after
+     */
+    sectionMovePage = async function(stateManager, sectionIds, targetSectionId) {
+        const logEntry = this._getLoggerEntry(
+            stateManager,
+            'section_movepage',
+            sectionIds,
+            {component: 'format_multipageformat', targetSectionId}
+        );
+        const course = stateManager.get('course');
+        this.sectionLock(stateManager, sectionIds, true);
+        const updates = await this._callEditWebservice('section_movepage', course.id, sectionIds, targetSectionId);
+        stateManager.processUpdates(updates);
+        stateManager.addLoggerEntry(await logEntry);
+        window.location.reload();
     };
 
     /**
@@ -272,5 +300,6 @@ export const init = () => {
         sectionMakePage: 'sectionMakePage',
         sectionAttach: 'sectionAttach',
         sectionDetach: 'sectionDetach',
+        movePage: openMovePage,
     });
 };

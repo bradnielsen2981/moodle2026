@@ -100,6 +100,11 @@ class content extends content_base {
             return [];
         }
 
+        // The Tab strip follows the course order of the pages, which changes when a page is moved.
+        $modinfo = $this->format->get_modinfo();
+        $sectionnum = fn($id) => $modinfo->get_section_info_by_id($id)?->sectionnum ?? PHP_INT_MAX;
+        usort($tabsectionids, fn($a, $b) => $sectionnum($a) <=> $sectionnum($b));
+
         $tabs = [];
         foreach ($tabsectionids as $tabsectionid) {
             $tabs[] = [

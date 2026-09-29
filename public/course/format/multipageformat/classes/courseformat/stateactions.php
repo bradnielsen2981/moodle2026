@@ -237,10 +237,114 @@ class stateactions extends stateactions_base {
     }
 
     /**
+     * Move a whole page (its Tab section and every section on it) before or after another page.
+     *
+     * This is the only way a Tab can be moved (the Move option of its section menu). Whether
+     * the page lands before or after the target page follows from where they are: a target
+     * above the moved page means "before it", a target below it means "after it", so every
+     * position is reachable. Untabbed sections, which are shown on every page, stay where
+     * they are. Subsections go wherever the section containing them goes.
+     *
+     * @param stateupdates $updates the affected course elements track
+     * @param stdClass $course the course object
+     * @param int[] $ids the Tab section id of the page to move (only the first is used)
+     * @param int|null $targetsectionid the Tab section id of the page to move it before or after
+     * @param int|null $targetcmid not used
+     */
+    public function section_movepage(
+        stateupdates $updates,
+        stdClass $course,
+        array $ids = [],
+        ?int $targetsectionid = null,
+        ?int $targetcmid = null
+    ): void {
+        if (!$targetsectionid) {
+            throw new moodle_exception('Action section_movepage requires targetsectionid');
+        }
+        $this->validate_sections($course, $ids, __FUNCTION__);
+        $this->validate_sections($course, [$targetsectionid], __FUNCTION__);
+        $coursecontext = context_course::instance($course->id);
+        require_capability('moodle/course:movesections', $coursecontext);
+
+        $tabid = (int) reset($ids);
+        if (!tabs_manager::is_tab($tabid) || !tabs_manager::is_tab($targetsectionid)) {
+            throw new moodle_exception('pagemoveonlytopage', 'format_multipageformat');
+        }
+        if ($tabid == $targetsectionid) {
+            return;
+        }
+
+        $modinfo = get_fast_modinfo($course);
+        $pagesections = $this->get_page_sections($course, $modinfo, $tabid);
+        $movingids = array_map(fn($section) => $section->id, $pagesections);
+        $tab = reset($pagesections);
+        $target = $modinfo->get_section_info_by_id($targetsectionid, MUST_EXIST);
+
+        if ($target->sectionnum < $tab->sectionnum) {
+            // Before the target page: after whatever section sits right above it.
+            $anchor = null;
+            foreach ($modinfo->get_section_info_all() as $section) {
+                if ($section->sectionnum >= $target->sectionnum) {
+                    break;
+                }
+                if ($section->component === null && !in_array($section->id, $movingids)) {
+                    $anchor = $section;
+                }
+            }
+        } else {
+            // After the target page: after its last section.
+            $targetsections = $this->get_page_sections($course, $modinfo, $target->id);
+            $anchor = end($targetsections);
+        }
+        if (!$anchor || in_array($anchor->id, $movingids)) {
+            return;
+        }
+
+        // Move the Tab after the anchor, then each of its sections after the previous one, so
+        // the page keeps its own order.
+        $format = course_get_format($course->id);
+        $previousid = $anchor->id;
+        foreach ($movingids as $sectionid) {
+            $modinfo = get_fast_modinfo($course);
+            $format->move_section_after(
+                $modinfo->get_section_info_by_id($sectionid, MUST_EXIST),
+                $modinfo->get_section_info_by_id($previousid, MUST_EXIST)
+            );
+            $previousid = $sectionid;
+        }
+
+        // Every section number after the first moved one can change.
+        $this->course_state($updates, $course);
+    }
+
+    /**
+     * The sections that make up a page, in course order: its Tab first, then the sections on it.
+     *
+     * Subsections are left out, since they are not placed in the course section order themselves.
+     *
+     * @param stdClass $course the course object
+     * @param course_modinfo $modinfo the course's modinfo
+     * @param int $tabid the page's Tab section id
+     * @return section_info[]
+     */
+    protected function get_page_sections(stdClass $course, course_modinfo $modinfo, int $tabid): array {
+        $children = [];
+        foreach (tabs_manager::get_children_sectionids($course->id, $tabid) as $childid) {
+            $child = $modinfo->get_section_info_by_id($childid, IGNORE_MISSING);
+            if ($child && $child->component === null) {
+                $children[] = $child;
+            }
+        }
+        usort($children, fn($a, $b) => $a->sectionnum <=> $b->sectionnum);
+        return [$modinfo->get_section_info_by_id($tabid, MUST_EXIST), ...$children];
+    }
+
+    /**
      * Move sections to a position right after a target section.
      *
-     * A section that has become a Tab (page) is locked in place: it can never be moved at
-     * all, by any means (dragging it, dragging another section onto/around it, etc). None of
+     * A section that has become a Tab (page) can only be moved as a whole page, using the
+     * Move option of its section menu (see section_movepage()). It can never be moved any
+     * other way (dragging it, dragging another section onto/around it, etc). None of
      * its children can be moved to a position above (before) it either. Sections with no Tab
      * relationship at all, and moves that do not involve a Tab or one of its children, are
      * unrestricted.

@@ -28,6 +28,7 @@
 
 import {open as openAddPage} from 'format_multipageformat/addpage';
 import Collapse from 'theme_boost/bootstrap/collapse';
+import {init as initCourseIndexRules} from 'format_multipageformat/local/courseindex/section';
 
 const SELECTORS = {
     SECTIONLIST: '[data-for="course_sectionlist"]',
@@ -356,6 +357,9 @@ export const init = (tabs, courseId, addPageLabel = '') => {
     if (!tabs || !tabs.length) {
         return;
     }
+
+    // Only let pages be dragged onto other pages in the Course index (see that module).
+    initCourseIndexRules(tabs);
 
     // Keep the Course index grouped by page on every page, including pages where the main
     // content only ever shows a single section (a Tab's own page, or one of its real delegated

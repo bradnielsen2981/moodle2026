@@ -1,0 +1,46 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_multipageformat/local/movepage
+
+    The "Move page" dialog body: the pages of the course, each one a place to move the page to.
+
+    Example context (json):
+    {
+        "information": "Move Page B to",
+        "pages": [
+            {"id": 42, "label": "Before Page A", "current": false},
+            {"id": 43, "label": "Page B", "current": true},
+            {"id": 44, "label": "After Page C", "current": false}
+        ]
+    }
+}}
+<p>{{information}}:</p>
+<nav class="collapse-list move-section-tree" id="destination-selector" role="tree">
+    {{#pages}}
+    <div class="collapse-list-item" role="treeitem">
+        <a href="#"
+            class="collapse-list-link text-truncate{{#current}} disabled text-body-secondary{{/current}}"
+            data-for="page"
+            data-id="{{id}}"
+            {{#current}}aria-disabled="true" tabindex="-1"{{/current}}
+        >
+            {{label}}
+        </a>
+    </div>
+    {{/pages}}
+</nav>
