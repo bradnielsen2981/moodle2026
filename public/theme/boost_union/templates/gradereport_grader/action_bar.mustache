@@ -74,6 +74,16 @@
     * Added a "Grade administration" heading above the tertiary navigation, matching the "Grade administration"
       breadcrumb node which is always shown above the Grader report page. It is a plain, unstyled h2 (no extra
       classes), the same as the "Edit course settings" heading on the course settings page.
+    * Added a placeholder next to the user search into which the "Show [number]" students per page selector is
+      moved from the sticky footer. The selector is rendered by grade/report/grader/index.php into the sticky footer
+      only, so it has to be moved client-side.
+    * Disabled the sticky footer so that the remaining footer content (paging bar and "Save changes" button)
+      is shown in the normal page flow below the grader table instead of being frozen at the bottom of the window.
+      See the "Grader report" section in scss/boost_union/post.scss for the accompanying styles.
+    * Added an "Expand grader report" button and a header bar for the expanded view, which shows the grader table
+      in a panel filling the window below the navbar. See amd/src/graderexpand.js.
+    * Added "Send message" and "Send email" icons which replace the email address column next to each user's name.
+      See amd/src/gradercontacts.js.
 }}
 <h2>{{#str}}gradeadministration, grades{{/str}}</h2>
 <div class="container-fluid tertiary-navigation full-width-bottom-border">
@@ -90,6 +100,8 @@
             </div>
             <div class="navitem-divider"></div>
         {{/searchdropdown}}
+        <div class="navitem align-self-center d-none" data-region="theme-boost-union-grader-perpage"></div>
+        <div class="navitem-divider d-none" data-region="theme-boost-union-grader-perpage-divider"></div>
         {{#groupselector}}
             <div class="navitem">
                 {{>core/comboboxsearch}}
@@ -117,3 +129,55 @@
         {{/collapsedcolumns}}
     </div>
 </div>
+{{! The expand button is moved into the top left cell of the grader table (above the name column) by JS. }}
+<button type="button" class="btn btn-sm btn-outline-secondary theme-boost-union-grader-expandtoggle d-none"
+        data-action="theme-boost-union-grader-expand" aria-pressed="false"
+        title="{{#str}}graderexpandedview, theme_boost_union{{/str}}"
+        aria-label="{{#str}}graderexpandedview, theme_boost_union{{/str}}"
+        data-label-expand="{{#str}}graderexpandedview, theme_boost_union{{/str}}"
+        data-label-collapse="{{#str}}graderexpandedviewexit, theme_boost_union{{/str}}">
+    {{#pix}}e/fullscreen, core{{/pix}}
+</button>
+{{! The contact icons which are cloned next to each user's name by JS. }}
+<div class="d-none" data-region="theme-boost-union-grader-contacts">
+    <a href="#" role="button" class="btn btn-link btn-sm p-0 d-none" data-type="message"
+       data-action="theme-boost-union-grader-message"
+       title="{{#str}}gradersendmessage, theme_boost_union{{/str}}"
+       data-label="{{#str}}gradersendmessage, theme_boost_union{{/str}}">{{#pix}}t/message, core{{/pix}}</a>
+    <a href="#" class="btn btn-link btn-sm p-0 d-none" data-type="email"
+       data-label="{{#str}}gradersendemail, theme_boost_union{{/str}}">{{#pix}}i/email, core{{/pix}}</a>
+</div>
+<div class="theme-boost-union-grader-expandedbar" data-region="theme-boost-union-grader-expandedbar" hidden>
+    <h2 class="h5 mb-0 text-truncate">{{#str}}pluginname, gradereport_grader{{/str}}</h2>
+    <div class="theme-boost-union-grader-expandedbar-perpage" data-region="theme-boost-union-grader-expandedbar-perpage"></div>
+    <button type="button" class="btn btn-outline-secondary ms-auto" data-action="theme-boost-union-grader-collapse">
+        {{#pix}}i/window_close, core{{/pix}}
+        {{#str}}graderexpandedviewexit, theme_boost_union{{/str}}
+    </button>
+</div>
+{{#js}}
+(function() {
+    var footer = document.querySelector('.stickyfooter');
+    if (!footer) {
+        return;
+    }
+    // Keep the footer from being frozen at the bottom of the window. This must happen before the sticky footer
+    // is initialised, which is the case as this template is rendered before the footer.
+    footer.dataset.disable = 'true';
+
+    // Move the students per page selector next to the user search.
+    var perpage = footer.querySelector('select[name="perpage"]');
+    var target = document.querySelector('[data-region="theme-boost-union-grader-perpage"]');
+    if (perpage && target) {
+        target.appendChild(perpage.closest('label'));
+        target.classList.remove('d-none');
+        document.querySelector('[data-region="theme-boost-union-grader-perpage-divider"]').classList.remove('d-none');
+    }
+})();
+require(['theme_boost_union/graderexpand'], function(graderExpand) {
+    graderExpand.init();
+});
+require(['theme_boost_union/gradercontacts'], function(graderContacts) {
+    graderContacts.init();
+});
+{{/js}}

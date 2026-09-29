@@ -35,6 +35,12 @@ $string['configtitle'] = 'Boost Union';
 $string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues">Github issues</a>';
 $string['warningboostunioninactive'] = 'Boost Union (or a child theme of Boost Union) is currently <em>not</em> the active theme. Settings on these pages will not have any effect if you do not <a href="{$a->url}">make Boost Union the active theme</a> or allow Boost Union to be used as category / course / user / cohort theme.';
 
+// Grader report: Expanded view.
+$string['graderexpandedview'] = 'Expand grader report';
+$string['graderexpandedviewexit'] = 'Exit expanded view';
+$string['gradersendemail'] = 'Send email';
+$string['gradersendmessage'] = 'Send message';
+
 // General select options.
 $string['never'] = 'Never';
 $string['always'] = 'Always';

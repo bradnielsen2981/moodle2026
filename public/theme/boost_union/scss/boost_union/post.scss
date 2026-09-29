@@ -51,6 +51,164 @@
     margin-left: 1.5rem;
 }
 
+/* Grader report (grade/report/grader/index.php): The "Show [number]" students per page selector is moved next to the
+   user search and the sticky footer is disabled by the theme's gradereport_grader/action_bar template override.
+   Show the remaining footer content (paging bar and "Save changes" button) in the normal page flow below the table. */
+#page-grade-report-grader-index {
+    [data-region="theme-boost-union-grader-perpage"] label {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+
+    .stickyfooter {
+        position: static;
+        height: auto;
+        box-shadow: none;
+        border-top: 0 !important; /* Overrule the border-top utility class. */
+        margin-top: 1rem;
+        z-index: auto;
+
+        .sticky-footer-content-wrapper {
+            margin: 0;
+            padding: 0;
+        }
+
+        .sticky-footer-content {
+            max-width: none;
+            padding: 0 !important; /* Overrule the px-3 / py-2 utility classes. */
+        }
+
+        /* Hide the (now empty) wrapper of the moved students per page selector. */
+        .col-auto:not(:has(*)) {
+            display: none;
+        }
+
+        /* Hide the footer completely if it has neither a paging bar nor a "Save changes" button. */
+        &:not(:has(.pagination, #gradersubmit)) {
+            display: none;
+        }
+    }
+
+    /* The email address column is replaced by contact icons next to the user's name (see amd/src/gradercontacts.js). */
+    &.theme-boost-union-grader-hideemailcol .gradeparent .useremail {
+        display: none;
+    }
+
+    .theme-boost-union-grader-contacticons {
+        display: inline-flex;
+        gap: .25rem;
+        margin-left: .5rem;
+        vertical-align: middle;
+
+        .btn {
+            line-height: 1;
+            color: $gray-600;
+
+            &:hover,
+            &:focus {
+                color: $primary;
+            }
+        }
+
+        .icon {
+            margin-right: 0;
+        }
+    }
+
+    /* The header bar of the expanded view is only shown in the expanded view. */
+    .theme-boost-union-grader-expandedbar[hidden] {
+        display: none;
+    }
+}
+
+/* Grader report: Expanded view (see amd/src/graderexpand.js).
+   The header bar, the grader table and the footer (paging bar and "Save changes" button) are fixed to the window
+   below the navbar, stacked on top of each other, above the drawers but below modals. The grader table scrolls in
+   both directions and keeps its sticky header row and student column. */
+$bu-grader-expandedbar-height: 3.5rem;
+$bu-grader-expanded-zindex: $zindex-fixed + 2;
+
+#page-grade-report-grader-index.theme-boost-union-grader-expanded {
+    /* Prevent the page behind the expanded view from scrolling. */
+    overflow: hidden;
+
+    .theme-boost-union-grader-expandedbar,
+    .gradeparent,
+    .stickyfooter {
+        position: fixed;
+        left: 0;
+        right: 0;
+        z-index: $bu-grader-expanded-zindex;
+        margin: 0;
+        background-color: $body-bg;
+    }
+
+    .theme-boost-union-grader-expandedbar {
+        top: $navbar-height;
+        height: $bu-grader-expandedbar-height;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0 1rem;
+        border-bottom: $border-width solid $border-color;
+        box-shadow: $box-shadow-sm;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+    }
+
+    /* The panel height is set with min-height and max-height instead of top and bottom to keep it indefinite.
+       Otherwise, the height: 100% (.h-100) elements in the category header cells would stretch the header rows
+       to the panel height if the table has only a few rows. */
+    .gradeparent {
+        top: calc(#{$navbar-height} + #{$bu-grader-expandedbar-height});
+        min-height: calc(100vh - #{$navbar-height} - #{$bu-grader-expandedbar-height});
+        max-height: calc(100vh - #{$navbar-height} - #{$bu-grader-expandedbar-height});
+        overflow: auto;
+        overscroll-behavior: contain;
+
+        /* The header row sticks to the top of the panel instead of the navbar. */
+        tr.heading {
+            top: 0;
+        }
+    }
+
+    /* Make room for the footer if it is shown. */
+    &:has(.stickyfooter .pagination, #gradersubmit) .gradeparent {
+        min-height: calc(100vh - #{$navbar-height} - 2 * #{$bu-grader-expandedbar-height});
+        max-height: calc(100vh - #{$navbar-height} - 2 * #{$bu-grader-expandedbar-height});
+    }
+
+    .stickyfooter {
+        bottom: 0;
+        height: $bu-grader-expandedbar-height;
+        border-top: $border-width solid $border-color !important; /* Overrule the rule for the non-expanded view. */
+        box-shadow: 0 -.125rem .25rem rgba($black, .075);
+
+        .sticky-footer-content {
+            height: 100%;
+            padding: 0 1rem !important; /* Overrule the rule for the non-expanded view. */
+        }
+
+        ul.pagination {
+            margin-bottom: 0;
+        }
+    }
+
+    /* Show the message drawer (opened by the contact icons) above the expanded view. */
+    .drawer:has([data-region="message-drawer"]) {
+        z-index: $bu-grader-expanded-zindex + 1;
+    }
+}
+
 /* Make the "Activities" heading on the course overview page (course/overview.php) render as a plain h2,
    the same as the "Edit course settings" heading on the course settings page and the "Grade administration" /
    "Participants" headings above the Grader report / Participants tertiary navigation dropdowns. Moodle core
