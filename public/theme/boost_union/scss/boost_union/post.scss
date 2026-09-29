@@ -60,6 +60,29 @@
     font-size: 2rem;
 }
 
+/* Limit the width of the section settings page (course/editsection.php, used for sections and subsections) to the
+   course content max width, the same as the course pages and the activity settings page (course/modedit.php).
+   Moodle core does not set a page layout or the "limitedwidth" body class on this page, so it would otherwise
+   use the full page width. These rules replicate Boost core's ".pagelayout-standard, body.limitedwidth" rules. */
+@include media-breakpoint-up(md) {
+    #page-course-editsection {
+        #page.drawers {
+            .main-inner {
+                max-width: $course-content-maxwidth;
+            }
+            .footer-popover {
+                max-width: $course-content-maxwidth;
+                width: 100%;
+                margin: 0 auto;
+                @include border-radius();
+            }
+        }
+        .sticky-footer-content {
+            max-width: $course-content-maxwidth;
+        }
+    }
+}
+
 /* Note: the "Grade administration" heading (above the Grader report dropdown) and the "Participants" heading
    (above the Enrolled users dropdown) intentionally have no custom styling here. They are plain h2 elements,
    the same as the "Edit course settings" heading on the course settings page. See the theme's
