@@ -1,0 +1,106 @@
+.coursearchiver_alreadyhidden {
+    opacity: .5;
+}
+
+.coursearchiver_bar {
+    background-color: red;
+    font-size: 3em;
+    height: 100px;
+    line-height: 100px;
+}
+
+.coursearchiver_completedmsg {
+    background-color: #f5f5f5;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+}
+
+.coursearchiver_error_text {
+    background-color: #f5f5f5;
+    color: #800000;
+    margin: 5px;
+    padding: 5px;
+}
+
+.coursearchiver_myformconfirm {
+    background-color: #f0f8ff;
+    border: 2px solid #cacadc;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.coursearchiver_myformerror {
+    background-color: #fdf5e6;
+    border: 2px solid #800000;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px;
+    padding: 20px;
+}
+
+.coursearchiver_notice_text {
+    background-color: yellow;
+    color: #000;
+    margin: 5px;
+    padding: 5px;
+}
+
+.coursearchiver_progress_bar {
+    border: 2px solid #000;
+    box-sizing: border-box;
+    margin-top: -104px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.coursearchiver_progress_bar_spacing {
+    margin-bottom: 120px;
+}
+
+.coursearchiver_stats {
+    background-color: #c0c0c0;
+    border: 1px dotted gray;
+    color: #fff;
+    font-size: .85em;
+    padding: 5px;
+}
+
+.mform .coursearchiver_checkbox .fitem {
+    position: relative;
+    display: inline-block;
+    top: 8px;
+    left: 8px;
+}
+
+.mform .coursearchiver_checkbox .fitem label {
+    display: none;
+}
+
+.path-admin-tool-coursearchiver .btn-primary {
+    margin: auto;
+}
+
+.path-admin-tool-coursearchiver .fdate_selector .form-group {
+    display: inline-block;
+}
+
+.path-admin-tool-coursearchiver .femptylabel .form-group {
+    margin: .5rem;
+}
+
+.path-admin-tool-coursearchiver .femptylabel > div:first-child {
+    flex: 0;
+    padding-left: 0;
+}
+
+.path-admin-tool-coursearchiver .form-check-input:not(#id_emptyonly):not(#id_subcats):not(#id_ignadmins):not(#id_ignsiteroles) {
+    position: unset;
+    vertical-align: middle;
+}
