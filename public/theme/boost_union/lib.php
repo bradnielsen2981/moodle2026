@@ -974,6 +974,9 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
 
+    // Setting: Compact blocks.
+    $content .= theme_boost_union_get_scss_compactblocks();
+
     return $content;
 }
 

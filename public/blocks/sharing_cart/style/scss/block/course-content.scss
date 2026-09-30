@@ -37,17 +37,6 @@ body:has(.block.block_sharing_cart) .course-content {
     cursor: pointer;
   }
 
-  .add_to_sharing_cart {
-    display: flex;
-    align-self: center;
-    cursor: pointer;
-    margin-left: 0.5rem;
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-  }
 
 
 }

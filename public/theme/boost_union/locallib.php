@@ -1983,6 +1983,46 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
 }
 
 /**
+ * Returns the SCSS to render blocks more compactly (smaller fonts and less vertical spacing).
+ *
+ * @return string
+ */
+function theme_boost_union_get_scss_compactblocks() {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    $compactblocksconfig = get_config('theme_boost_union', 'compactblocks');
+    if (isset($compactblocksconfig) && $compactblocksconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Blocks use Bootstrap spacing utilities (mb-3, p-3, mt-3) which are !important, so we have to override with !important.
+        $scss .= 'section.block.card {
+            margin-bottom: $spacer * 0.5 !important;
+            font-size: $font-size-sm;
+
+            > .card-body {
+                padding: ($spacer * 0.5) ($spacer * 0.75) !important;
+            }
+
+            .card-title {
+                font-size: $font-size-base;
+                margin-bottom: 0;
+            }
+
+            .card-text {
+                margin-top: $spacer * 0.5 !important;
+            }
+
+            .card-text .footer,
+            .card-text > p:last-child {
+                margin-bottom: 0;
+            }
+        }';
+    }
+
+    return $scss;
+}
+
+/**
  * Returns the SCSS to add an envelope symbol in front of mailto links to mark them visually.
  *
  * @param \core\output\theme_config $theme The theme config object.

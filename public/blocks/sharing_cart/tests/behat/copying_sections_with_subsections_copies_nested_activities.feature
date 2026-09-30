@@ -30,8 +30,9 @@ The editing teacher copies the section and inserts it into a different section.
   And I click on "//a[@data-blockname='sharing_cart']" "xpath_element"
 
   #Region Start: All the steps to copy the section that has a subsection with an activity inside it
-  And I wait until "//li[@id='section-1']//*[@class='fa fa-shopping-basket add_to_sharing_cart']" "xpath_element" exists
-  And I click on "//li[@id='section-1']//*[@class='fa fa-shopping-basket add_to_sharing_cart']" "xpath_element"
+  And I open section "1" edit menu
+  And I wait until "(//li[@id='section-1']//div[contains(@class,'section_action_menu')]//a[contains(@class,'add_to_sharing_cart')])[1]" "xpath_element" exists
+  And I click on "(//li[@id='section-1']//div[contains(@class,'section_action_menu')]//a[contains(@class,'add_to_sharing_cart')])[1]" "xpath_element"
 
   And I wait "2" seconds
   And I wait until "//div[@class='modal-footer']/button[@data-action='save']" "xpath_element" exists

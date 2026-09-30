@@ -207,6 +207,11 @@ $string['courseindexdrawerwidthsetting_desc'] = 'With this setting, you can over
 // ... ... Setting: Medium content max width.
 $string['blockdrawerwidthsetting'] = 'Block drawer width';
 $string['blockdrawerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s block drawer width without manual SCSS modifications. By default, Moodle uses a medium content max width of 315px. You can enter other pixel-based values like 400px, but values with other units like percentage-based values or a viewport-width value won\'t work.';
+// ... Section: Blocks.
+$string['pageblocksheading'] = 'Blocks';
+// ... ... Setting: Compact blocks.
+$string['compactblockssetting'] = 'Compact blocks';
+$string['compactblockssetting_desc'] = 'With this setting, blocks are rendered more compactly: they use a slightly smaller font size and less padding and margin, so that they take up less vertical space.';
 
 // Settings: Site branding tab.
 $string['sitebrandingtab'] = 'Site branding';

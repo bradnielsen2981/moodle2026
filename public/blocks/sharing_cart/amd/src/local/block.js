@@ -84,20 +84,8 @@ export default class Block extends BaseComponent {
         this.block = block;
         this.queue = queue;
 
-        const courseContent = document.querySelector('.course-content');
-        if (courseContent) {
-            const sectionElements = courseContent.querySelectorAll('[data-for="section"]');
-            sectionElements.forEach(sectionElement => {
-                const section = this.reactive.state.section.get(sectionElement.dataset.id);
-                this._refreshSection({element: section});
-            });
-
-            const courseModuleElements = courseContent.querySelectorAll('[data-for="cmitem"]');
-            courseModuleElements.forEach(courseModuleElement => {
-                const courseModule = this.reactive.state.cm.get(courseModuleElement.dataset.id);
-                this._refreshCourseModule({element: courseModule});
-            });
-        }
+        this._setupMenuItemListener();
+        this._addMenuItems();
 
         const showCopySectionInBlockSegment = this.getElement(this.selectors.COPY_SECTION_CONTAINER);
         if (showCopySectionInBlockSegment) {
@@ -129,15 +117,130 @@ export default class Block extends BaseComponent {
         ];
     }
 
-    async getBackupToSharingCartButton() {
-        if (!this._sharingCartButton) {
-            this._sharingCartButton = await this.baseFactory.moodle().template().createElementFromTemplate(
-                'block_sharing_cart/block/course/add_to_sharing_cart_button',
+    async getSharingCartMenuItem() {
+        if (!this._sharingCartMenuItem) {
+            this._sharingCartMenuItem = await this.baseFactory.moodle().template().createElementFromTemplate(
+                'block_sharing_cart/block/course/add_to_sharing_cart_menu_item',
                 {}
             );
         }
 
-        return this._sharingCartButton.cloneNode(true);
+        return this._sharingCartMenuItem.cloneNode(true);
+    }
+
+    /**
+     * Whether the "Add to Sharing Cart" edit menu items should be shown.
+     * @returns {boolean}
+     */
+    showMenuItems() {
+        return this.showSharingCartBasket && this.canBackup;
+    }
+
+    /**
+     * Handles clicks on "Add to Sharing Cart" edit menu items anywhere in the course content.
+     */
+    _setupMenuItemListener() {
+        const courseContent = document.querySelector('.course-content');
+        if (!courseContent || !this.showMenuItems()) {
+            return;
+        }
+
+        courseContent.addEventListener('click', (e) => {
+            const menuItem = e.target.closest('[data-sharing-cart-action="add"]');
+            if (!menuItem) {
+                return;
+            }
+            e.preventDefault();
+
+            if (menuItem.classList.contains('disabled')) {
+                return;
+            }
+
+            const courseModuleMenu = menuItem.closest('.cm_action_menu[data-cmid]');
+            if (courseModuleMenu) {
+                this.block.addCourseModuleBackupToSharingCart(courseModuleMenu.dataset.cmid);
+                return;
+            }
+
+            const sectionMenu = menuItem.closest('.section_action_menu[data-sectionid]');
+            if (sectionMenu) {
+                this.block.addSectionBackupToSharingCart(sectionMenu.dataset.sectionid);
+            }
+        });
+
+        // Edit menus are re-rendered by the course editor, so re-add the menu item whenever the content changes.
+        let pending = false;
+        new MutationObserver(() => {
+            if (pending) {
+                return;
+            }
+            pending = true;
+            requestAnimationFrame(() => {
+                pending = false;
+                this._addMenuItems();
+            });
+        }).observe(courseContent, {childList: true, subtree: true});
+    }
+
+    /**
+     * Add the "Add to Sharing Cart" item to every section and activity edit menu that does not have it yet.
+     */
+    async _addMenuItems() {
+        if (!this.showMenuItems()) {
+            return;
+        }
+
+        const menus = document.querySelectorAll(
+            '.course-content .section_action_menu[data-sectionid] .dropdown-menu,' +
+            '.course-content .cm_action_menu[data-cmid] .dropdown-menu'
+        );
+        for (const menu of menus) {
+            // Skip submenus (e.g. "Group mode") nested inside the edit menu.
+            if (menu.parentElement.closest('.dropdown-menu')) {
+                continue;
+            }
+            if (menu.querySelector('.add_to_sharing_cart')) {
+                continue;
+            }
+
+            const menuItem = await this.getSharingCartMenuItem();
+            if (menu.querySelector('.add_to_sharing_cart')) {
+                continue;
+            }
+
+            // Place it just above the delete option (and its divider) when present.
+            let before = menu.querySelector('[data-action="cmDelete"],[data-action="deleteSection"]');
+            if (before && before.previousElementSibling?.matches('.dropdown-divider')) {
+                before = before.previousElementSibling;
+            }
+            menu.insertBefore(menuItem, before);
+
+            const sectionMenu = menu.closest('.section_action_menu[data-sectionid]');
+            if (sectionMenu) {
+                await this._updateSectionMenuItemState(sectionMenu.dataset.sectionid);
+            }
+        }
+    }
+
+    /**
+     * Disable the section's "Add to Sharing Cart" menu item when the section has no course modules.
+     * @param {number|string} sectionId
+     */
+    async _updateSectionMenuItemState(sectionId) {
+        const menuItem = document.querySelector(
+            '.course-content .section_action_menu[data-sectionid="' + sectionId + '"] .add_to_sharing_cart'
+        );
+        const section = this.reactive.state.section.get(sectionId);
+        if (!menuItem || !section) {
+            return;
+        }
+
+        const disabled = section.cmlist.length === 0;
+        menuItem.classList.toggle('disabled', disabled);
+        menuItem.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+        menuItem.title = disabled ?
+            await getString('no_course_modules_in_section_description', 'block_sharing_cart') :
+            '';
     }
 
     async _refreshCopySectionOptions() {
@@ -184,66 +287,15 @@ export default class Block extends BaseComponent {
      */
     async _refreshSection({element}) {
         this._refreshCopySectionOptions();
-
-        if (this.showSharingCartBasket && this.canBackup) {
-            let backupButton = await this.getBackupToSharingCartButton();
-
-            const sectionTitle = document.querySelector(
-                '.course-content [data-for="section_title"] .inplaceeditable[data-itemid="' + element.id + '"]'
-            );
-            if (sectionTitle) {
-                const hasBackupButton = sectionTitle.parentElement.querySelector('.add_to_sharing_cart');
-                if (!hasBackupButton) {
-                    sectionTitle.after(backupButton);
-
-                    backupButton.addEventListener(
-                        'click',
-                        (e) => {
-                            if (e.currentTarget.classList.contains('disabled')) {
-                                return;
-                            }
-                            this.block.addSectionBackupToSharingCart(element.id);
-                        }
-                    );
-                }
-                backupButton = sectionTitle.parentElement.querySelector('.add_to_sharing_cart');
-
-                const disabled = element.cmlist.length === 0;
-                backupButton.classList.toggle('disabled', disabled);
-                backupButton.title = disabled ?
-                    await getString('no_course_modules_in_section_description', 'block_sharing_cart') :
-                    '';
-            }
-        }
+        await this._addMenuItems();
+        await this._updateSectionMenuItemState(element.id);
     }
 
     /**
      * Refresh the course module.
-     * @param {Object} param
-     * @param {Object} param.element
      */
-    async _refreshCourseModule({element}) {
-        if (this.showSharingCartBasket && this.canBackup) {
-            const backupButton = await this.getBackupToSharingCartButton();
-
-            const courseModuleActionMenu = document.querySelector(
-                '.course-content .cm_action_menu[data-cmid="' + element.id + '"]'
-            );
-            if (!courseModuleActionMenu) {
-                setTimeout(() => this._refreshCourseModule({element}), 100);
-                return;
-            }
-
-            const hasBackupButton = courseModuleActionMenu.querySelector('.add_to_sharing_cart');
-            if (!hasBackupButton) {
-                courseModuleActionMenu.append(backupButton);
-
-                backupButton.addEventListener(
-                    'click',
-                    this.block.addCourseModuleBackupToSharingCart.bind(this.block, element.id)
-                );
-            }
-        }
+    async _refreshCourseModule() {
+        await this._addMenuItems();
     }
 
     /**

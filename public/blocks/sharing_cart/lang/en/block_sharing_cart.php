@@ -6,7 +6,7 @@ $string['pluginname'] = 'Sharing Cart';
 // Block
 $string['items'] = 'Items';
 $string['restores'] = 'Copies queued';
-$string['no_items'] = 'No items.<br><br>Drag & drop activities or sections into the sharing cart or click the <i class="fa fa-shopping-basket"></i> icon, to add items to the Sharing Cart.';
+$string['no_items'] = 'No items.<br><br>Drag & drop activities or sections into the sharing cart or choose "Add to Sharing Cart" from a section or activity edit menu, to add items to the Sharing Cart.';
 $string['no_restores'] = '<div class="no-restores font-italic text-muted">No copies queued.</div>';
 $string['has_items'] = 'Click the <i class="fa fa-clone"></i> icon to copy items from the Sharing Cart to the course.';
 $string['nopermissions'] = 'You do not have permission to backup or restore items in this course. Please contact your administrator if you think this is a mistake.';
@@ -51,6 +51,8 @@ $string['bulk_delete'] = 'Bulk delete';
 $string['cancel_bulk_delete'] = 'Cancel';
 $string['delete_marked_items'] = 'Delete marked items';
 
+$string['add_to_sharing_cart'] = 'Add to Sharing Cart';
+
 $string['select_all'] = 'Select all';
 $string['deselect_all'] = 'Deselect all';
 
@@ -70,8 +72,8 @@ $string['sharing_cart:addinstance'] = 'Add a new Sharing Cart block';
 $string['sharing_cart:manual_run_task'] = 'Manually run the backup/restore task';
 
 // Settings
-$string['settings:show_sharing_cart_basket'] = 'Show the sharing cart basket';
-$string['settings:show_sharing_cart_basket_desc'] = 'Show the sharing cart basket on the course page when in editing mode. This allows users to click and copy activities & sections into the sharing cart. If you hide the basket, users can still drag and drop activities & sections into the sharing cart.';
+$string['settings:show_sharing_cart_basket'] = 'Show "Add to Sharing Cart" in edit menus';
+$string['settings:show_sharing_cart_basket_desc'] = 'Add an "Add to Sharing Cart" option to the section and activity edit menus on the course page when in editing mode. This allows users to copy activities & sections into the sharing cart. If you hide the option, users can still drag and drop activities & sections into the sharing cart.';
 $string['settings:show_copy_section_in_block'] = 'Show the "Copy section" in block';
 $string['settings:show_copy_section_in_block_desc'] = 'Show the "Copy section" in the sharing cart block, underneath all modules/activities';
 $string['settings:show_copies_queued_segment_when_empty'] = 'Show "Copies queued" segment when it\'s empty';
