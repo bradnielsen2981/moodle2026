@@ -76,25 +76,6 @@ if ($PAGE->has_secondary_navigation()) {
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
     
     if ($secondarynavigationicons && isset($secondarynavigation['nodecollection']->children)) {
-        $iconmap = [
-            'coursehome' => 'i/course',
-            'editsettings' => 'i/settings',
-            'participants' => 'i/users',
-            'grades' => 'i/grades',
-            'reports' => 'i/report',
-            'coursereports' => 'i/report',
-            'questionbank' => 'i/questions',
-            'more' => 'i/moremenu',
-            'advancedgrading' => 'i/grading',
-            'roles' => 'i/role',
-            'logs' => 'i/log',
-            'competencies' => 'i/competencies',
-            'filtermanage' => 'i/filter',
-            'filtermanagement' => 'i/filter',
-            'backup' => 'i/backup',
-            'restore' => 'i/restore',
-        ];
-        
         $custom_nodes = [];
         foreach ($secondarynavigation['nodecollection']->children as $child) {
             $node = new \stdClass();
@@ -114,16 +95,7 @@ if ($PAGE->has_secondary_navigation()) {
             $node->isactive = $child->isactive;
             $node->haschildren = false;
             
-            $node->pixicon = $iconmap[$child->key] ?? 'i/marker';
-            $node->iconhtml = $OUTPUT->render(new \pix_icon($node->pixicon, $node->text, 'core'));
-            
-            if ($node->key === 'editsettings') {
-                $node->iconhtml = '<i class="icon fa fa-cog fa-fw" aria-hidden="true" title="Course Settings" role="img" aria-label="Course Settings"></i>';
-            }
-            
-            if ($node->key === 'grades') {
-                $node->iconhtml = '<i class="icon fa fa-check fa-fw" aria-hidden="true" title="Grades" role="img" aria-label="Grades"></i>';
-            }
+            $node->iconhtml = theme_boost_union_get_secondary_nav_icon($node->key, $node->text);
 
             $custom_nodes[] = $node;
         }
@@ -137,8 +109,7 @@ if ($PAGE->has_secondary_navigation()) {
             $morenode->key = 'more';
             $morenode->text = get_string('moremenu', 'core');
             $morenode->title = get_string('moremenu', 'core');
-            $morenode->pixicon = $iconmap['more'];
-            $morenode->iconhtml = $OUTPUT->render(new \pix_icon($morenode->pixicon, $morenode->text, 'core'));
+            $morenode->iconhtml = theme_boost_union_get_secondary_nav_icon('more', $morenode->text);
             $morenode->haschildren = true;
             $morenode->children = $hidden;
             $morenode->isactive = false;

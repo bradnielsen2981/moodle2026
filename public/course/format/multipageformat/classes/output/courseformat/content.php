@@ -25,7 +25,6 @@
 namespace format_multipageformat\output\courseformat;
 
 use core_courseformat\output\local\content as content_base;
-use format_multipageformat\tabs_manager;
 use renderer_base;
 
 /**
@@ -70,7 +69,7 @@ class content extends content_base {
 
         $data = parent::export_for_template($output);
 
-        $tabs = $this->export_tabs();
+        $tabs = $this->format->export_tabs();
         if (!empty($tabs)) {
             $addpagelabel = ($PAGE->user_is_editing() && has_capability('moodle/course:update', $this->format->get_context()))
                 ? get_string('addpage', 'format_multipageformat') : '';
@@ -82,43 +81,6 @@ class content extends content_base {
         }
 
         return $data;
-    }
-
-    /**
-     * Builds the Tab grouping data used by the format_multipageformat/tabs AMD module.
-     *
-     * Tabs represent higher level sections: a section can be a Tab (grouping other
-     * sections as its children) or a child of a Tab. Sections with no Tab relationship
-     * at all are left untouched and always display normally.
-     *
-     * @return array list of ['sectionid' => int, 'childsectionids' => int[]]
-     */
-    protected function export_tabs(): array {
-        $courseid = $this->format->get_courseid();
-        $tabsectionids = tabs_manager::get_tab_sectionids($courseid);
-        if (empty($tabsectionids)) {
-            return [];
-        }
-
-        // The Tab strip follows the course order of the pages, which changes when a page is moved.
-        $modinfo = $this->format->get_modinfo();
-        $sectionnum = fn($id) => $modinfo->get_section_info_by_id($id)?->sectionnum ?? PHP_INT_MAX;
-        usort($tabsectionids, fn($a, $b) => $sectionnum($a) <=> $sectionnum($b));
-
-        // A hidden page only has a Tab in Edit mode (see format_multipageformat::is_section_visible()).
-        $tabs = [];
-        foreach ($tabsectionids as $tabsectionid) {
-            $tabsection = $modinfo->get_section_info_by_id($tabsectionid);
-            if (!$tabsection || !$this->format->is_section_visible($tabsection)) {
-                continue;
-            }
-            $tabs[] = [
-                'sectionid' => $tabsectionid,
-                'childsectionids' => tabs_manager::get_children_sectionids($courseid, $tabsectionid),
-                'hiddenlabel' => $tabsection->visible ? '' : get_string('hiddenfromstudents'),
-            ];
-        }
-        return $tabs;
     }
 
 }

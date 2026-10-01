@@ -110,6 +110,24 @@ if (!$courseindex) {
     $courseindexopen = false;
 }
 
+// On activity and resource pages, the course index drawer always starts closed, and opening or closing it there is not
+// remembered (so it does not change whether it is open on the course page). When it is opened, it shows where the
+// user currently is in the course.
+// Likewise, after following a breadcrumb link, the course index drawer starts closed, without changing the stored
+// preference (the cookie is set and cleared again by theme_boost_union/courseindexfocus).
+$courseindexpreference = 'drawer-open-index';
+if ($courseindex) {
+    $isactivitypage = ($PAGE->context->contextlevel == CONTEXT_MODULE);
+    if ($isactivitypage || !empty($_COOKIE['theme_boost_union_closecourseindex'])) {
+        $courseindexopen = false;
+        $extraclasses = array_values(array_diff($extraclasses, ['drawer-open-index']));
+    }
+    if ($isactivitypage) {
+        $courseindexpreference = '';
+    }
+    $PAGE->requires->js_call_amd('theme_boost_union/courseindexfocus', 'init', [$isactivitypage]);
+}
+
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
 // Only apply secondary navigation modifications in Course and Module contexts.
@@ -131,25 +149,6 @@ if ($PAGE->has_secondary_navigation()) {
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
     
     if ($secondarynavigationicons && isset($secondarynavigation['nodecollection']->children)) {
-        $iconmap = [
-            'coursehome' => 'i/course',
-            'editsettings' => 'i/settings',
-            'participants' => 'i/users',
-            'grades' => 'i/grades',
-            'reports' => 'i/report',
-            'coursereports' => 'i/report',
-            'questionbank' => 'i/questions',
-            'more' => 'i/moremenu',
-            'advancedgrading' => 'i/grading',
-            'roles' => 'i/role',
-            'logs' => 'i/log',
-            'competencies' => 'i/competencies',
-            'filtermanage' => 'i/filter',
-            'filtermanagement' => 'i/filter',
-            'backup' => 'i/backup',
-            'restore' => 'i/restore',
-        ];
-        
         $custom_nodes = [];
         foreach ($secondarynavigation['nodecollection']->children as $child) {
             $node = new \stdClass();
@@ -170,24 +169,7 @@ if ($PAGE->has_secondary_navigation()) {
             $node->isactive = $child->isactive;
             $node->haschildren = false;
             
-            // If the icon is settings, we can force a cog icon if desired, or use i/settings which is Moodle's cog/gear.
-            $node->pixicon = $iconmap[$child->key] ?? 'i/marker';
-            $node->iconhtml = $OUTPUT->render(new \pix_icon($node->pixicon, $node->text, 'core'));
-            
-            if ($node->key === 'editsettings') {
-                // Force a cog explicitly if i/settings rendering defaults to something else.
-                $node->iconhtml = '<i class="icon fa fa-cog fa-fw" aria-hidden="true" title="Course Settings" role="img" aria-label="Course Settings"></i>';
-            }
-            
-            if ($node->key === 'grades') {
-                // Use a tick-like icon for grades.
-                $node->iconhtml = '<i class="icon fa fa-check fa-fw" aria-hidden="true" title="Grades" role="img" aria-label="Grades"></i>';
-            }
-
-            if ($node->key === 'courseoverview') {
-                // Use a 5 pointed star icon for Activities.
-                $node->iconhtml = '<i class="icon fa fa-star fa-fw" aria-hidden="true" title="Activities" role="img" aria-label="Activities"></i>';
-            }
+            $node->iconhtml = theme_boost_union_get_secondary_nav_icon($node->key, $node->text);
 
             $custom_nodes[] = $node;
         }
@@ -201,8 +183,7 @@ if ($PAGE->has_secondary_navigation()) {
             $morenode->key = 'more';
             $morenode->text = get_string('moremenu', 'core');
             $morenode->title = get_string('moremenu', 'core');
-            $morenode->pixicon = $iconmap['more'];
-            $morenode->iconhtml = $OUTPUT->render(new \pix_icon($morenode->pixicon, $morenode->text, 'core'));
+            $morenode->iconhtml = theme_boost_union_get_secondary_nav_icon('more', $morenode->text);
             $morenode->haschildren = true;
             $morenode->children = $hidden;
             $morenode->isactive = false;
@@ -290,6 +271,7 @@ $templatecontext = [
     'hasblocks' => $hasblocks,
     'bodyattributes' => $bodyattributes,
     'courseindexopen' => $courseindexopen,
+    'courseindexpreference' => $courseindexpreference,
     'blockdraweropen' => $blockdraweropen,
     'courseindex' => $courseindex,
     'primarymoremenu' => $primarymenu['moremenu'],

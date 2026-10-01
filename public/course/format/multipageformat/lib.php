@@ -55,6 +55,63 @@ class format_multipageformat extends core_courseformat\base {
     }
 
     /**
+     * On activity and resource pages, group the Course index drawer by page just like on the course page.
+     *
+     * The course page starts format_multipageformat/tabs from its content output, which activity pages
+     * never render, so it is started here instead.
+     *
+     * @param moodle_page $page instance of page calling set_cm
+     */
+    public function page_set_cm(moodle_page $page) {
+        $tabs = $this->export_tabs();
+        if (empty($tabs) || !$page->cm) {
+            return;
+        }
+        $page->requires->js_call_amd(
+            'format_multipageformat/tabs',
+            'init',
+            [$tabs, $this->get_courseid(), '', (int) $page->cm->section]
+        );
+    }
+
+    /**
+     * Builds the Tab grouping data used by the format_multipageformat/tabs AMD module.
+     *
+     * Tabs represent higher level sections: a section can be a Tab (grouping other
+     * sections as its children) or a child of a Tab. Sections with no Tab relationship
+     * at all are left untouched and always display normally.
+     *
+     * @return array list of ['sectionid' => int, 'childsectionids' => int[], 'hiddenlabel' => string]
+     */
+    public function export_tabs(): array {
+        $courseid = $this->get_courseid();
+        $tabsectionids = \format_multipageformat\tabs_manager::get_tab_sectionids($courseid);
+        if (empty($tabsectionids)) {
+            return [];
+        }
+
+        // The Tab strip follows the course order of the pages, which changes when a page is moved.
+        $modinfo = $this->get_modinfo();
+        $sectionnum = fn($id) => $modinfo->get_section_info_by_id($id)?->sectionnum ?? PHP_INT_MAX;
+        usort($tabsectionids, fn($a, $b) => $sectionnum($a) <=> $sectionnum($b));
+
+        // A hidden page only has a Tab in Edit mode (see is_section_visible()).
+        $tabs = [];
+        foreach ($tabsectionids as $tabsectionid) {
+            $tabsection = $modinfo->get_section_info_by_id($tabsectionid);
+            if (!$tabsection || !$this->is_section_visible($tabsection)) {
+                continue;
+            }
+            $tabs[] = [
+                'sectionid' => $tabsectionid,
+                'childsectionids' => \format_multipageformat\tabs_manager::get_children_sectionids($courseid, $tabsectionid),
+                'hiddenlabel' => $tabsection->visible ? '' : get_string('hiddenfromstudents'),
+            ];
+        }
+        return $tabs;
+    }
+
+    /**
      * Returns the display name of the given section that the course prefers.
      *
      * Use section name is specified by user. Otherwise use default ("Topic #").

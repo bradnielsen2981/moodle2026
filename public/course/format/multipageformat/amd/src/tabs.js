@@ -224,6 +224,9 @@ const buildTabStrip = (resolvedTabs, onSelect, addPageLabel) => {
  */
 const storageKey = (courseId) => `format_multipageformat/activetab/${courseId}`;
 
+/** @var {?number} on an activity or resource page, the section that activity is in */
+let pageSectionId = null;
+
 /**
  * Find the id of the section actually on screen, whichever kind of page this is.
  *
@@ -239,7 +242,11 @@ const getFocusSectionId = () => {
     // The full course page: whichever section the URL anchor points at, if any.
     const match = window.location.hash.match(/^#section-(\d+)$/);
     const target = match ? document.getElementById(`section-${match[1]}`) : null;
-    return target ? Number(target.dataset.id) : null;
+    if (target) {
+        return Number(target.dataset.id);
+    }
+    // An activity or resource page: the section that activity is in.
+    return pageSectionId;
 };
 
 /**
@@ -351,7 +358,9 @@ const highlightFocusedSection = (focusId) => {
  */
 const expandCurrentPathInIndex = (tabs) => {
     const focusId = getFocusSectionId();
-    highlightFocusedSection(focusId);
+    // On an activity or resource page core already highlights the activity itself, so its section
+    // is only expanded, not highlighted as well - just like on a standard course.
+    highlightFocusedSection(focusId === pageSectionId ? null : focusId);
     if (!focusId) {
         return;
     }
@@ -363,17 +372,44 @@ const expandCurrentPathInIndex = (tabs) => {
 };
 
 /**
+ * Run a callback once the Course index has rendered its sections.
+ *
+ * @param {Function} callback called with the Course index element
+ */
+const whenCourseIndexReady = (callback) => {
+    const ready = () => {
+        const section = document.querySelector('.courseindex .courseindex-section');
+        return section ? section.closest('.courseindex') : null;
+    };
+    const courseindex = ready();
+    if (courseindex) {
+        callback(courseindex);
+        return;
+    }
+    const observer = new MutationObserver(() => {
+        const courseindex = ready();
+        if (courseindex) {
+            observer.disconnect();
+            callback(courseindex);
+        }
+    });
+    observer.observe(document.body, {subtree: true, childList: true});
+};
+
+/**
  * Initialise the Tabs UI.
  *
  * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
  *     by format_multipageformat\output\courseformat\content::export_tabs()
  * @param {number} courseId the course id, used to remember the active tab across reloads
  * @param {string} addPageLabel label of the "Add page" tab (edit mode only), empty for none
+ * @param {?number} activitySectionId on an activity or resource page, the section that activity is in
  */
-export const init = (tabs, courseId, addPageLabel = '') => {
+export const init = (tabs, courseId, addPageLabel = '', activitySectionId = null) => {
     if (!tabs || !tabs.length) {
         return;
     }
+    pageSectionId = activitySectionId;
 
     // Only let pages be dragged onto other pages in the Course index (see that module).
     initCourseIndexRules(tabs);
@@ -383,9 +419,10 @@ export const init = (tabs, courseId, addPageLabel = '') => {
     // Keep the Course index grouped by page on every page, including pages where the main
     // content only ever shows a single section (a Tab's own page, or one of its real delegated
     // subsections) and so has nothing for the code below to build a Tab strip out of.
-    syncCourseIndex(tabs);
-    const courseindex = document.querySelector('.courseindex');
-    if (courseindex) {
+    // The Course index may still be loading (it is rendered asynchronously, notably on activity
+    // pages), so wait until its sections are there.
+    whenCourseIndexReady((courseindex) => {
+        syncCourseIndex(tabs);
         let pending = false;
         new MutationObserver(() => {
             if (!pending) {
@@ -401,9 +438,9 @@ export const init = (tabs, courseId, addPageLabel = '') => {
             attributes: true,
             attributeFilter: ['aria-expanded', 'class'],
         });
-    }
 
-    expandCurrentPathInIndex(tabs);
+        expandCurrentPathInIndex(tabs);
+    });
     window.addEventListener('hashchange', () => expandCurrentPathInIndex(tabs));
 
     // Everything from here on builds the Tab strip and switches between tab groups in the

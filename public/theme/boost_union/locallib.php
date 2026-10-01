@@ -3351,3 +3351,110 @@ function theme_boost_union_ensure_modal_js(): void {
     // And remember that fact.
     $initialized = true;
 }
+
+/**
+ * Returns the icon HTML for a node of the icon-based secondary navigation.
+ *
+ * Course pages and activity pages share the secondary navigation, but use different node keys
+ * (e.g. 'editsettings' vs. 'modedit'), so both sets of keys are mapped here.
+ *
+ * @param string $key The secondary navigation node key.
+ * @param string $text The node text, used as the icon title.
+ * @return string
+ */
+function theme_boost_union_get_secondary_nav_icon(string $key, string $text): string {
+    global $OUTPUT, $PAGE;
+
+    // The activity's main page gets a solid icon for its activity type, matching the style and size of the other icons
+    // (the activity's own monologo icon is an outline image which looks out of place here).
+    // Note: $PAGE->cm is a magic property, so it must not be checked with empty() / isset().
+    $cm = $PAGE->cm;
+    $modicons = [
+        'assign' => 'fa-file-arrow-up',
+        'quiz' => 'fa-list-check',
+        'forum' => 'fa-comments',
+        'page' => 'fa-file-lines',
+        'resource' => 'fa-file',
+        'url' => 'fa-link',
+        'folder' => 'fa-folder',
+        'book' => 'fa-book',
+        'lesson' => 'fa-chalkboard',
+        'glossary' => 'fa-spell-check',
+        'wiki' => 'fa-book-open',
+        'choice' => 'fa-square-check',
+        'feedback' => 'fa-comment-dots',
+        'data' => 'fa-database',
+        'workshop' => 'fa-users-viewfinder',
+        'h5pactivity' => 'fa-shapes',
+        'lti' => 'fa-puzzle-piece',
+        'scorm' => 'fa-box-open',
+        'chat' => 'fa-comment',
+        'label' => 'fa-tag',
+        'bigbluebuttonbn' => 'fa-video',
+        'qbank' => 'fa-circle-question',
+        'subsection' => 'fa-layer-group',
+    ];
+
+    // Font Awesome icons, by exact node key.
+    $faicons = [
+        'modulepage' => $cm ? ($modicons[$cm->modname] ?? 'fa-file-lines') : 'fa-file-lines',
+        'editsettings' => 'fa-cog',
+        'modedit' => 'fa-cog',
+        'grades' => 'fa-check',
+        'courseoverview' => 'fa-star',
+        'advgrading' => 'fa-list-check',
+        'roleoverride' => 'fa-user-shield',
+        'rolecheck' => 'fa-user-check',
+        'roleassign' => 'fa-user-tag',
+        'logreport' => 'fa-clock-rotate-left',
+        'contentbank' => 'fa-box-archive',
+    ];
+    $faicon = $faicons[$key] ?? null;
+
+    // Activity-specific nodes are keyed 'mod_<modname>_<something>', so match them by suffix.
+    if ($faicon === null && str_starts_with($key, 'mod_')) {
+        $suffixicons = [
+            'overrides' => 'fa-user-clock',
+            'submissions' => 'fa-inbox',
+            'grading' => 'fa-inbox',
+            'results' => 'fa-chart-column',
+            'report' => 'fa-chart-column',
+            'reports' => 'fa-chart-column',
+            'edit' => 'fa-pen-to-square',
+            'questions' => 'fa-circle-question',
+            'subscribers' => 'fa-bell',
+        ];
+        foreach ($suffixicons as $suffix => $icon) {
+            if (str_ends_with($key, $suffix)) {
+                $faicon = $icon;
+                break;
+            }
+        }
+    }
+
+    if ($faicon !== null) {
+        $title = s($text);
+        return '<i class="icon fa ' . $faicon . ' fa-fw" aria-hidden="true" title="' . $title . '" role="img" aria-label="' .
+            $title . '"></i>';
+    }
+
+    // Moodle pix icons for the remaining known keys.
+    $pixicons = [
+        'coursehome' => 'i/course',
+        'participants' => 'i/users',
+        'reports' => 'i/report',
+        'coursereports' => 'i/report',
+        'questionbank' => 'i/questions',
+        'more' => 'i/moremenu',
+        'advancedgrading' => 'i/grading',
+        'roles' => 'i/role',
+        'logs' => 'i/log',
+        'competencies' => 'i/competencies',
+        'competencybreakdown' => 'i/competencies',
+        'filtermanage' => 'i/filter',
+        'filtermanagement' => 'i/filter',
+        'backup' => 'i/backup',
+        'restore' => 'i/restore',
+    ];
+    return $OUTPUT->render(new \pix_icon($pixicons[$key] ?? 'i/marker', $text, 'core'));
+}
