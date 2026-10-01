@@ -154,9 +154,7 @@ if ($PAGE->has_secondary_navigation()) {
             $node = new \stdClass();
             $node->key = $child->key;
             $node->text = $child->text;
-            if ($node->key === 'editsettings') {
-                $node->text = 'Course Settings';
-            }
+            $node->text = theme_boost_union_get_secondary_nav_text($node->key, $node->text);
             $node->title = $node->text;
             // Handle URL output safely
             if (isset($child->action) && $child->action instanceof \moodle_url) {

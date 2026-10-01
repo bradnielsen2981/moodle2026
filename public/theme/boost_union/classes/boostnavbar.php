@@ -57,6 +57,10 @@ class boostnavbar extends \theme_boost\boostnavbar {
             }
         }
         if ($this->page->context->contextlevel == CONTEXT_COURSE) {
+            // Course administration pages (e.g. Reports) have a 'Course administration' node without a link, which is of
+            // type TYPE_COURSE as well and would otherwise be taken for (and shown instead of) the course node.
+            $this->remove('courseadmin');
+
             if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $categorynodes = $this->get_category_nodes();
                 // Not all course pages (e.g. Participants) provide a course node in the navbar, so make sure there is one.
@@ -156,30 +160,12 @@ class boostnavbar extends \theme_boost\boostnavbar {
                     $this->remove('mygrades');
                     $this->remove('grades');
                     break;
-                case 'course-view-participants':
-                    // The 'Participants' navbar node was just removed above (in
-                    // remove_items_that_exist_in_navigation($PAGE->secondarynav)) because it duplicates the
-                    // 'Participants' secondary navigation tab. We want to keep showing it in the breadcrumb
-                    // on the participants page though, so add it back here as the new last item.
-                    $lastitem = end($this->items);
-                    if (is_a($lastitem, 'breadcrumb_navigation_node')) {
-                        $lastitem->set_last(false);
-                    }
-                    reset($this->items);
-                    $participantsnode = \breadcrumb_navigation_node::create(
-                        get_string('participants'),
-                        new moodle_url('/user/index.php', ['id' => $this->page->course->id]),
-                        navigation_node::TYPE_CUSTOM,
-                        null,
-                        'participants'
-                    );
-                    // navigation_node::create() always returns a plain navigation_node (even when called via
-                    // breadcrumb_navigation_node::create()), so it has to be wrapped to get access to set_last().
-                    $participantsnode = new \breadcrumb_navigation_node($participantsnode);
-                    $participantsnode->set_last(true);
-                    $this->items[] = $participantsnode;
-                    break;
             }
+
+            // The navbar node of the page itself was just removed above (in
+            // remove_items_that_exist_in_navigation($PAGE->secondarynav)) because it duplicates a secondary navigation
+            // item. We want to keep showing it in the breadcrumb though, so add it back.
+            $this->add_secondary_navigation_page_node();
         }
 
         // Remove 'My courses' if we are in the module context.
@@ -236,6 +222,76 @@ class boostnavbar extends \theme_boost\boostnavbar {
         if (!$showcoursebreadcrumbs) {
             $this->remove_last_item_action();
         }
+    }
+
+    /**
+     * Makes sure that a course page which is linked from the secondary navigation (e.g. Course settings, Reports or
+     * Question banks) shows its name in the breadcrumb, as a link to the page, right after the course.
+     *
+     * The node is only added if the breadcrumb does not show an item with that name yet.
+     */
+    protected function add_secondary_navigation_page_node(): void {
+        global $CFG, $PAGE;
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        // The course page itself is not a secondary navigation page.
+        $path = $this->page->url->get_path();
+        if (str_ends_with($path, '/course/view.php') || str_ends_with($path, '/course/section.php')) {
+            return;
+        }
+
+        // Find the secondary navigation item of this page (or the item containing this page).
+        $pagenode = null;
+        foreach ($PAGE->secondarynav->children as $child) {
+            if ($child->key === 'coursehome') {
+                continue;
+            }
+            if ($child->isactive || $child->find_active_node()) {
+                $pagenode = $child;
+                break;
+            }
+        }
+        if (is_null($pagenode) || !$pagenode->has_action()) {
+            return;
+        }
+
+        $text = theme_boost_union_get_secondary_nav_text($pagenode->key, (string) $pagenode->text);
+        foreach ($this->items as $item) {
+            if (\core_text::strtolower(strip_tags((string) $item->text)) === \core_text::strtolower($text)) {
+                return;
+            }
+        }
+
+        // navigation_node::create() always returns a plain navigation_node (even when called via
+        // breadcrumb_navigation_node::create()), so it has to be wrapped to get access to set_last().
+        $node = new \breadcrumb_navigation_node(\breadcrumb_navigation_node::create(
+            $text,
+            $pagenode->action,
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'boostunion-' . $pagenode->key
+        ));
+
+        // Place it right after the course node, or at the end if there is no course node.
+        $position = count($this->items);
+        foreach (array_values($this->items) as $index => $item) {
+            if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                $position = $index + 1;
+            }
+        }
+        $this->items = array_values($this->items);
+        array_splice($this->items, $position, 0, [$node]);
+
+        foreach ($this->items as $item) {
+            if ($item instanceof \breadcrumb_navigation_node) {
+                $item->set_last(false);
+            }
+        }
+        $lastitem = end($this->items);
+        if ($lastitem instanceof \breadcrumb_navigation_node) {
+            $lastitem->set_last(true);
+        }
+        reset($this->items);
     }
 
     /**

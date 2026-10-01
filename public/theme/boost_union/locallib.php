@@ -3458,3 +3458,18 @@ function theme_boost_union_get_secondary_nav_icon(string $key, string $text): st
     ];
     return $OUTPUT->render(new \pix_icon($pixicons[$key] ?? 'i/marker', $text, 'core'));
 }
+
+/**
+ * Returns the display name of a node of the secondary navigation, as used by the icon-based secondary navigation
+ * and the breadcrumb.
+ *
+ * @param string $key The secondary navigation node key.
+ * @param string $text The node text.
+ * @return string
+ */
+function theme_boost_union_get_secondary_nav_text(string $key, string $text): string {
+    if ($key === 'editsettings') {
+        return get_string('secondarynavcoursesettings', 'theme_boost_union');
+    }
+    return $text;
+}

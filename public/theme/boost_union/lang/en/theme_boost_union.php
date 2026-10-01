@@ -212,6 +212,8 @@ $string['pageblocksheading'] = 'Blocks';
 // ... ... Setting: Compact blocks.
 $string['compactblockssetting'] = 'Compact blocks';
 $string['compactblockssetting_desc'] = 'With this setting, blocks are rendered more compactly: they use a slightly smaller font size and less padding and margin, so that they take up less vertical space.';
+// Secondary navigation: name of the course settings page.
+$string['secondarynavcoursesettings'] = 'Course Settings';
 
 // Settings: Site branding tab.
 $string['sitebrandingtab'] = 'Site branding';
