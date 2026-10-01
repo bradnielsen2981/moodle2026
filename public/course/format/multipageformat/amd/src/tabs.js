@@ -395,29 +395,40 @@ const whenCourseIndexReady = (callback) => {
     observer.observe(document.body, {subtree: true, childList: true});
 };
 
+/** @var {boolean} whether the Course index has been set up already (see initCourseIndex) */
+let courseIndexInitialised = false;
+
 /**
- * Initialise the Tabs UI.
+ * Group the Course index drawer by page.
+ *
+ * This is started on every page of the course that has the Course index drawer (see
+ * format_multipageformat::page_set_course() and page_set_cm()), not only on the course page itself,
+ * and may be started more than once on the same page: it is only set up once, but a later call can
+ * still tell it which section the activity on screen is in.
  *
  * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
- *     by format_multipageformat\output\courseformat\content::export_tabs()
- * @param {number} courseId the course id, used to remember the active tab across reloads
- * @param {string} addPageLabel label of the "Add page" tab (edit mode only), empty for none
+ *     by format_multipageformat::export_tabs()
  * @param {?number} activitySectionId on an activity or resource page, the section that activity is in
  */
-export const init = (tabs, courseId, addPageLabel = '', activitySectionId = null) => {
+export const initCourseIndex = (tabs, activitySectionId = null) => {
     if (!tabs || !tabs.length) {
         return;
     }
-    pageSectionId = activitySectionId;
+    if (activitySectionId !== null) {
+        pageSectionId = activitySectionId;
+    }
+    if (courseIndexInitialised) {
+        whenCourseIndexReady(() => expandCurrentPathInIndex(tabs));
+        return;
+    }
+    courseIndexInitialised = true;
 
     // Only let pages be dragged onto other pages in the Course index (see that module).
     initCourseIndexRules(tabs);
-    // No bulk Move while a page's top section is selected (see that module).
-    initBulkPages(tabs);
 
     // Keep the Course index grouped by page on every page, including pages where the main
     // content only ever shows a single section (a Tab's own page, or one of its real delegated
-    // subsections) and so has nothing for the code below to build a Tab strip out of.
+    // subsections) and so has nothing for the Tab strip to be built out of.
     // The Course index may still be loading (it is rendered asynchronously, notably on activity
     // pages), so wait until its sections are there.
     whenCourseIndexReady((courseindex) => {
@@ -441,6 +452,24 @@ export const init = (tabs, courseId, addPageLabel = '', activitySectionId = null
         expandCurrentPathInIndex(tabs);
     });
     window.addEventListener('hashchange', () => expandCurrentPathInIndex(tabs));
+};
+
+/**
+ * Initialise the Tabs UI of the course page.
+ *
+ * @param {Array} tabs array of {sectionid: number, childsectionids: number[]} as built
+ *     by format_multipageformat::export_tabs()
+ * @param {number} courseId the course id, used to remember the active tab across reloads
+ * @param {string} addPageLabel label of the "Add page" tab (edit mode only), empty for none
+ */
+export const init = (tabs, courseId, addPageLabel = '') => {
+    if (!tabs || !tabs.length) {
+        return;
+    }
+
+    initCourseIndex(tabs);
+    // No bulk Move while a page's top section is selected (see that module).
+    initBulkPages(tabs);
 
     // Everything from here on builds the Tab strip and switches between tab groups in the
     // main content, which only makes sense when this page actually renders more than one

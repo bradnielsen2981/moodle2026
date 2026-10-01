@@ -55,23 +55,47 @@ class format_multipageformat extends core_courseformat\base {
     }
 
     /**
-     * On activity and resource pages, group the Course index drawer by page just like on the course page.
+     * On every page of the course (e.g. Participants, Activities, Reports), group the Course index drawer
+     * by page just like on the course page.
      *
-     * The course page starts format_multipageformat/tabs from its content output, which activity pages
-     * never render, so it is started here instead.
+     * The course page starts format_multipageformat/tabs from its content output, which the other pages
+     * of the course never render, so the Course index part of it is started here instead (starting it
+     * again on the course page itself does no harm).
+     *
+     * @param moodle_page $page instance of page calling set_course
+     */
+    public function page_set_course(moodle_page $page) {
+        $this->init_course_index($page);
+    }
+
+    /**
+     * On activity and resource pages, also tell the Course index which section the activity is in, so
+     * that the page holding it is expanded.
      *
      * @param moodle_page $page instance of page calling set_cm
      */
     public function page_set_cm(moodle_page $page) {
-        $tabs = $this->export_tabs();
-        if (empty($tabs) || !$page->cm) {
+        if ($page->cm) {
+            $this->init_course_index($page, (int) $page->cm->section);
+        }
+    }
+
+    /**
+     * Start the Course index part of format_multipageformat/tabs on the given page.
+     *
+     * @param moodle_page $page the page
+     * @param int|null $activitysectionid on an activity or resource page, the section that activity is in
+     */
+    protected function init_course_index(moodle_page $page, ?int $activitysectionid = null): void {
+        // There is no Course index drawer to group in AJAX requests or on the command line.
+        if (AJAX_SCRIPT || CLI_SCRIPT) {
             return;
         }
-        $page->requires->js_call_amd(
-            'format_multipageformat/tabs',
-            'init',
-            [$tabs, $this->get_courseid(), '', (int) $page->cm->section]
-        );
+        $tabs = $this->export_tabs();
+        if (empty($tabs)) {
+            return;
+        }
+        $page->requires->js_call_amd('format_multipageformat/tabs', 'initCourseIndex', [$tabs, $activitysectionid]);
     }
 
     /**
