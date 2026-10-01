@@ -977,6 +977,9 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Compact blocks.
     $content .= theme_boost_union_get_scss_compactblocks();
 
+    // Setting: Prominent drag and drop indicators.
+    $content .= theme_boost_union_get_scss_prominentdropindicators();
+
     return $content;
 }
 

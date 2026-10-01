@@ -1983,6 +1983,51 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
 }
 
 /**
+ * Returns the SCSS to make the drag and drop indicators on the course page more prominent.
+ *
+ * @return string
+ */
+function theme_boost_union_get_scss_prominentdropindicators() {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    $config = get_config('theme_boost_union', 'prominentdropindicators');
+    if (isset($config) && $config == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // The drop indicator line is 2px thick instead of 1px (the negative margins core uses to stop the border
+        // shifting the layout are widened to match).
+        // An empty section or subsection has no activities to draw the line under, so core draws it on the 1px tall
+        // section info element right below the heading. That element is given a 10px minimum height, which also
+        // leaves well over 5px of space between the heading and the line.
+        $scss .= 'body.dragging {
+            .drop-up {
+                border-top-width: 2px;
+            }
+            .drop-down,
+            .course-content .section.dropready.main.drop-down {
+                border-bottom-width: 2px;
+            }
+            .course-content .section li.activity.dropready.drop-down {
+                border-bottom-width: 2px;
+                margin-bottom: -2px;
+            }
+            .course-content .section li.activity.dropready.drop-up {
+                border-top-width: 2px;
+                margin-top: -2px;
+            }
+            .course-content .section [data-for="sectioninfo"].drop-down {
+                margin-top: 0;
+            }
+        }
+        body.editing .course-content .section .content:not(:has(li.activity)) > [data-for="sectioninfo"] {
+            min-height: 10px;
+        }';
+    }
+
+    return $scss;
+}
+
+/**
  * Returns the SCSS to render blocks more compactly (smaller fonts and less vertical spacing).
  *
  * @return string

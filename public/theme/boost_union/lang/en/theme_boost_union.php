@@ -876,6 +876,11 @@ $string['courseindexcompletioninfoposition'] = 'Position of activity completion 
 $string['courseindexcompletioninfoposition_desc'] = 'Choose the position where the completion indication is displayed. <em>End of line</em> displays the standard completion indicator at the end of the course index row line. <em>Start of line</em> displays the standard completion indicator at the start of the course index row line. <em>Icon color</em> does not show the standard completion indicator, but encodes the completion information as background of the course module icon.';
 $string['courseindexcompletioninfopositionendofline'] = 'End of line';
 $string['courseindexcompletioninfopositioniconcolor'] = 'Icon color';
+// ... Section: Course editing.
+$string['courseeditingheading'] = 'Course editing';
+// ... ... Setting: Prominent drag and drop indicators.
+$string['prominentdropindicatorssetting'] = 'Prominent drag and drop indicators';
+$string['prominentdropindicatorssetting_desc'] = 'With this setting, the line which shows where a dragged activity or section will be dropped on the course page is drawn twice as thick (2px instead of 1px). Additionally, empty sections and subsections get a little more space below their heading, so that the line is easier to see and to aim for when dropping something into them.';
 $string['courseindexcompletioninfopositionstartofline'] = 'Start of line';
 
 // Settings: E-Mail branding tab.

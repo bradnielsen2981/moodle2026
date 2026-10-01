@@ -32,43 +32,6 @@ body.format-multipageformat.editing .course-content li.section.delegated-section
 }
 
 /*
- * Drop targets while dragging in edit mode.
- *
- * - The drop indicator line is 2px thick instead of core's 1px (the negative margins core uses
- *   to stop the border shifting the layout are widened to match).
- * - An empty section or subsection has no activities to draw the line under, so core draws it
- *   on the 1px tall section info element right below the heading. That element is given a
- *   10px minimum height (it already spans the full width of its section), which also leaves
- *   well over 5px of space between the heading and the line.
- */
-body.format-multipageformat.dragging .drop-up {
-    border-top-width: 2px;
-}
-
-body.format-multipageformat.dragging .drop-down,
-body.format-multipageformat.dragging .course-content .section.dropready.main.drop-down {
-    border-bottom-width: 2px;
-}
-
-body.format-multipageformat.dragging .course-content .section li.activity.dropready.drop-down {
-    border-bottom-width: 2px;
-    margin-bottom: -2px;
-}
-
-body.format-multipageformat.dragging .course-content .section li.activity.dropready.drop-up {
-    border-top-width: 2px;
-    margin-top: -2px;
-}
-
-body.format-multipageformat.editing .course-content .section .content:not(:has(li.activity)) > [data-for="sectioninfo"] {
-    min-height: 10px;
-}
-
-body.format-multipageformat.dragging .course-content .section [data-for="sectioninfo"].drop-down {
-    margin-top: 0;
-}
-
-/*
  * Course index drawer: the sections that belong to a page are indented under it, and are only
  * shown while that page is expanded (see syncCourseIndex in tabs.js). Subsections inside a
  * section are already indented by core, so they end up one level further in again.
@@ -117,18 +80,40 @@ body.format-multipageformat.dragging .course-content .section [data-for="section
     color: inherit;
 }
 
+/* While a section or subsection is highlighted below, core's "page item" highlight of an activity
+ * (driven by content.js's scroll-spy as well) is hidden too, so there is only ever one highlight.
+ * Without a highlighted section (e.g. on an activity page) core's activity highlight is kept.
+ */
+.courseindex:has(.format-multipageformat-index-focused) .courseindex-item.pageitem {
+    background-color: transparent;
+    color: inherit;
+}
+
+.courseindex:has(.format-multipageformat-index-focused) .courseindex-item.pageitem .courseindex-link,
+.courseindex:has(.format-multipageformat-index-focused) .courseindex-item.pageitem .courseindex-link a,
+.courseindex:has(.format-multipageformat-index-focused) .courseindex-item.pageitem .courseindex-chevron {
+    color: inherit;
+}
+
 /* Highlights whichever Course index item corresponds to the section or subsection actually on
- * screen (see highlightFocusedSection in tabs.js), in core's own "page item" colours (see above).
+ * screen (see highlightFocusedSection in tabs.js), in core's own "page item" colours (see above):
+ * the theme's primary colour with white text, taken from the theme's CSS variables so that the
+ * highlight follows the theme's brand colour.
  */
 .courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item {
-    background-color: #0f6cbf;
-    color: #ffffff;
+    background-color: var(--bs-primary, #0f6cbf);
+    color: var(--bs-white, #fff);
 }
 
 .courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-link,
 .courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-link a,
 .courseindex .courseindex-section.format-multipageformat-index-focused > .courseindex-item .courseindex-chevron {
-    color: #ffffff;
+    color: var(--bs-white, #fff);
+}
+
+/* The tab strip sits in the section list, wrapped in a list item (see buildTabStrip in tabs.js). */
+.format-multipageformat-tabs-wrapper {
+    list-style: none;
 }
 
 /* The Tab of a hidden page, only shown in Edit mode (see buildTabStrip in tabs.js). */

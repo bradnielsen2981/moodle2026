@@ -138,7 +138,6 @@ const syncCourseIndex = (tabs) => {
 const buildTabStrip = (resolvedTabs, onSelect, addPageLabel) => {
     const wrapper = document.createElement('li');
     wrapper.className = 'format-multipageformat-tabs-wrapper';
-    wrapper.style.listStyle = 'none';
 
     // Core's section-list reordering (see the observer set up in init()) removes any
     // list item it does not recognise as a section unless it is flagged as an orphan,
