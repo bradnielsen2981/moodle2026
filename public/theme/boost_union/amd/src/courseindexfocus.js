@@ -23,6 +23,8 @@
  *   tells layout/drawers.php to render that page with the drawer closed (so it does not visibly slide shut). When the
  *   link only jumps to an anchor on the current page, the drawer is closed right away. Neither changes the user's
  *   stored drawer preference.
+ * - The button of the course index options menu (Expand all / Collapse all) shows the "Collapse all" icon while all
+ *   sections are expanded (e.g. after "Expand all" was chosen), and the "Expand all" icon otherwise.
  *
  * @module     theme_boost_union/courseindexfocus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -34,6 +36,57 @@ const SELECTORS = {
     DRAWER: '#theme_boost-drawers-courseindex',
     PAGEITEM: '#courseindex .courseindex-item.pageitem',
     BREADCRUMBLINK: '.breadcrumb a[href]',
+    COURSEINDEX: '#courseindex',
+    CHEVRON: '#courseindex .courseindex-chevron',
+    CONTROLSICON: '#courseindexdrawercontrolsmenubutton .icon',
+};
+
+/** Icons of the course index options menu button (the same ones its Expand all / Collapse all items show). */
+const ICONS = {
+    EXPANDALL: 'fa-angles-down',
+    COLLAPSEALL: document.dir === 'rtl' ? 'fa-angles-left' : 'fa-angles-right',
+};
+
+/**
+ * Show the "Collapse all" icon on the course index options menu button while all sections are expanded,
+ * and the "Expand all" icon otherwise.
+ */
+const updateControlsIcon = () => {
+    const icon = document.querySelector(SELECTORS.CONTROLSICON);
+    const chevrons = [...document.querySelectorAll(SELECTORS.CHEVRON)];
+    if (!icon || !chevrons.length) {
+        return;
+    }
+    const allexpanded = chevrons.every((chevron) => chevron.getAttribute('aria-expanded') === 'true');
+    icon.classList.toggle(ICONS.EXPANDALL, !allexpanded);
+    icon.classList.toggle(ICONS.COLLAPSEALL, allexpanded);
+};
+
+/**
+ * Keep the course index options menu button icon up to date, also while the course index is still loading.
+ */
+const watchControlsIcon = () => {
+    let pending = false;
+    const update = () => {
+        if (!pending) {
+            pending = true;
+            requestAnimationFrame(() => {
+                pending = false;
+                updateControlsIcon();
+            });
+        }
+    };
+    const courseindex = document.querySelector(SELECTORS.COURSEINDEX);
+    if (!courseindex) {
+        return;
+    }
+    new MutationObserver(update).observe(courseindex, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ['aria-expanded'],
+    });
+    update();
 };
 
 /** Name of the cookie which asks layout/drawers.php to render the next page with the course index drawer closed. */
@@ -101,6 +154,8 @@ export const init = (activitypage) => {
     setCloseCookie(false);
 
     document.addEventListener('click', onBreadcrumbClick);
+
+    watchControlsIcon();
 
     if (activitypage) {
         document.addEventListener(Drawers.eventTypes.drawerShown, (event) => {

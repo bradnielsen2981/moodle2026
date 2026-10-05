@@ -226,6 +226,9 @@ const storageKey = (courseId) => `format_multipageformat/activetab/${courseId}`;
 /** @var {?number} on an activity or resource page, the section that activity is in */
 let pageSectionId = null;
 
+/** @var {?number} on the course page, the Tab section of the page currently shown by the Tab strip */
+let activeTabId = null;
+
 /**
  * Find the id of the section actually on screen, whichever kind of page this is.
  *
@@ -245,7 +248,11 @@ const getFocusSectionId = () => {
         return Number(target.dataset.id);
     }
     // An activity or resource page: the section that activity is in.
-    return pageSectionId;
+    if (pageSectionId !== null) {
+        return pageSectionId;
+    }
+    // The full course page without an anchor: the page the Tab strip is showing.
+    return activeTabId;
 };
 
 /**
@@ -507,6 +514,7 @@ export const init = (tabs, courseId, addPageLabel = '') => {
 
     const setActive = (sectionId) => {
         activeSectionId = sectionId;
+        activeTabId = sectionId;
         rememberActive(sectionId);
         resolvedTabs.forEach(tab => {
             const isActive = tab.sectionid === activeSectionId;
@@ -517,9 +525,23 @@ export const init = (tabs, courseId, addPageLabel = '') => {
             link.classList.toggle('active', isActive);
             link.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
+        // Show the page in the Course index too: highlighted, and expanded to its sections. If the
+        // Course index is still loading this does nothing yet, and initCourseIndex() does it once
+        // it is there.
+        expandCurrentPathInIndex(tabs);
     };
 
-    strip = buildTabStrip(resolvedTabs, setActive, addPageLabel);
+    // Clicking a Tab leaves whichever section the URL anchor pointed at, so that anchor is dropped:
+    // it would otherwise keep that section highlighted in the Course index instead of the page
+    // just clicked (and bring its page back on the next reload).
+    const selectTab = (sectionId) => {
+        if (window.location.hash.match(/^#section-\d+$/)) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+        setActive(sectionId);
+    };
+
+    strip = buildTabStrip(resolvedTabs, selectTab, addPageLabel);
 
     // The strip belongs right before the first tabbed section so untabbed sections
     // keep rendering above it, undisturbed.
